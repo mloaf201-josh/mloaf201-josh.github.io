@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GiolArt — Επαγγελματική Κάρτα</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#3a2a1a;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'Georgia','Times New Roman',serif;padding:2rem}
+.card{background:#faf5f0;width:350px;min-height:500px;border-radius:16px;padding:2rem;box-shadow:0 20px 60px rgba(0,0,0,0.3);text-align:center;position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#d4a76a,#e8d5c0,#d4a76a)}
+.logo{width:100px;height:100px;border-radius:50%;margin:1rem auto;background:#faf5f0;border:2px solid #d4a76a;display:flex;align-items:center;justify-content:center;font-size:2rem}
+.logo img{width:90px;height:90px;border-radius:50%;object-fit:cover}
+h1{font-size:1.5rem;color:#5a3d2a;font-weight:400;letter-spacing:4px;margin-bottom:0.2rem}
+.sub{color:#d4a76a;font-size:0.8rem;letter-spacing:2px;margin-bottom:1.5rem}
+.line{width:40px;height:1px;background:#d4a76a;margin:0 auto 1.5rem}
+.info{text-align:left;margin:0 auto;max-width:260px}
+.info p{color:rgba(90,61,42,0.6);font-size:0.85rem;margin-bottom:0.8rem;line-height:1.6}
+.info strong{color:#5a3d2a}
+.qr{margin:1.5rem auto;width:120px;height:120px;background:#fff;border:1px solid #e8d5c0;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:0.7rem;color:rgba(90,61,42,0.3);padding:0.5rem}
+.qr img{width:100%;height:100%}
+.web{font-size:0.75rem;color:#d4a76a;margin-top:0.5rem}
+.print-btn{display:inline-block;margin-top:1.5rem;padding:0.7rem 2rem;background:#5a3d2a;color:#faf5f0;text-decoration:none;border-radius:25px;font-size:0.85rem;transition:all 0.2s;border:none;cursor:pointer}
+.print-btn:hover{background:#7a5d4a}
+@media print{body{background:#fff;padding:0}.card{box-shadow:none;border:1px solid #ddd}.print-btn{display:none}}
+</style>
+</head>
+<body>
+<div class="card" id="card">
+  <div class="logo"><img src="images/logo.png" alt="GiolArt"></div>
+  <h1>GIOL ART</h1>
+  <div class="sub">Χειροποίητες Δημιουργίες</div>
+  <div class="line"></div>
+  <div class="info">
+    <p><strong>📧 Email:</strong><br>jobnetmania@gmail.com</p>
+    <p><strong>📞 Τηλέφωνο:</strong><br>+30 690 869 3343</p>
+    <p><strong>📍 Τοποθεσία:</strong><br>Ιωάννινα, Ελλάδα</p>
+  </div>
+  <div class="qr" id="qrcode">🔗 Σκανάρετε για<br>να επισκεφθείτε</div>
+  <div class="web">🌐 mloaf201-josh.github.io/giolart</div>
+</div>
+
+<button class="print-btn" onclick="window.print()">🖨️ Εκτύπωση Κάρτας</button>
+
+<script>
+// Generate simple QR code using API
+const qrContainer = document.getElementById('qrcode');
+const siteUrl = 'https://mloaf201-josh.github.io/giolart/';
+qrContainer.innerHTML = `<img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${encodeURIComponent(siteUrl)}" alt="QR Code">`;
+</script>
+</body>
+</html>
