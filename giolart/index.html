@@ -150,45 +150,6 @@ footer{background:#2a1a0a;color:rgba(232,213,192,0.3);text-align:center;padding:
     </div>
   </div>
 
-<script>
-var lbIdx = 0;
-var lbImgs = [];
-
-document.querySelectorAll('.card').forEach(function(card, i) {
-  var a = card.querySelector('a');
-  if(!a) return;
-  var href = a.getAttribute('href');
-  lbImgs.push(href);
-  a.onclick = function(e) {
-    e.preventDefault();
-    openLB(i);
-  };
-});
-
-function openLB(idx) {
-  lbIdx = idx;
-  document.getElementById('lbImg').src = lbImgs[idx];
-  document.getElementById('lightbox').style.display = 'flex';
-  document.getElementById('lbCounter').textContent = (idx+1) + ' / ' + lbImgs.length;
-}
-
-function closeLB() {
-  document.getElementById('lightbox').style.display = 'none';
-}
-
-function navLB(dir) {
-  lbIdx = (lbIdx + dir + lbImgs.length) % lbImgs.length;
-  document.getElementById('lbImg').src = lbImgs[lbIdx];
-  document.getElementById('lbCounter').textContent = (lbIdx+1) + ' / ' + lbImgs.length;
-}
-
-document.addEventListener('keydown', function(e) {
-  if(document.getElementById('lightbox').style.display !== 'flex') return;
-  if(e.key === 'Escape') closeLB();
-  if(e.key === 'ArrowLeft') navLB(-1);
-  if(e.key === 'ArrowRight') navLB(1);
-});
-</script>
 </div>
 
 <div class="contact">
