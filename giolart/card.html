@@ -26,13 +26,13 @@ body{background:#2a1a0a;min-height:100vh;display:flex;flex-direction:column;alig
   background:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="85" font-size="100" font-family="Georgia" font-weight="bold" fill="%235a3d2a">G</text></svg>') no-repeat center;
   background-size:contain}
 
-/* Top-left: logo + brand */
-.logo-area{position:absolute;top:14px;left:16px;z-index:2;display:flex;align-items:center;gap:7px}
-.logo-img{width:36px;height:36px;border-radius:50%;border:2px solid #d4a76a;overflow:hidden;flex-shrink:0}
+/* Top center: logo + brand */
+.logo-area{position:absolute;top:12px;left:50%;transform:translateX(-50%);z-index:2;text-align:center}
+.logo-img{width:48px;height:48px;border-radius:50%;border:2.5px solid #d4a76a;overflow:hidden;margin:0 auto 2px}
 .logo-img img{width:100%;height:100%;object-fit:cover}
-.brand{font-size:0.8rem;letter-spacing:3px;color:#5a3d2a;line-height:1.1}
+.brand{font-size:0.95rem;letter-spacing:4px;color:#5a3d2a;line-height:1.1}
 .brand span{color:#d4a76a}
-.brand-sub{font-size:0.42rem;color:rgba(90,61,42,0.4);letter-spacing:1px}
+.brand-sub{font-size:0.45rem;color:rgba(90,61,42,0.4);letter-spacing:1px}
 
 /* All info - left side, grouped */
 .info{position:absolute;left:16px;top:70px;z-index:2}
@@ -42,8 +42,8 @@ body{background:#2a1a0a;min-height:100vh;display:flex;flex-direction:column;alig
 .info-item a:hover{color:#d4a76a}
 
 /* QR - top right */
-.qr-area{position:absolute;top:14px;right:14px;z-index:2;text-align:center}
-.qr-box{width:38px;height:38px;background:#fff;border:1px solid rgba(90,61,42,0.2);border-radius:3px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.qr-area{position:absolute;top:12px;right:12px;z-index:2;text-align:center}
+.qr-box{width:40px;height:40px;background:#fff;border:1px solid rgba(90,61,42,0.2);border-radius:3px;display:flex;align-items:center;justify-content:center;overflow:hidden}
 .qr-box img{width:100%;height:100%}
 .qr-label{font-size:0.3rem;color:rgba(90,61,42,0.2);margin-top:1px;letter-spacing:0.5px}
 
@@ -74,13 +74,11 @@ body{background:#2a1a0a;min-height:100vh;display:flex;flex-direction:column;alig
   <div class="texture"></div>
   <div class="watermark"></div>
   
-  <!-- Logo + Brand - top left -->
+  <!-- Logo + Brand - top center -->
   <div class="logo-area">
     <div class="logo-img"><img src="images/logo.png" alt="G"></div>
-    <div>
-      <div class="brand"><span>GIOL</span>ART</div>
-      <div class="brand-sub">ΧΕΙΡΟΠΟΙΗΤΕΣ ΔΗΜΙΟΥΡΓΙΕΣ</div>
-    </div>
+    <div class="brand"><span>GIOL</span>ART</div>
+    <div class="brand-sub">ΧΕΙΡΟΠΟΙΗΤΕΣ ΔΗΜΙΟΥΡΓΙΕΣ</div>
   </div>
   
   <!-- QR - top right -->
