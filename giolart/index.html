@@ -190,7 +190,20 @@ document.addEventListener('DOMContentLoaded', function() {
       var title = c.querySelector('h3');
       if(title) data.push(title.textContent + ': ' + (localStorage.getItem('giolart_r'+i) || '0') + '°');
     });
-    alert('Rotations saved! Josh will read them when he refreshes.\n\n' + data.join('\n'));
+    var txt = 'Rotations saved! Copy this to Josh:\n\n' + data.join('\n');
+    // Create a temporary textarea for copying
+    var ta = document.createElement('textarea');
+    ta.value = data.join('\n');
+    ta.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:80%;max-width:400px;height:300px;font-size:14px;padding:10px;z-index:999;background:#fff;color:#000;border:2px solid #d4a76a;border-radius:8px';
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    // Show message
+    var msg = document.createElement('div');
+    msg.textContent = '✅ Copied! Send to Josh.';
+    msg.style.cssText = 'position:fixed;top:calc(50% + 160px);left:50%;transform:translateX(-50%);z-index:999;background:#5a3d2a;color:#faf5f0;padding:10px 20px;border-radius:8px;font-size:14px';
+    document.body.appendChild(msg);
+    setTimeout(function() { ta.remove(); msg.remove(); }, 3000);
   };
   document.querySelector('.gallery').appendChild(expBtn);
 });
