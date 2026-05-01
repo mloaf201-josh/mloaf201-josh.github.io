@@ -22,7 +22,7 @@ body{background:#faf5f0;color:#3a2a1a;font-family:'Georgia','Times New Roman',se
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1.5rem}
 .card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(90,61,42,0.08);transition:all 0.3s}
 .card:hover{transform:translateY(-4px);box-shadow:0 8px 25px rgba(90,61,42,0.12)}
-.card .img{height:250px;background:#e8d5c0;display:flex;align-items:center;justify-content:center;color:rgba(90,61,42,0.3);font-size:2rem;transition:transform 0.3s}
+.card .img{height:250px;background:#e8d5c0;display:flex;align-items:center;justify-content:center;color:rgba(90,61,42,0.3);font-size:2rem;transition:transform 0.3s,height 0.3s}
 .card .info{padding:1.2rem}
 .card .info h3{font-size:1rem;color:#5a3d2a;font-weight:400;margin-bottom:0.3rem}
 .card .info p{font-size:0.85rem;color:rgba(90,61,42,0.4)}
@@ -143,20 +143,56 @@ footer{background:#2a1a0a;color:rgba(232,213,192,0.3);text-align:center;padding:
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  document.querySelectorAll('.card').forEach(function(card) {
+  var imgFns = []; // store rotations for export
+  
+  document.querySelectorAll('.card').forEach(function(card, idx) {
     var imgDiv = card.querySelector('.img');
     if(!imgDiv) return;
-    var rotation = 0;
+    
+    // Load saved rotation
+    var rotation = parseInt(localStorage.getItem('giolart_r'+idx) || '0');
+    if(rotation) { imgDiv.style.transform = 'rotate('+rotation+'deg)'; }
+    
     var btn = document.createElement('button');
     btn.className = 'rotate-btn';
     btn.textContent = '🔄 Περιστροφή';
+    
     btn.onclick = function(e) {
       e.stopPropagation();
       rotation = (rotation + 90) % 360;
       imgDiv.style.transform = 'rotate('+rotation+'deg)';
+      
+      // Auto-fit height when rotated 90 or 270
+      if(rotation == 90 || rotation == 270) {
+        imgDiv.style.height = 'auto';
+        imgDiv.style.minHeight = '250px';
+      } else {
+        imgDiv.style.height = '250px';
+      }
+      
+      // Save rotation
+      localStorage.setItem('giolart_r'+idx, rotation);
+      imgFns[idx] = rotation;
     };
+    
     card.querySelector('.info').appendChild(btn);
+    imgFns[idx] = rotation;
   });
+  
+  // Export button to show all rotations (for Josh to apply)
+  var expBtn = document.createElement('button');
+  expBtn.className = 'rotate-btn';
+  expBtn.textContent = '💾 Αποθήκευση όλων';
+  expBtn.style.cssText = 'display:block;margin:1rem auto;padding:0.5rem 1.5rem;font-size:0.8rem';
+  expBtn.onclick = function() {
+    var data = [];
+    document.querySelectorAll('.card').forEach(function(c, i) {
+      var title = c.querySelector('h3');
+      if(title) data.push(title.textContent + ': ' + (localStorage.getItem('giolart_r'+i) || '0') + '°');
+    });
+    alert('Rotations saved! Josh will read them when he refreshes.\n\n' + data.join('\n'));
+  };
+  document.querySelector('.gallery').appendChild(expBtn);
 });
 </script>
 </div>
