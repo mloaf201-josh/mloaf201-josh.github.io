@@ -38,10 +38,7 @@ body{background:#faf5f0;color:#3a2a1a;font-family:'Georgia','Times New Roman',se
 .card .info{padding:1.2rem}
 .card .info h3{font-size:1rem;color:#5a3d2a;font-weight:400;margin-bottom:0.3rem}
 .card .info p{font-size:0.85rem;color:rgba(90,61,42,0.4)}
-.card .rotate-btn{display:inline-block;margin-top:0.5rem;padding:0.2rem 0.6rem;font-size:0.7rem;background:transparent;border:1px solid rgba(90,61,42,0.15);border-radius:12px;color:rgba(90,61,42,0.4);cursor:pointer;transition:all 0.2s}
-.card .rotate-btn:hover{background:rgba(212,167,106,0.1);border-color:#d4a76a;color:#5a3d2a}
-.card .img-wrap{overflow:hidden;border-radius:12px 12px 0 0;position:relative}
-.card .img-wrap img{width:100%;display:block;transition:transform 0.3s}
+
 
 .contact{background:#3a2a1a;color:#e8d5c0;padding:4rem 2rem;text-align:center}
 .contact h2{font-size:1.3rem;font-weight:400;letter-spacing:2px;margin-bottom:1rem}
@@ -154,70 +151,42 @@ footer{background:#2a1a0a;color:rgba(232,213,192,0.3);text-align:center;padding:
   </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-  var imgFns = []; // store rotations for export
-  
-  document.querySelectorAll('.card').forEach(function(card, idx) {
-    var imgDiv = card.querySelector('.img');
-    if(!imgDiv) return;
-    
-    // Load saved rotation
-    var rotation = parseInt(localStorage.getItem('giolart_r'+idx) || '0');
-    if(rotation) { imgDiv.style.transform = 'rotate('+rotation+'deg)'; }
-    
-    var btn = document.createElement('button');
-    btn.className = 'rotate-btn';
-    btn.textContent = '🔄 Περιστροφή';
-    
-    btn.onclick = function(e) {
-      e.stopPropagation();
-      rotation = (rotation + 90) % 360;
-      imgDiv.style.transform = 'rotate('+rotation+'deg)';
-      
-      // Auto-fit height when rotated 90 or 270
-      if(rotation == 90 || rotation == 270) {
-        imgDiv.style.height = 'auto';
-        imgDiv.style.minHeight = '250px';
-      } else {
-        imgDiv.style.height = '250px';
-      }
-      
-      // Save rotation
-      localStorage.setItem('giolart_r'+idx, rotation);
-      imgFns[idx] = rotation;
-    };
-    
-    card.querySelector('.info').appendChild(btn);
-    imgFns[idx] = rotation;
-  });
-  
-  // Export button to show all rotations (for Josh to apply)
-  var expBtn = document.createElement('button');
-  expBtn.className = 'rotate-btn';
-  expBtn.textContent = '💾 Αποθήκευση όλων';
-  expBtn.style.cssText = 'display:block;margin:1rem auto;padding:0.5rem 1.5rem;font-size:0.8rem';
-  expBtn.onclick = function() {
-    var data = [];
-    document.querySelectorAll('.card').forEach(function(c, i) {
-      var title = c.querySelector('h3');
-      if(title) data.push(title.textContent + ': ' + (localStorage.getItem('giolart_r'+i) || '0') + '°');
-    });
-    var txt = 'Rotations saved! Copy this to Josh:\n\n' + data.join('\n');
-    // Create a temporary textarea for copying
-    var ta = document.createElement('textarea');
-    ta.value = data.join('\n');
-    ta.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:80%;max-width:400px;height:300px;font-size:14px;padding:10px;z-index:999;background:#fff;color:#000;border:2px solid #d4a76a;border-radius:8px';
-    document.body.appendChild(ta);
-    ta.select();
-    document.execCommand('copy');
-    // Show message
-    var msg = document.createElement('div');
-    msg.textContent = '✅ Copied! Send to Josh.';
-    msg.style.cssText = 'position:fixed;top:calc(50% + 160px);left:50%;transform:translateX(-50%);z-index:999;background:#5a3d2a;color:#faf5f0;padding:10px 20px;border-radius:8px;font-size:14px';
-    document.body.appendChild(msg);
-    setTimeout(function() { ta.remove(); msg.remove(); }, 3000);
+var lbIdx = 0;
+var lbImgs = [];
+
+document.querySelectorAll('.card').forEach(function(card, i) {
+  var a = card.querySelector('a');
+  if(!a) return;
+  var href = a.getAttribute('href');
+  lbImgs.push(href);
+  a.onclick = function(e) {
+    e.preventDefault();
+    openLB(i);
   };
-  document.querySelector('.gallery').appendChild(expBtn);
+});
+
+function openLB(idx) {
+  lbIdx = idx;
+  document.getElementById('lbImg').src = lbImgs[idx];
+  document.getElementById('lightbox').style.display = 'flex';
+  document.getElementById('lbCounter').textContent = (idx+1) + ' / ' + lbImgs.length;
+}
+
+function closeLB() {
+  document.getElementById('lightbox').style.display = 'none';
+}
+
+function navLB(dir) {
+  lbIdx = (lbIdx + dir + lbImgs.length) % lbImgs.length;
+  document.getElementById('lbImg').src = lbImgs[lbIdx];
+  document.getElementById('lbCounter').textContent = (lbIdx+1) + ' / ' + lbImgs.length;
+}
+
+document.addEventListener('keydown', function(e) {
+  if(document.getElementById('lightbox').style.display !== 'flex') return;
+  if(e.key === 'Escape') closeLB();
+  if(e.key === 'ArrowLeft') navLB(-1);
+  if(e.key === 'ArrowRight') navLB(1);
 });
 </script>
 </div>
