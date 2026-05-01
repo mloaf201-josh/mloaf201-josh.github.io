@@ -22,10 +22,14 @@ body{background:#faf5f0;color:#3a2a1a;font-family:'Georgia','Times New Roman',se
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1.5rem}
 .card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(90,61,42,0.08);transition:all 0.3s}
 .card:hover{transform:translateY(-4px);box-shadow:0 8px 25px rgba(90,61,42,0.12)}
-.card .img{height:250px;background:#e8d5c0;display:flex;align-items:center;justify-content:center;color:rgba(90,61,42,0.3);font-size:2rem}
+.card .img{height:250px;background:#e8d5c0;display:flex;align-items:center;justify-content:center;color:rgba(90,61,42,0.3);font-size:2rem;transition:transform 0.3s}
 .card .info{padding:1.2rem}
 .card .info h3{font-size:1rem;color:#5a3d2a;font-weight:400;margin-bottom:0.3rem}
 .card .info p{font-size:0.85rem;color:rgba(90,61,42,0.4)}
+.card .rotate-btn{display:inline-block;margin-top:0.5rem;padding:0.2rem 0.6rem;font-size:0.7rem;background:transparent;border:1px solid rgba(90,61,42,0.15);border-radius:12px;color:rgba(90,61,42,0.4);cursor:pointer;transition:all 0.2s}
+.card .rotate-btn:hover{background:rgba(212,167,106,0.1);border-color:#d4a76a;color:#5a3d2a}
+.card .img-wrap{overflow:hidden;border-radius:12px 12px 0 0;position:relative}
+.card .img-wrap img{width:100%;display:block;transition:transform 0.3s}
 
 .contact{background:#3a2a1a;color:#e8d5c0;padding:4rem 2rem;text-align:center}
 .contact h2{font-size:1.3rem;font-weight:400;letter-spacing:2px;margin-bottom:1rem}
@@ -57,124 +61,30 @@ footer{background:#2a1a0a;color:rgba(232,213,192,0.3);text-align:center;padding:
 <div class="gallery">
   <h2>Οι Δημιουργίες μας</h2>
   <div class="grid">
-    <div class="card">
-      <a href="images/photo1.jpg" target="_blank">
-        <div class="img" style="background-image:url('images/thumb_photo1.jpg');background-size:contain;background-position:center;background-repeat:no-repeat"></div>
-      </a>
-      <div class="info">
-        <h3>Διακοσμητικό κουτί αποθήκευσης</h3>
-        <p>Χειροποίητο με αγάπη 🧶</p>
-      </div>
-    </div>
-    <div class="card">
-      <a href="images/photo2.jpg" target="_blank">
-        <div class="img" style="background-image:url('images/thumb_photo2.jpg');background-size:contain;background-position:center;background-repeat:no-repeat"></div>
-      </a>
-      <div class="info">
-        <h3>Βαρελάκι διακοσμητικό (πλάγια)</h3>
-        <p>Φτιαγμένο με μεράκι 🧶</p>
-      </div>
-    </div>
-    <div class="card">
-      <a href="images/photo3.jpg" target="_blank">
-        <div class="img" style="background-image:url('images/thumb_photo3.jpg');background-size:contain;background-position:center;background-repeat:no-repeat"></div>
-      </a>
-      <div class="info">
-        <h3>Βαρελάκι διακοσμητικό (εμπρός)</h3>
-        <p>Μοναδικό & ξεχωριστό 🧶</p>
-      </div>
-    </div>
-    <div class="card">
-      <a href="images/photo4.jpg" target="_blank">
-        <div class="img" style="background-image:url('images/thumb_photo4.jpg');background-size:contain;background-position:center;background-repeat:no-repeat"></div>
-      </a>
-      <div class="info">
-        <h3>Χειροποίητη δημιουργία</h3>
-        <p>Φτιαγμένο με μεράκι 🧶</p>
-      </div>
-    </div>
-    <div class="card">
-      <a href="images/photo5.jpg" target="_blank">
-        <div class="img" style="background-image:url('images/thumb_photo5.jpg');background-size:contain;background-position:center;background-repeat:no-repeat"></div>
-      </a>
-      <div class="info">
-        <h3>Χειροποίητη δημιουργία</h3>
-        <p>Φτιαγμένο με αγάπη 🧶</p>
-      </div>
-    </div>
-    <div class="card">
-      <a href="images/stone3.jpg" target="_blank">
-        <div class="img" style="background-image:url('images/thumb_stone3.jpg');background-size:contain;background-position:center;background-repeat:no-repeat"></div>
-      </a>
-      <div class="info">
-        <h3>Αρχαιοελληνικά αποφθέγματα (3)</h3>
-        <p>Σκαλιστά σε πέτρα 🏛️</p>
-      </div>
-    </div>
-    <div class="card">
-      <a href="images/stone4.jpg" target="_blank">
-        <div class="img" style="background-image:url('images/thumb_stone4.jpg');background-size:contain;background-position:center;background-repeat:no-repeat"></div>
-      </a>
-      <div class="info">
-        <h3>Αρχαιοελληνικά αποφθέγματα (4)</h3>
-        <p>Σκαλιστά σε πέτρα 🏛️</p>
-      </div>
-    </div>
-    <div class="card">
-      <a href="images/attachment_1.jpg" target="_blank">
-        <div class="img" style="background-image:url('images/thumb_attachment_1.jpg');background-size:contain;background-position:center;background-repeat:no-repeat"></div>
-      </a>
-      <div class="info">
-        <h3>Χειροποίητη δημιουργία</h3>
-        <p>Φτιαγμένο με αγάπη 🧶</p>
-      </div>
-    </div>
-    <div class="card">
-      <a href="images/attachment_2.jpg" target="_blank">
-        <div class="img" style="background-image:url('images/thumb_attachment_2.jpg');background-size:contain;background-position:center;background-repeat:no-repeat"></div>
-      </a>
-      <div class="info">
-        <h3>Χειροποίητη δημιουργία</h3>
-        <p>Φτιαγμένο με μεράκι 🧶</p>
-      </div>
-    </div>
-    <div class="card">
-      <a href="images/attachment_3.jpg" target="_blank">
-        <div class="img" style="background-image:url('images/thumb_attachment_3.jpg');background-size:contain;background-position:center;background-repeat:no-repeat"></div>
-      </a>
-      <div class="info">
-        <h3>Χειροποίητη δημιουργία</h3>
-        <p>Μοναδικό & ξεχωριστό 🧶</p>
-      </div>
-    </div>
-    <div class="card">
-      <a href="images/attachment_4.jpg" target="_blank">
-        <div class="img" style="background-image:url('images/thumb_attachment_4.jpg');background-size:contain;background-position:center;background-repeat:no-repeat"></div>
-      </a>
-      <div class="info">
-        <h3>Χειροποίητη δημιουργία</h3>
-        <p>Παραδοσιακή τέχνη 🧶</p>
-      </div>
-    </div>
-    <div class="card">
-      <a href="images/attachment_5.jpg" target="_blank">
-        <div class="img" style="background-image:url('images/thumb_attachment_5.jpg');background-size:contain;background-position:center;background-repeat:no-repeat"></div>
-      </a>
-      <div class="info">
-        <h3>Χειροποίητη δημιουργία</h3>
-        <p>Φτιαγμένο στο χέρι 🧶</p>
-      </div>
-    </div>
-    <div class="card">
-      <a href="images/attachment_6.jpg" target="_blank">
-        <div class="img" style="background-image:url('images/thumb_attachment_6.jpg');background-size:contain;background-position:center;background-repeat:no-repeat"></div>
-      </a>
-      <div class="info">
-        <h3>Χειροποίητη δημιουργία</h3>
-        <p>Με αγάπη από τη Γιολάντα 🧶</p>
-      </div>
-    </div>
+    <script>var ph=0;</script>
   </div>
+
+<script>
+// Add rotate button to every card
+var cards = document.querySelectorAll('.card');
+cards.forEach(function(card) {
+  var imgDiv = card.querySelector('.img');
+  if(!imgDiv) return;
+  
+  // Make imgDiv clickable and add rotation
+  var rotation = 0;
+  var btn = document.createElement('button');
+  btn.className = 'rotate-btn';
+  btn.textContent = '🔄 Περιστροφή';
+  btn.onclick = function(e) {
+    e.stopPropagation();
+    rotation = (rotation + 90) % 360;
+    imgDiv.style.transform = 'rotate('+rotation+'deg)';
+    imgDiv.style.transition = 'transform 0.3s';
+  };
+  card.querySelector('.info').appendChild(btn);
+});
+</script>
 </div>
 
 <div class="contact">
