@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GiolArt — Χειροποίητες Δημιουργίες</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#faf5f0;color:#3a2a1a;font-family:'Georgia','Times New Roman',serif;line-height:1.7;overflow-x:hidden}
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem;background:linear-gradient(135deg,#faf5f0 0%,#f0e6d8 50%,#e8d5c0 100%);position:relative}
+.hero h1{font-size:clamp(3rem,10vw,6rem);font-weight:400;color:#5a3d2a;letter-spacing:6px;margin-bottom:0.5rem;font-family:'Georgia',serif}
+.hero .sub{font-size:1.2rem;color:rgba(90,61,42,0.6);letter-spacing:3px;font-weight:300;margin-bottom:2rem}
+.hero .line{width:60px;height:1px;background:rgba(90,61,42,0.3);margin-bottom:2rem}
+.hero p{max-width:500px;color:rgba(90,61,42,0.5);font-size:1rem;font-style:italic}
+
+.about{padding:5rem 2rem;max-width:800px;margin:0 auto;text-align:center}
+.about h2{font-size:1.5rem;color:#5a3d2a;font-weight:400;letter-spacing:2px;margin-bottom:1.5rem}
+.about p{color:rgba(90,61,42,0.6);margin-bottom:1rem;font-size:1.05rem}
+
+.gallery{padding:3rem 2rem 5rem;max-width:1000px;margin:0 auto}
+.gallery h2{text-align:center;font-size:1.5rem;color:#5a3d2a;font-weight:400;letter-spacing:2px;margin-bottom:2rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1.5rem}
+.card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(90,61,42,0.08);transition:all 0.3s}
+.card:hover{transform:translateY(-4px);box-shadow:0 8px 25px rgba(90,61,42,0.12)}
+.card .img{height:250px;background:#e8d5c0;display:flex;align-items:center;justify-content:center;color:rgba(90,61,42,0.3);font-size:2rem}
+.card .info{padding:1.2rem}
+.card .info h3{font-size:1rem;color:#5a3d2a;font-weight:400;margin-bottom:0.3rem}
+.card .info p{font-size:0.85rem;color:rgba(90,61,42,0.4)}
+
+.contact{background:#3a2a1a;color:#e8d5c0;padding:4rem 2rem;text-align:center}
+.contact h2{font-size:1.3rem;font-weight:400;letter-spacing:2px;margin-bottom:1rem}
+.contact p{color:rgba(232,213,192,0.6);font-size:0.95rem;margin-bottom:0.5rem}
+.contact a{color:#d4a76a;text-decoration:none}
+.contact a:hover{color:#e8c49a}
+
+footer{background:#2a1a0a;color:rgba(232,213,192,0.3);text-align:center;padding:2rem;font-size:0.8rem}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="line"></div>
+  <h1>GIOL ART</h1>
+  <div class="sub">Χειροποίητες Δημιουργίες</div>
+  <div class="line"></div>
+  <p>Με αγάπη για την παράδοση, φτιαγμένα με τα χέρια μας.</p>
+</div>
+
+<div class="about">
+  <h2>Η Ιστορία μας</h2>
+  <p>Η GiolArt γεννήθηκε από την αγάπη για τη χειροτεχνία και την παράδοση. Κάθε κομμάτι είναι φτιαγμένο με μεράκι, υπομονή, και αγάπη για την τέχνη.</p>
+  <p>Από μικρά διακοσμητικά μέχρι μοναδικά δώρα, η Γιολάντα δημιουργεί με τα χέρια της ό,τι φαντάζεσαι.</p>
+</div>
+
+<div class="gallery">
+  <h2>Οι Δημιουργίες μας</h2>
+  <div class="grid">
+    <div class="card">
+      <div class="img">🪡</div>
+      <div class="info">
+        <h3>Πλέξιμο &amp; Κέντημα</h3>
+        <p>Μοναδικά χειροποίητα κομμάτια</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="img">🎀</div>
+      <div class="info">
+        <h3>Διακοσμητικά</h3>
+        <p>Για το σπίτι και τις γιορτές</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="img">🎁</div>
+      <div class="info">
+        <h3>Δώρα</h3>
+        <p>Μοναδικά χειροποίητα δώρα</p>
+      </div>
+    </div>
+  </div>
+  <p style="text-align:center;color:rgba(90,61,42,0.4);margin-top:2rem;font-style:italic">Φωτογραφίες σύντομα — μείνετε συντονισμένοι! 📸</p>
+</div>
+
+<div class="contact">
+  <h2>Επικοινωνία</h2>
+  <p>Για παραγγελίες και πληροφορίες:</p>
+  <p><a href="mailto:mloaf201@gmail.com">mloaf201@gmail.com</a></p>
+  <p style="margin-top:1rem;font-size:0.85rem;color:rgba(232,213,192,0.4)">
+    ή ρωτήστε τον Γρηγόρη — αυτός ξέρει! 😊
+  </p>
+</div>
+
+<footer>
+  GiolArt · Με αγάπη 🧶
+</footer>
+</body>
+</html>
