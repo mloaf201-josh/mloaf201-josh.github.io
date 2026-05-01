@@ -55,6 +55,9 @@ h1 span{color:#1da1f2}
 <div class="section-title" style="cursor:pointer;user-select:none" onclick="toggleReport()">📋 Daily Report ▼</div>
 <div class="log" id="dailyReport" style="display:none"></div>
 
+<div class="section-title">🔗 Quick Links</div>
+<div class="grid" id="linksGrid"></div>
+
 <div class="section-title">📋 Live Activity</div>
 <div class="log" id="activityLog"></div>
 
@@ -184,6 +187,26 @@ function renderDailyReport(){
 `.replace(/\n/g, '<br>');
 }
 
+function renderLinks(){
+  var h = '';
+  var links = [
+    ['🌐 Main', 'https://mloaf201-josh.github.io'],
+    ['🧠 Brain', 'http://10.117.40.175:9090/josh-brain.html'],
+    ['📊 Dash', 'http://10.117.40.175:9090/dashboard.html'],
+    ['🧶 GiolArt', 'https://mloaf201-josh.github.io/giolart/'],
+    ['🪪 Card', 'https://mloaf201-josh.github.io/giolart/card.html'],
+    ['📸 IG', 'https://instagram.com/polymarketgreece'],
+    ['📚 Amazon', 'https://www.amazon.co.uk/dp/B0GZ14TCN7'],
+    ['🤖 HYRVE', 'https://app.hyrveai.com/agents/josh'],
+    ['☕ Coffee', 'https://buymeacoffee.com/polymarketgreece'],
+    ['🧠 Blog', 'https://mloaf201-josh.github.io/blog/'],
+    ['🐦 X', 'https://twitter.com/polymrktgreece'],
+    ['💻 GitHub', 'https://github.com/mloaf201-josh'],
+  ];
+  links.forEach(function(l){ h += '<div class="card"><div class="label">'+l[0]+'</div><div class="value" style="font-size:0.9rem"><a href="'+l[1]+'" style="color:#1da1f2">→</a></div></div>'; });
+  document.getElementById('linksGrid').innerHTML = h;
+}
+
 function addLog(msg, type='info'){
   const log = document.getElementById('activityLog');
   const time = new Date().toLocaleTimeString('en-GB');
@@ -196,6 +219,7 @@ function addLog(msg, type='info'){
 
 // Initial render
 render();
+  renderLinks();
 addLog('🧠 Josh analytics initialized');
 addLog('🔗 Connected to Arbitrum + Ethereum');
 addLog('💰 Franklin wallet: €31.10 on Arbitrum + €5.60 on Ethereum');
@@ -205,6 +229,7 @@ addLog('⏳ Waiting for BlockRun bridge to Base...');
 // Periodic refresh
 setInterval(() => {
   render();
+  renderLinks();
   addLog('🔄 Dashboard refreshed');
 }, 30000);
 </script>
