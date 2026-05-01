@@ -5,47 +5,105 @@
 <title>GiolArt — Επαγγελματική Κάρτα</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:#3a2a1a;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'Georgia','Times New Roman',serif;padding:2rem}
-.card{background:#faf5f0;width:350px;min-height:500px;border-radius:16px;padding:2rem;box-shadow:0 20px 60px rgba(0,0,0,0.3);text-align:center;position:relative;overflow:hidden}
-.card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#d4a76a,#e8d5c0,#d4a76a)}
-.logo{width:100px;height:100px;border-radius:50%;margin:1rem auto;background:#faf5f0;border:2px solid #d4a76a;display:flex;align-items:center;justify-content:center;font-size:2rem}
-.logo img{width:90px;height:90px;border-radius:50%;object-fit:cover}
-h1{font-size:1.5rem;color:#5a3d2a;font-weight:400;letter-spacing:4px;margin-bottom:0.2rem}
-.sub{color:#d4a76a;font-size:0.8rem;letter-spacing:2px;margin-bottom:1.5rem}
-.line{width:40px;height:1px;background:#d4a76a;margin:0 auto 1.5rem}
-.info{text-align:left;margin:0 auto;max-width:260px}
-.info p{color:rgba(90,61,42,0.6);font-size:0.85rem;margin-bottom:0.8rem;line-height:1.6}
-.info strong{color:#5a3d2a}
-.qr{margin:1.5rem auto;width:120px;height:120px;background:#fff;border:1px solid #e8d5c0;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:0.7rem;color:rgba(90,61,42,0.3);padding:0.5rem}
+body{background:#2a1a0a;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'Georgia','Times New Roman',serif;padding:2rem}
+
+.card{background:linear-gradient(160deg,#faf5f0 0%,#f0e6d8 40%,#e8d5c0 100%);width:378px;min-height:216px;border-radius:8px;padding:1.2rem 1.5rem;box-shadow:0 15px 40px rgba(0,0,0,0.4);position:relative;overflow:hidden}
+
+/* Decorative border with woven pattern */
+.card::before{content:'';position:absolute;top:4px;left:4px;right:4px;bottom:4px;border:1px solid rgba(90,61,42,0.2);border-radius:5px;pointer-events:none}
+
+/* Vine corner decorations */
+.vine{position:absolute;font-size:2rem;opacity:0.2}
+.vine-tl{top:2px;left:4px;transform:rotate(0deg)}
+.vine-tr{top:2px;right:4px;transform:scaleX(-1)}
+.vine-bl{bottom:2px;left:4px;transform:scaleY(-1)}
+.vine-br{bottom:2px;right:4px;transform:scale(-1)}
+
+/* Cloth texture overlay */
+.card::after{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(212,167,106,0.03) 2px,rgba(212,167,106,0.03) 4px);pointer-events:none}
+
+.inner{position:relative;z-index:1;height:100%;display:flex;flex-direction:column;justify-content:center}
+
+.logo-row{display:flex;align-items:center;gap:0.8rem;margin-bottom:0.5rem}
+.logo{width:45px;height:45px;border-radius:50%;border:2px solid #d4a76a;flex-shrink:0;overflow:hidden}
+.logo img{width:100%;height:100%;object-fit:cover}
+.logo-text{font-size:1rem;letter-spacing:3px;color:#5a3d2a;font-weight:400}
+.logo-text span{color:#d4a76a;font-weight:700}
+.sub-text{font-size:0.55rem;color:rgba(90,61,42,0.5);letter-spacing:1.5px;margin-top:-0.2rem}
+
+.info-grid{display:grid;grid-template-columns:1fr auto;gap:0.2rem 0.8rem;margin:0.3rem 0;font-size:0.6rem;color:rgba(90,61,42,0.7)}
+.info-grid .label{color:rgba(90,61,42,0.4)}
+.info-grid a{color:#5a3d2a;text-decoration:none}
+.info-grid a:hover{color:#d4a76a}
+
+.qr-section{position:absolute;bottom:0.8rem;right:0.8rem;text-align:center}
+.qr{width:55px;height:55px;background:#fff;border:1px solid #d4a76a;border-radius:4px;display:flex;align-items:center;justify-content:center}
 .qr img{width:100%;height:100%}
-.web{font-size:0.75rem;color:#d4a76a;margin-top:0.5rem}
-.print-btn{display:inline-block;margin-top:1.5rem;padding:0.7rem 2rem;background:#5a3d2a;color:#faf5f0;text-decoration:none;border-radius:25px;font-size:0.85rem;transition:all 0.2s;border:none;cursor:pointer}
-.print-btn:hover{background:#7a5d4a}
-@media print{body{background:#fff;padding:0}.card{box-shadow:none;border:1px solid #ddd}.print-btn{display:none}}
+.qr-label{font-size:0.4rem;color:rgba(90,61,42,0.3);margin-top:0.2rem}
+
+.web-url{font-size:0.45rem;color:rgba(90,61,42,0.35);margin-top:0.2rem}
+
+.actions{margin-top:1.5rem;display:flex;gap:0.8rem;flex-wrap:wrap;justify-content:center}
+.btn{display:inline-flex;align-items:center;gap:0.4rem;padding:0.6rem 1.2rem;border-radius:25px;text-decoration:none;font-size:0.8rem;transition:all 0.2s;cursor:pointer;border:none}
+.btn-primary{background:#5a3d2a;color:#faf5f0}
+.btn-primary:hover{background:#7a5d4a}
+.btn-secondary{background:transparent;border:1px solid #d4a76a;color:#5a3d2a}
+.btn-secondary:hover{background:rgba(212,167,106,0.1)}
+
+@media print{
+  body{background:#fff;padding:0}
+  .card{box-shadow:none;border:1px solid #ccc;width:85mm;min-height:55mm;margin:0 auto;border-radius:0}
+  .actions{display:none}
+  .card::before{border-color:#ccc}
+}
+
+@page{size:85mm 55mm;margin:0}
 </style>
 </head>
 <body>
+
 <div class="card" id="card">
-  <div class="logo"><img src="images/logo.png" alt="GiolArt"></div>
-  <h1>GIOL ART</h1>
-  <div class="sub">Χειροποίητες Δημιουργίες</div>
-  <div class="line"></div>
-  <div class="info">
-    <p><strong>📧 Email:</strong><br>jobnetmania@gmail.com</p>
-    <p><strong>📞 Τηλέφωνο:</strong><br>+30 690 869 3343</p>
-    <p><strong>📍 Τοποθεσία:</strong><br>Ιωάννινα, Ελλάδα</p>
+  <div class="vine vine-tl">🌿</div>
+  <div class="vine vine-tr">🌿</div>
+  <div class="vine vine-bl">🌿</div>
+  <div class="vine vine-br">🌿</div>
+  
+  <div class="inner">
+    <div class="logo-row">
+      <div class="logo"><img src="images/logo.png" alt="G"></div>
+      <div>
+        <div class="logo-text"><span>GIOL</span>ART</div>
+        <div class="sub-text">Χειροποίητες Δημιουργίες</div>
+      </div>
+    </div>
+    
+    <div class="info-grid">
+      <span class="label">📧 Email</span>
+      <span><a href="mailto:jobnetmania@gmail.com">jobnetmania@gmail.com</a></span>
+      <span class="label">📞 Τηλέφωνο</span>
+      <span><a href="tel:+306908693343">+30 690 869 3343</a></span>
+      <span class="label">📍 Τοποθεσία</span>
+      <span>Ιωάννινα, Ελλάδα</span>
+    </div>
+    
+    <div class="web-url">🌐 mloaf201-josh.github.io/giolart</div>
+    
+    <div class="qr-section">
+      <div class="qr" id="qrcode">📱</div>
+      <div class="qr-label">Scan me</div>
+    </div>
   </div>
-  <div class="qr" id="qrcode">🔗 Σκανάρετε για<br>να επισκεφθείτε</div>
-  <div class="web">🌐 mloaf201-josh.github.io/giolart</div>
 </div>
 
-<button class="print-btn" onclick="window.print()">🖨️ Εκτύπωση Κάρτας</button>
+<div class="actions">
+  <button class="btn btn-primary" onclick="window.print()">🖨️ Εκτύπωση</button>
+  <a class="btn btn-secondary" href="index.html">🔙 Στην Ιστοσελίδα</a>
+</div>
 
 <script>
-// Generate simple QR code using API
-const qrContainer = document.getElementById('qrcode');
 const siteUrl = 'https://mloaf201-josh.github.io/giolart/';
-qrContainer.innerHTML = `<img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${encodeURIComponent(siteUrl)}" alt="QR Code">`;
+document.getElementById('qrcode').innerHTML = 
+  `<img src="https://api.qrserver.com/v1/create-qr-code/?size=55x55&data=${encodeURIComponent(siteUrl)}" alt="QR">`;
 </script>
 </body>
 </html>
