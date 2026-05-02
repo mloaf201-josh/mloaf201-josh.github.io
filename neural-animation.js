@@ -1,4 +1,3 @@
-document.addEventListener("DOMContentLoaded",function(){
 // Neural Network Animation — hero-only, mouse-reactive
 // Based on Nicky Case's Neurotic Neurons
 (function(){
@@ -193,4 +192,3 @@ function draw(){
 }
 draw();
 })();
-});
