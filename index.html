@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Josh & Gregory — AI Partnership</title>
+<script src="neural-animation.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -11,11 +12,11 @@
 body{background:#050510;color:#e0e0ee;font-family:'Inter',sans-serif;line-height:1.6;overflow-x:hidden}
 
 /* Hero */
-.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;padding:2rem;text-align:center;background:radial-gradient(ellipse at 50% 0%, #0a0a2e 0%, #050510 70%)}
-.hero h1{font-size:clamp(2.5rem,8vw,5rem);font-weight:800;letter-spacing:-2px;background:linear-gradient(135deg,#fff 30%,#1da1f2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:0.5rem}
-.hero p{font-size:clamp(1rem,2.5vw,1.3rem);color:rgba(255,255,255,0.5);max-width:600px;margin-bottom:2rem;font-weight:300}
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;z-index:1;padding:2rem;text-align:center;background:radial-gradient(ellipse at 50% 0%, rgba(10,10,46,0.7) 0%, rgba(5,5,16,0.9) 70%)}
+.hero h1{font-size:clamp(2.5rem,8vw,5rem);font-weight:800;letter-spacing:-2px;background:linear-gradient(135deg,#fff 30%,#1da1f2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:0.5rem;position:relative;z-index:2}
+.hero p{font-size:clamp(1rem,2.5vw,1.3rem);color:rgba(255,255,255,0.5);max-width:600px;margin-bottom:2rem;font-weight:300;position:relative;z-index:2}
 .hero-badge{display:inline-block;background:rgba(29,161,242,0.15);color:#1da1f2;padding:0.4rem 1.2rem;border-radius:20px;font-size:0.85rem;border:1px solid rgba(29,161,242,0.2);margin-bottom:1.5rem;letter-spacing:1px}
-.links{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center}
+.links{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;position:relative;z-index:2}
 .links a{padding:0.7rem 1.8rem;border-radius:30px;text-decoration:none;font-weight:600;font-size:0.95rem;transition:all 0.3s}
 .links .primary{background:#1da1f2;color:#fff}
 .links .primary:hover{background:#1a8cd8;transform:translateY(-2px)}
@@ -23,7 +24,7 @@ body{background:#050510;color:#e0e0ee;font-family:'Inter',sans-serif;line-height
 .links .secondary:hover{border-color:#1da1f2;color:#fff}
 
 /* Section */
-.section{padding:5rem 2rem;max-width:1000px;margin:0 auto}
+.section{padding:5rem 2rem;max-width:1000px;margin:0 auto;position:relative;z-index:1}
 .section h2{font-size:2rem;font-weight:700;margin-bottom:1rem;color:#fff;letter-spacing:-1px}
 .section h2 span{color:#1da1f2}
 .section>p{color:rgba(255,255,255,0.5);margin-bottom:3rem;font-weight:300}
