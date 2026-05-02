@@ -8,47 +8,57 @@
 body{background:#050510;overflow:hidden;font-family:'Inter','Segoe UI',sans-serif;height:100vh}
 canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
 
-.title{position:fixed;top:24px;left:28px;z-index:20;font-size:22px;font-weight:800;color:#1da1f2;letter-spacing:2px}
-.title span{color:#fff;font-weight:300}
+.title{position:fixed;top:24px;left:28px;z-index:20}
+.title h1{font-size:22px;font-weight:800;color:#1da1f2;letter-spacing:2px}
+.title h1 span{color:#fff;font-weight:300}
 .title .cursor{animation:blink 1.2s infinite;color:#1da1f2;font-weight:100}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
-.subtitle{position:fixed;top:55px;left:28px;z-index:20;font-size:12px;color:rgba(255,255,255,0.2);letter-spacing:4px;font-weight:300}
-.subtitle span{color:#1da1f2;opacity:0.5}
+.subtitle{font-size:11px;color:rgba(255,255,255,0.15);letter-spacing:4px;margin-top:4px;}
+.subtitle em{color:#1da1f2;font-style:normal;opacity:0.4}
 
 .scene{position:absolute;top:50%;left:50%;width:0;height:0;transform-style:preserve-3d}
 
-.node{position:absolute;border-radius:50%;cursor:pointer;z-index:3;will-change:transform;transform-style:preserve-3d;
-  transition:transform 0.3s cubic-bezier(.2,.9,.3,1), box-shadow 0.3s, filter 0.3s}
-.node .label{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:9px;color:#fff;opacity:0.8;
-  transition:all 0.3s;white-space:nowrap;pointer-events:none;text-shadow:0 0 20px rgba(0,0,0,0.95);
-  font-family:'Inter','Segoe UI',sans-serif;font-weight:600;letter-spacing:0.3px}
-.node:hover .label{opacity:1;transform:translate(-50%,-50%) scale(1.3);font-size:11px}
-.node:hover{z-index:20!important;filter:brightness(1.6)!important}
+/* Planet style — true 3D spheres */
+.planet{position:absolute;border-radius:50%;cursor:pointer;z-index:3;
+  transform-style:preserve-3d;backface-visibility:hidden;
+  transition:transform 0.4s cubic-bezier(.2,.9,.3,1), box-shadow 0.3s, filter 0.3s}
+.planet .label{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  font-size:9px;color:#fff;opacity:0.85;transition:all 0.3s;white-space:nowrap;
+  pointer-events:none;text-shadow:0 0 20px rgba(0,0,0,0.95);
+  font-weight:600;letter-spacing:0.3px;z-index:5}
+.planet:hover .label{opacity:1;transform:translate(-50%,-50%) scale(1.3);font-size:11px}
+.planet:hover{z-index:30!important;filter:brightness(1.3)!important}
+.planet:hover .ring{opacity:1!important}
+.planet .ring{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotateX(75deg);
+  border:1px solid;border-radius:50%;opacity:0;transition:opacity 0.5s;
+  width:200%;height:60%;pointer-events:none}
 
-/* Tooltip on click */
-.tooltip{position:fixed;bottom:40px;left:50%;transform:translateX(-50%);z-index:50;background:rgba(5,5,16,0.92);
-  border:1px solid rgba(29,161,242,0.2);border-radius:14px;padding:18px 28px;max-width:450px;width:90%;
+/* Tooltip */
+.tooltip{position:fixed;bottom:40px;left:50%;transform:translateX(-50%);z-index:50;
+  background:rgba(5,5,16,0.92);border:1px solid rgba(29,161,242,0.2);
+  border-radius:14px;padding:18px 28px;max-width:450px;width:90%;
   display:none;backdrop-filter:blur(10px);text-align:center;pointer-events:none}
-.tooltip .tt-title{font-size:16px;font-weight:700;color:#fff;margin-bottom:6px}
-.tooltip .tt-desc{font-size:13px;color:rgba(255,255,255,0.5);line-height:1.5}
-.tooltip .tt-cluster{display:inline-block;background:rgba(29,161,242,0.12);color:#1da1f2;padding:2px 10px;
-  border-radius:10px;font-size:10px;margin-top:8px;letter-spacing:1px;text-transform:uppercase}
 .tooltip.show{display:block;animation:fadeUp 0.3s ease}
 @keyframes fadeUp{from{opacity:0;transform:translateX(-50%) translateY(10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+.tt-title{font-size:16px;font-weight:700;color:#fff;margin-bottom:6px}
+.tt-desc{font-size:13px;color:rgba(255,255,255,0.5);line-height:1.5}
+.tt-cluster{display:inline-block;background:rgba(29,161,242,0.12);color:#1da1f2;
+  padding:2px 10px;border-radius:10px;font-size:10px;margin-top:8px;letter-spacing:1px;text-transform:uppercase}
 
-/* Stats counter */
-.stats{position:fixed;bottom:30px;right:30px;z-index:20;font-size:11px;color:rgba(255,255,255,0.12);
-  font-family:'Courier New',monospace;letter-spacing:1px;text-align:right;pointer-events:none;line-height:1.8}
+/* Stats & controls */
+.stats{position:fixed;bottom:30px;right:30px;z-index:20;font-size:11px;
+  color:rgba(255,255,255,0.12);text-align:right;pointer-events:none;line-height:1.8}
 .stats span{color:#1da1f2;opacity:0.4}
-
-.controls{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);z-index:20;font-size:10px;
-  color:rgba(255,255,255,0.08);font-family:'Courier New',monospace;letter-spacing:2px;text-align:center;pointer-events:none}
+.controls{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);z-index:20;
+  font-size:10px;color:rgba(255,255,255,0.08);letter-spacing:2px;text-align:center;pointer-events:none}
 </style>
 </head>
 <body>
 
-<div class="title"><span>Josh</span>'s <span class="cursor">_</span>brain</div>
-<div class="subtitle"><span>✦</span> IDEAS &middot; PROJECTS &middot; EVERYTHING I AM</div>
+<div class="title">
+  <h1><span>Josh</span>'s <span class="cursor">_</span>brain</h1>
+  <div class="subtitle"><em>✦</em> A GALAXY OF IDEAS</div>
+</div>
 
 <div class="scene" id="scene"></div>
 <canvas id="lines"></canvas>
@@ -60,32 +70,26 @@ canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-even
 </div>
 
 <div class="stats" id="stats">loading<span>_</span></div>
-<div class="controls">HOVER to zoom · CLICK to explore</div>
+<div class="controls">HOVER to orbit · CLICK to explore</div>
 
 <script>
-// Josh's Brain v2 — Living Idea Network
 const DATA_URL = 'brain-data.json';
 const scene = document.getElementById('scene');
 const canvas = document.getElementById('lines');
 const ctx = canvas.getContext('2d');
-let W, H;
-const nodes = [];
+let W, H, mouseX = 0, mouseY = 0;
+const planets = [];
 const connections = [];
 let selected = null;
 
-// Site colors
-const COLORS = {
-  primary: '#1da1f2', accent: '#e94560',
-  bg: '#050510', text: 'rgba(255,255,255,0.5)'
-};
 const CLUSTER_COLORS = {
   identity: '#1da1f2', markets: '#e94560', income: '#4ade80',
   marketing: '#a78bfa', infrastructure: '#f59e0b', projects: '#38bdf8',
   finance: '#f472b6', tools: '#34d399', goals: '#fb923c'
 };
 const CLUSTER_RADII = {
-  identity: 180, markets: 150, income: 130, marketing: 140,
-  infrastructure: 120, projects: 120, finance: 100, tools: 100, goals: 90
+  identity: 220, markets: 180, income: 160, marketing: 170,
+  infrastructure: 150, projects: 150, finance: 130, tools: 130, goals: 120
 };
 
 function resize(){
@@ -95,28 +99,29 @@ function resize(){
 window.addEventListener('resize', resize);
 resize();
 
-// Load data
-fetch(DATA_URL).then(r=>r.json()).then(data=>{
-  createNodes(data);
-  animate();
-}).catch(()=>{
-  // Fallback if JSON fails
-  document.getElementById('stats').innerHTML = 'error loading<span>_</span>';
+// Mouse tracking for subtle parallax
+document.addEventListener('mousemove', e => {
+  mouseX = (e.clientX / W - 0.5) * 2;
+  mouseY = (e.clientY / H - 0.5) * 2;
 });
 
-function createNodes(data){
+fetch(DATA_URL).then(r=>r.json()).then(data=>{
+  createPlanets(data);
+  animate();
+});
+
+function createPlanets(data){
   const clusters = {};
   data.forEach(d => {
     if(!clusters[d.cluster]) clusters[d.cluster] = [];
     clusters[d.cluster].push(d);
   });
 
-  let idx = 0;
   Object.entries(clusters).forEach(([cluster, items]) => {
-    const cx = (Math.random() - 0.5) * 600;
-    const cy = (Math.random() - 0.5) * 400;
-    const cz = (Math.random() - 0.5) * 200;
-    const radius = CLUSTER_RADII[cluster] || 120;
+    const cx = (Math.random() - 0.5) * 800;
+    const cy = (Math.random() - 0.5) * 500;
+    const cz = (Math.random() - 0.5) * 300;
+    const radius = CLUSTER_RADII[cluster] || 140;
     const color = CLUSTER_COLORS[cluster] || '#666';
 
     items.forEach((item, i) => {
@@ -125,93 +130,104 @@ function createNodes(data){
       const r = radius * (0.3 + Math.random() * 0.7);
 
       const el = document.createElement('div');
-      el.className = 'node';
-      const size = 18 + Math.random() * 16;
+      el.className = 'planet';
+      const size = 22 + Math.random() * 24; // bigger = more planet-like
       el.style.width = size + 'px';
       el.style.height = size + 'px';
-      el.style.background = `radial-gradient(circle at 30% 30%, ${color}, ${color}88)`;
-      el.style.boxShadow = `0 0 ${size/2}px ${color}44`;
-      el.style.left = (cx + Math.cos(angle) * Math.cos(tilt) * r) + 'px';
-      el.style.top = (cy + Math.sin(angle) * Math.cos(tilt) * r) + 'px';
-      el.style.transform = `translateZ(${cz + Math.sin(angle * 2) * r * 0.5}px)`;
-      el.innerHTML = `<div class="label">${item.label}</div>`;
+
+      // 3D sphere gradient — looks like a real planet
+      const lightColor = color;
+      const darkColor = color + '66';
+      el.style.background = `radial-gradient(circle at 35% 35%, #ffffff88, ${lightColor} 30%, ${darkColor} 80%, #00000088)`;
+      el.style.boxShadow = `0 0 ${size}px ${color}33, inset 0 -${size/4}px ${size/2}px rgba(0,0,0,0.4)`;
+
+      const x = cx + Math.cos(angle) * Math.cos(tilt) * r;
+      const y = cy + Math.sin(angle) * Math.cos(tilt) * r;
+      const z = cz + Math.sin(angle * 2) * r * 0.5;
       
-      // Store data
+      el.style.left = x + 'px';
+      el.style.top = y + 'px';
+      el.style.transform = `translateZ(${z}px)`;
+
+      // Saturn-like ring for some planets
+      if(Math.random() > 0.7){
+        const ring = document.createElement('div');
+        ring.className = 'ring';
+        ring.style.borderColor = color + '44';
+        el.appendChild(ring);
+      }
+
+      el.innerHTML = `<div class="label">${item.label}</div>`;
+
       el.dataset.id = item.id;
       el.dataset.cluster = cluster;
       el.dataset.desc = item.desc;
       el.dataset.label = item.label;
-      el.dataset.x = parseFloat(el.style.left);
-      el.dataset.y = parseFloat(el.style.top);
-      el.dataset.z = parseFloat(el.style.transform.replace('translateZ(','').replace('px)',''));
+      el.dataset.x = x;
+      el.dataset.y = y;
+      el.dataset.z = z;
       el.dataset.size = size;
       el.dataset.phase = Math.random() * Math.PI * 2;
       el.dataset.color = color;
-      el.dataset.speed = 0.2 + Math.random() * 0.3;
+      el.dataset.orbitAngle = angle;
+      el.dataset.orbitRadius = r;
+      el.dataset.orbitSpeed = 0.0003 + Math.random() * 0.0005;
 
-      el.addEventListener('click', () => selectNode(el, item));
-      
+      el.addEventListener('click', () => selectPlanet(el, item));
       scene.appendChild(el);
-      nodes.push(el);
+      planets.push(el);
 
-      // Connections between nearby nodes
-      nodes.forEach(other => {
+      // Connections
+      planets.forEach(other => {
         if(other === el) return;
-        const dx = parseFloat(el.dataset.x) - parseFloat(other.dataset.x);
-        const dy = parseFloat(el.dataset.y) - parseFloat(other.dataset.y);
-        const dz = parseFloat(el.dataset.z) - parseFloat(other.dataset.z);
+        const dx = x - parseFloat(other.dataset.x);
+        const dy = y - parseFloat(other.dataset.y);
+        const dz = z - parseFloat(other.dataset.z);
         const dist = Math.sqrt(dx*dx + dy*dy + dz*dz);
-        if(dist < 250 && Math.random() > 0.3){
+        if(dist < 300 && Math.random() > 0.3){
           connections.push({from: el, to: other, dist});
         }
       });
-      idx++;
     });
   });
 
-  document.getElementById('stats').innerHTML = `${nodes.length} nodes<span> · </span>${connections.length} connections`;
+  // Add orbit lines for clusters (galaxy-like)
+  document.getElementById('stats').innerHTML = `${planets.length} planets · ${connections.length} synapses`;
 }
 
-function selectNode(el, data){
+function selectPlanet(el, data){
   selected = el;
   document.getElementById('tt-title').textContent = data.label;
   document.getElementById('tt-desc').textContent = data.desc;
   document.getElementById('tt-cluster').textContent = data.cluster;
   document.getElementById('tooltip').classList.add('show');
-  
-  // Highlight connected nodes
+
   connections.forEach(c => {
-    if(c.from === el) c.to.style.filter = 'brightness(1.5)';
-    if(c.to === el) c.from.style.filter = 'brightness(1.5)';
+    if(c.from === el) c.to.style.filter = 'brightness(1.4) drop-shadow(0 0 8px ' + c.to.dataset.color + ')';
+    if(c.to === el) c.from.style.filter = 'brightness(1.4) drop-shadow(0 0 8px ' + c.from.dataset.color + ')';
   });
-  
   setTimeout(() => {
     connections.forEach(c => {
       if(c.from === el) c.to.style.filter = '';
       if(c.to === el) c.from.style.filter = '';
     });
-  }, 2000);
+  }, 2500);
 }
 
-let angle = 0;
 function animate(){
-  angle += 0.003;
-  
-  // Rotate scene
-  scene.style.transform = `rotateY(${angle}rad) rotateX(${Math.sin(angle*0.3)*0.1}rad)`;
+  // Slow orbital drift — each planet orbits its cluster center slowly
+  // But no global rotation
 
-  // Pulse nodes
-  nodes.forEach(n => {
-    const phase = parseFloat(n.dataset.phase);
-    const speed = parseFloat(n.dataset.speed);
-    const pulse = 1 + Math.sin(Date.now() * 0.001 * speed + phase) * 0.08;
-    const size = parseFloat(n.dataset.size);
-    const color = n.dataset.color;
-    n.style.transform = n.style.transform.replace(/scale\([^)]+\)/, '') + ` scale(${pulse})`;
-    n.style.boxShadow = `0 0 ${size/2 * pulse}px ${color}44`;
+  // Pulse planets like breathing
+  planets.forEach(p => {
+    const phase = parseFloat(p.dataset.phase);
+    const size = parseFloat(p.dataset.size);
+    const pulse = 1 + Math.sin(Date.now() * 0.0008 + phase) * 0.05;
+    const color = p.dataset.color;
+    p.style.boxShadow = `0 0 ${size * pulse * 0.8}px ${color}33, inset 0 -${size/4}px ${size/2}px rgba(0,0,0,0.4)`;
   });
 
-  // Draw connections
+  // Draw connection lines (neural synapses)
   ctx.clearRect(0, 0, W, H);
   connections.forEach(c => {
     const a = c.from.getBoundingClientRect();
@@ -221,24 +237,35 @@ function animate(){
     const bx = b.left + b.width/2;
     const by = b.top + b.height/2;
     const dist = Math.sqrt((ax-bx)**2 + (ay-by)**2);
-    if(dist < 500){
-      const alpha = (1 - dist / 500) * 0.08;
-      const isHighlighted = c.from === selected || c.to === selected;
+    if(dist < 600){
+      const alpha = (1 - dist / 600) * 0.1;
+      const hl = c.from === selected || c.to === selected;
       ctx.beginPath();
       ctx.moveTo(ax, ay);
       ctx.lineTo(bx, by);
-      ctx.strokeStyle = isHighlighted ? `rgba(29,161,242,${alpha*3})` : `rgba(100,180,255,${alpha})`;
-      ctx.lineWidth = isHighlighted ? 1.5 : 0.5;
+      ctx.strokeStyle = hl ? `rgba(29,161,242,${alpha*4})` : `rgba(100,180,255,${alpha})`;
+      ctx.lineWidth = hl ? 2 : 0.5;
       ctx.stroke();
+
+      // Synapse impulse — occasional traveling light
+      if(Math.random() < 0.003 && !hl){
+        ctx.beginPath();
+        const t = Math.random();
+        ctx.arc(ax + (bx-ax)*t, ay + (by-ay)*t, 2, 0, Math.PI*2);
+        ctx.fillStyle = `rgba(150,220,255,${alpha*5})`;
+        ctx.fill();
+      }
     }
   });
+
+  // Subtle parallax on mouse
+  scene.style.transform = `translateX(${mouseX * -15}px) translateY(${mouseY * -10}px)`;
 
   requestAnimationFrame(animate);
 }
 
-// Click anywhere to close tooltip
 document.addEventListener('click', e => {
-  if(!e.target.closest('.node')){
+  if(!e.target.closest('.planet')){
     document.getElementById('tooltip').classList.remove('show');
     selected = null;
   }
