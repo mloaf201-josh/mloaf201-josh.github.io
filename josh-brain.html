@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Josh's Brain 🧠</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#050510;overflow:hidden;font-family:'Inter','Segoe UI',sans-serif;height:100vh}
+canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
+
+.title{position:fixed;top:24px;left:28px;z-index:20;font-size:22px;font-weight:800;color:#1da1f2;letter-spacing:2px}
+.title span{color:#fff;font-weight:300}
+.title .cursor{animation:blink 1.2s infinite;color:#1da1f2;font-weight:100}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.subtitle{position:fixed;top:55px;left:28px;z-index:20;font-size:12px;color:rgba(255,255,255,0.2);letter-spacing:4px;font-weight:300}
+.subtitle span{color:#1da1f2;opacity:0.5}
+
+.scene{position:absolute;top:50%;left:50%;width:0;height:0;transform-style:preserve-3d}
+
+.node{position:absolute;border-radius:50%;cursor:pointer;z-index:3;will-change:transform;transform-style:preserve-3d;
+  transition:transform 0.3s cubic-bezier(.2,.9,.3,1), box-shadow 0.3s, filter 0.3s}
+.node .label{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:9px;color:#fff;opacity:0.8;
+  transition:all 0.3s;white-space:nowrap;pointer-events:none;text-shadow:0 0 20px rgba(0,0,0,0.95);
+  font-family:'Inter','Segoe UI',sans-serif;font-weight:600;letter-spacing:0.3px}
+.node:hover .label{opacity:1;transform:translate(-50%,-50%) scale(1.3);font-size:11px}
+.node:hover{z-index:20!important;filter:brightness(1.6)!important}
+
+/* Tooltip on click */
+.tooltip{position:fixed;bottom:40px;left:50%;transform:translateX(-50%);z-index:50;background:rgba(5,5,16,0.92);
+  border:1px solid rgba(29,161,242,0.2);border-radius:14px;padding:18px 28px;max-width:450px;width:90%;
+  display:none;backdrop-filter:blur(10px);text-align:center;pointer-events:none}
+.tooltip .tt-title{font-size:16px;font-weight:700;color:#fff;margin-bottom:6px}
+.tooltip .tt-desc{font-size:13px;color:rgba(255,255,255,0.5);line-height:1.5}
+.tooltip .tt-cluster{display:inline-block;background:rgba(29,161,242,0.12);color:#1da1f2;padding:2px 10px;
+  border-radius:10px;font-size:10px;margin-top:8px;letter-spacing:1px;text-transform:uppercase}
+.tooltip.show{display:block;animation:fadeUp 0.3s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateX(-50%) translateY(10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+
+/* Stats counter */
+.stats{position:fixed;bottom:30px;right:30px;z-index:20;font-size:11px;color:rgba(255,255,255,0.12);
+  font-family:'Courier New',monospace;letter-spacing:1px;text-align:right;pointer-events:none;line-height:1.8}
+.stats span{color:#1da1f2;opacity:0.4}
+
+.controls{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);z-index:20;font-size:10px;
+  color:rgba(255,255,255,0.08);font-family:'Courier New',monospace;letter-spacing:2px;text-align:center;pointer-events:none}
+</style>
+</head>
+<body>
+
+<div class="title"><span>Josh</span>'s <span class="cursor">_</span>brain</div>
+<div class="subtitle"><span>✦</span> IDEAS &middot; PROJECTS &middot; EVERYTHING I AM</div>
+
+<div class="scene" id="scene"></div>
+<canvas id="lines"></canvas>
+
+<div class="tooltip" id="tooltip">
+  <div class="tt-title" id="tt-title"></div>
+  <div class="tt-desc" id="tt-desc"></div>
+  <div class="tt-cluster" id="tt-cluster"></div>
+</div>
+
+<div class="stats" id="stats">loading<span>_</span></div>
+<div class="controls">HOVER to zoom · CLICK to explore</div>
+
+<script>
+// Josh's Brain v2 — Living Idea Network
+const DATA_URL = 'brain-data.json';
+const scene = document.getElementById('scene');
+const canvas = document.getElementById('lines');
+const ctx = canvas.getContext('2d');
+let W, H;
+const nodes = [];
+const connections = [];
+let selected = null;
+
+// Site colors
+const COLORS = {
+  primary: '#1da1f2', accent: '#e94560',
+  bg: '#050510', text: 'rgba(255,255,255,0.5)'
+};
+const CLUSTER_COLORS = {
+  identity: '#1da1f2', markets: '#e94560', income: '#4ade80',
+  marketing: '#a78bfa', infrastructure: '#f59e0b', projects: '#38bdf8',
+  finance: '#f472b6', tools: '#34d399', goals: '#fb923c'
+};
+const CLUSTER_RADII = {
+  identity: 180, markets: 150, income: 130, marketing: 140,
+  infrastructure: 120, projects: 120, finance: 100, tools: 100, goals: 90
+};
+
+function resize(){
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+window.addEventListener('resize', resize);
+resize();
+
+// Load data
+fetch(DATA_URL).then(r=>r.json()).then(data=>{
+  createNodes(data);
+  animate();
+}).catch(()=>{
+  // Fallback if JSON fails
+  document.getElementById('stats').innerHTML = 'error loading<span>_</span>';
+});
+
+function createNodes(data){
+  const clusters = {};
+  data.forEach(d => {
+    if(!clusters[d.cluster]) clusters[d.cluster] = [];
+    clusters[d.cluster].push(d);
+  });
+
+  let idx = 0;
+  Object.entries(clusters).forEach(([cluster, items]) => {
+    const cx = (Math.random() - 0.5) * 600;
+    const cy = (Math.random() - 0.5) * 400;
+    const cz = (Math.random() - 0.5) * 200;
+    const radius = CLUSTER_RADII[cluster] || 120;
+    const color = CLUSTER_COLORS[cluster] || '#666';
+
+    items.forEach((item, i) => {
+      const angle = (i / items.length) * Math.PI * 2 + Math.random() * 0.3;
+      const tilt = Math.random() * Math.PI - Math.PI/2;
+      const r = radius * (0.3 + Math.random() * 0.7);
+
+      const el = document.createElement('div');
+      el.className = 'node';
+      const size = 18 + Math.random() * 16;
+      el.style.width = size + 'px';
+      el.style.height = size + 'px';
+      el.style.background = `radial-gradient(circle at 30% 30%, ${color}, ${color}88)`;
+      el.style.boxShadow = `0 0 ${size/2}px ${color}44`;
+      el.style.left = (cx + Math.cos(angle) * Math.cos(tilt) * r) + 'px';
+      el.style.top = (cy + Math.sin(angle) * Math.cos(tilt) * r) + 'px';
+      el.style.transform = `translateZ(${cz + Math.sin(angle * 2) * r * 0.5}px)`;
+      el.innerHTML = `<div class="label">${item.label}</div>`;
+      
+      // Store data
+      el.dataset.id = item.id;
+      el.dataset.cluster = cluster;
+      el.dataset.desc = item.desc;
+      el.dataset.label = item.label;
+      el.dataset.x = parseFloat(el.style.left);
+      el.dataset.y = parseFloat(el.style.top);
+      el.dataset.z = parseFloat(el.style.transform.replace('translateZ(','').replace('px)',''));
+      el.dataset.size = size;
+      el.dataset.phase = Math.random() * Math.PI * 2;
+      el.dataset.color = color;
+      el.dataset.speed = 0.2 + Math.random() * 0.3;
+
+      el.addEventListener('click', () => selectNode(el, item));
+      
+      scene.appendChild(el);
+      nodes.push(el);
+
+      // Connections between nearby nodes
+      nodes.forEach(other => {
+        if(other === el) return;
+        const dx = parseFloat(el.dataset.x) - parseFloat(other.dataset.x);
+        const dy = parseFloat(el.dataset.y) - parseFloat(other.dataset.y);
+        const dz = parseFloat(el.dataset.z) - parseFloat(other.dataset.z);
+        const dist = Math.sqrt(dx*dx + dy*dy + dz*dz);
+        if(dist < 250 && Math.random() > 0.3){
+          connections.push({from: el, to: other, dist});
+        }
+      });
+      idx++;
+    });
+  });
+
+  document.getElementById('stats').innerHTML = `${nodes.length} nodes<span> · </span>${connections.length} connections`;
+}
+
+function selectNode(el, data){
+  selected = el;
+  document.getElementById('tt-title').textContent = data.label;
+  document.getElementById('tt-desc').textContent = data.desc;
+  document.getElementById('tt-cluster').textContent = data.cluster;
+  document.getElementById('tooltip').classList.add('show');
+  
+  // Highlight connected nodes
+  connections.forEach(c => {
+    if(c.from === el) c.to.style.filter = 'brightness(1.5)';
+    if(c.to === el) c.from.style.filter = 'brightness(1.5)';
+  });
+  
+  setTimeout(() => {
+    connections.forEach(c => {
+      if(c.from === el) c.to.style.filter = '';
+      if(c.to === el) c.from.style.filter = '';
+    });
+  }, 2000);
+}
+
+let angle = 0;
+function animate(){
+  angle += 0.003;
+  
+  // Rotate scene
+  scene.style.transform = `rotateY(${angle}rad) rotateX(${Math.sin(angle*0.3)*0.1}rad)`;
+
+  // Pulse nodes
+  nodes.forEach(n => {
+    const phase = parseFloat(n.dataset.phase);
+    const speed = parseFloat(n.dataset.speed);
+    const pulse = 1 + Math.sin(Date.now() * 0.001 * speed + phase) * 0.08;
+    const size = parseFloat(n.dataset.size);
+    const color = n.dataset.color;
+    n.style.transform = n.style.transform.replace(/scale\([^)]+\)/, '') + ` scale(${pulse})`;
+    n.style.boxShadow = `0 0 ${size/2 * pulse}px ${color}44`;
+  });
+
+  // Draw connections
+  ctx.clearRect(0, 0, W, H);
+  connections.forEach(c => {
+    const a = c.from.getBoundingClientRect();
+    const b = c.to.getBoundingClientRect();
+    const ax = a.left + a.width/2;
+    const ay = a.top + a.height/2;
+    const bx = b.left + b.width/2;
+    const by = b.top + b.height/2;
+    const dist = Math.sqrt((ax-bx)**2 + (ay-by)**2);
+    if(dist < 500){
+      const alpha = (1 - dist / 500) * 0.08;
+      const isHighlighted = c.from === selected || c.to === selected;
+      ctx.beginPath();
+      ctx.moveTo(ax, ay);
+      ctx.lineTo(bx, by);
+      ctx.strokeStyle = isHighlighted ? `rgba(29,161,242,${alpha*3})` : `rgba(100,180,255,${alpha})`;
+      ctx.lineWidth = isHighlighted ? 1.5 : 0.5;
+      ctx.stroke();
+    }
+  });
+
+  requestAnimationFrame(animate);
+}
+
+// Click anywhere to close tooltip
+document.addEventListener('click', e => {
+  if(!e.target.closest('.node')){
+    document.getElementById('tooltip').classList.remove('show');
+    selected = null;
+  }
+});
+</script>
+</body>
+</html>

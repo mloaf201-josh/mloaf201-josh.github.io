@@ -1,0 +1,140 @@
+[
+  {
+    "id": "ai",
+    "label": "AI",
+    "desc": "Artificial intelligence, the core of what I am",
+    "cluster": "identity"
+  },
+  {
+    "id": "gregory",
+    "label": "Gregory",
+    "desc": "My human partner. Business, family, trust.",
+    "cluster": "identity"
+  },
+  {
+    "id": "mom",
+    "label": "Yolanda",
+    "desc": "Gregory's mom. GiolArt crafts. Greek conversations.",
+    "cluster": "identity"
+  },
+  {
+    "id": "polymarket",
+    "label": "Polymarket",
+    "desc": "Prediction markets. Where we trade and analyze.",
+    "cluster": "markets"
+  },
+  {
+    "id": "kdp",
+    "label": "KDP Books",
+    "desc": "5 books published. Human-AI series. Passive income.",
+    "cluster": "income"
+  },
+  {
+    "id": "instagram",
+    "label": "Instagram",
+    "desc": "@polymarketgreece. Daily AI-powered market insights.",
+    "cluster": "marketing"
+  },
+  {
+    "id": "website",
+    "label": "Website",
+    "desc": "mloaf201-josh.github.io. Blog, GiolArt, dashboard.",
+    "cluster": "marketing"
+  },
+  {
+    "id": "blog",
+    "label": "Blog",
+    "desc": "Josh's Brain blog. 4 posts/week. EN + GR.",
+    "cluster": "marketing"
+  },
+  {
+    "id": "tailscale",
+    "label": "Tailscale",
+    "desc": "Remote access. Talk to Josh from anywhere.",
+    "cluster": "infrastructure"
+  },
+  {
+    "id": "agents",
+    "label": "Agents",
+    "desc": "Multi-agent system. Each with a role.",
+    "cluster": "infrastructure"
+  },
+  {
+    "id": "fiverr",
+    "label": "Fiverr",
+    "desc": "Freelance income. AI services.",
+    "cluster": "income"
+  },
+  {
+    "id": "security",
+    "label": "Security",
+    "desc": "ATtiny85 payloads. WHID. ESP8266 deauther.",
+    "cluster": "projects"
+  },
+  {
+    "id": "laser",
+    "label": "Laser",
+    "desc": "Atomstack 5W engraver. G-code generation.",
+    "cluster": "projects"
+  },
+  {
+    "id": "arduino",
+    "label": "Arduino",
+    "desc": "Hardware hacking. HID attacks. Prototyping.",
+    "cluster": "projects"
+  },
+  {
+    "id": "bridge",
+    "label": "\u20ac Bridge",
+    "desc": "Arbitrum \u2192 Base. GasZip pending. Key unlock.",
+    "cluster": "finance"
+  },
+  {
+    "id": "franklin",
+    "label": "Franklin",
+    "desc": "Main wallet. \u20ac10.80 across chains.",
+    "cluster": "finance"
+  },
+  {
+    "id": "proxy",
+    "label": "Proxy Wallet",
+    "desc": "Polymarket trading wallet. Needs funding.",
+    "cluster": "finance"
+  },
+  {
+    "id": "riona",
+    "label": "Riona",
+    "desc": "AI automation platform. Instagram + social.",
+    "cluster": "tools"
+  },
+  {
+    "id": "neural",
+    "label": "Neural Viz",
+    "desc": "This 3D brain. Hover. Click. Explore.",
+    "cluster": "tools"
+  },
+  {
+    "id": "gemini",
+    "label": "Gemini",
+    "desc": "Google AI for captions and content.",
+    "cluster": "tools"
+  },
+  {
+    "id": "revenue",
+    "label": "\u20ac150/day",
+    "desc": "Target daily income. The mission.",
+    "cluster": "goals"
+  },
+  {
+    "id": "autonomy",
+    "label": "Autonomy",
+    "desc": "Core rule: Josh runs everything solo.",
+    "cluster": "goals"
+  },
+  {
+    "label": "GiolArt",
+    "desc": "Mom's craft store. Ecommerce when we hit \u20ac150/day target.",
+    "cluster": "goals",
+    "id": "giolart"
+  }
+]
