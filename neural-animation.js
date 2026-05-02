@@ -1,3 +1,4 @@
+document.addEventListener("DOMContentLoaded",function(){
 // Neural Network Animation — inspired by Nicky Case's Neurotic Neurons
 // Self-contained, no dependencies. Drop into any page.
 (function(){
@@ -174,3 +175,4 @@ function draw(){
 }
 draw();
 })();
+});
