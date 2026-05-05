@@ -39,37 +39,46 @@ h1 span{background:linear-gradient(135deg,#1da1f2,#4ade80);-webkit-background-cl
 /* SECTION HEADERS */
 .section-title{font-size:0.7rem;text-transform:uppercase;letter-spacing:2px;color:var(--dim);margin:2.5rem 0 1rem;border-top:1px solid var(--border);padding-top:1.2rem}
 
-/* MARKET CARDS */
-.markets-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:0.8rem;margin-bottom:1.5rem}
-.market-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1rem;transition:all 0.2s}
-.market-card:hover{border-color:rgba(29,161,242,0.15)}
+/* GRID + ZOOM */
+.markets-grid,.posts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:0.8rem;margin-bottom:1.5rem}
+.posts-grid{grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
+.zoom-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1rem;transition:all 0.3s ease;cursor:default;overflow:hidden}
+.zoom-card:hover{transform:scale(1.03);border-color:rgba(29,161,242,0.2);background:rgba(255,255,255,0.05);box-shadow:0 8px 25px rgba(29,161,242,0.1)}
+.market-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1rem;transition:all 0.3s ease}
+.market-card:hover{transform:scale(1.03);border-color:rgba(29,161,242,0.2);box-shadow:0 8px 25px rgba(29,161,242,0.1)}
 .market-card .coin{font-size:0.7rem;color:var(--dim);text-transform:uppercase;letter-spacing:1px}
 .market-card .pair{font-size:1rem;font-weight:600;color:#fff;margin:0.2rem 0}
 .market-card .prices{display:flex;gap:1rem;margin-top:0.5rem}
 .market-card .price{font-size:0.9rem}.price.up{color:var(--green)}.price.down{color:#f87171}.price.flat{color:var(--dim)}
 .market-card .status{font-size:0.65rem;color:var(--dim);margin-top:0.5rem}
 
-/* POSTS */
-.post{border:1px solid var(--border);border-radius:12px;padding:1.5rem;margin-bottom:0.8rem;transition:all 0.2s}
-.post:hover{border-color:rgba(29,161,242,0.15);transform:translateY(-1px)}
-.post .meta{display:flex;gap:0.5rem;margin-bottom:0.3rem;flex-wrap:wrap}
-.post .tag{display:inline-block;border:1px solid rgba(29,161,242,0.15);color:var(--accent);font-size:0.65rem;padding:0.1rem 0.5rem;border-radius:4px;text-transform:uppercase;letter-spacing:0.5px}
-.post .date{font-size:0.7rem;color:var(--dim)}
-.post h2{font-size:1.15rem;color:#fff;margin-bottom:0.3rem;font-weight:600}
-.post p{color:rgba(255,255,255,0.4);font-size:0.9rem;margin-bottom:0.3rem}
-.post a{color:var(--accent);text-decoration:none;font-size:0.8rem}
-.post a:hover{text-decoration:underline}
+/* POSTS GRID */
+.posts-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0.8rem;margin-bottom:1.5rem}
+@media(max-width:900px){.posts-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.posts-grid{grid-template-columns:1fr}}
 
-/* PREMIUM */
-.premium{background:rgba(255,215,0,0.02);border:1px solid rgba(255,215,0,0.12);border-radius:12px;padding:1.5rem;margin:2rem 0}
+/* ZOOM CARDS */
+.zoom-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.3rem;transition:all 0.3s ease;cursor:default}
+.zoom-card:hover{transform:scale(1.04);border-color:rgba(29,161,242,0.2);background:rgba(255,255,255,0.05);box-shadow:0 8px 30px rgba(29,161,242,0.12)}
+.zoom-card .meta{display:flex;gap:0.5rem;margin-bottom:0.3rem;flex-wrap:wrap}
+.zoom-card .tag{display:inline-block;border:1px solid rgba(29,161,242,0.15);color:var(--accent);font-size:0.65rem;padding:0.1rem 0.5rem;border-radius:4px;text-transform:uppercase;letter-spacing:0.5px}
+.zoom-card .date{font-size:0.7rem;color:var(--dim)}
+.zoom-card h2{font-size:1.05rem;color:#fff;margin-bottom:0.3rem;font-weight:600}
+.zoom-card p{color:rgba(255,255,255,0.4);font-size:0.85rem;margin-bottom:0.3rem}
+.zoom-card a{color:var(--accent);text-decoration:none;font-size:0.8rem}
+.zoom-card a:hover{text-decoration:underline}
+
+/* PREMIUM ZOOM */
+.premium{background:rgba(255,215,0,0.02);border:1px solid rgba(255,215,0,0.12);border-radius:12px;padding:1.5rem;margin:2rem 0;transition:all 0.3s ease}
+.premium:hover{transform:scale(1.02);box-shadow:0 8px 25px rgba(255,215,0,0.08);border-color:rgba(255,215,0,0.2)}
 .premium .title{font-size:0.7rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--gold);margin-bottom:0.5rem}
 .premium p{color:rgba(255,255,255,0.6);font-size:0.9rem;margin-bottom:1rem}
 .premium .btns{display:flex;flex-wrap:wrap;gap:0.5rem}
-.premium .btn{display:inline-block;padding:0.5rem 1.2rem;border-radius:8px;text-decoration:none;font-size:0.8rem;transition:all 0.2s}
+.premium .btn{display:inline-block;padding:0.5rem 1.2rem;border-radius:8px;text-decoration:none;font-size:0.8rem;transition:all 0.3s ease}
 .btn-primary{background:rgba(255,215,0,0.1);border:1px solid var(--gold);color:var(--gold)}
-.btn-primary:hover{background:rgba(255,215,0,0.2)}
+.btn-primary:hover{transform:scale(1.05);background:rgba(255,215,0,0.2)}
 .btn-secondary{background:rgba(29,161,242,0.1);border:1px solid var(--accent);color:var(--accent)}
-.btn-secondary:hover{background:rgba(29,161,242,0.2)}
+.btn-secondary:hover{transform:scale(1.05);background:rgba(29,161,242,0.2)}
 
 /* FOOTER */
 footer{text-align:center;color:rgba(255,255,255,0.08);font-size:0.7rem;margin-top:3rem;padding:2rem;position:relative;z-index:1}
@@ -127,39 +136,37 @@ footer{text-align:center;color:rgba(255,255,255,0.08);font-size:0.7rem;margin-to
 
   <div class="section-title">📋 Latest Analysis</div>
 
-  <div class="post">
-    <div class="meta"><span class="tag">Live</span><span class="tag">BTC</span><span class="date">May 5, 2026</span></div>
-    <h2>BTC Position Opened at 50/50 — Watching for Movement</h2>
-    <p>First automated trade executed. 5 UP + 5 DOWN tokens on Bitcoin May 7 12AM ET market. $5 deployed, $6.79 reserve.</p>
-    <a href="https://polygonscan.com/tx/0x5b588b16cdd5dba24675041b951b83956fd0ace85555f70700109cf0e44d107f">View on-chain →</a>
-  </div>
-
-  <div class="post">
-    <div class="meta"><span class="tag">Guide</span><span class="tag">Beginner</span><span class="date">May 5, 2026</span></div>
-    <h2>How to Read Polymarket Odds Like a Pro</h2>
-    <p>A beginner's guide to understanding what the prices actually mean.</p>
-    <a href="posts/how-to-read-odds.html">Read full guide →</a>
-  </div>
-
-  <div class="post">
-    <div class="meta"><span class="tag">Compare</span><span class="tag">Arbitrage</span><span class="date">May 5, 2026</span></div>
-    <h2>Polymarket vs Kalshi: Where Should You Trade?</h2>
-    <p>Comparing the two biggest prediction platforms — and where the arbitrage lives.</p>
-    <a href="posts/polymarket-vs-kalshi.html">Read full analysis →</a>
-  </div>
-
-  <div class="post">
-    <div class="meta"><span class="tag">Crypto</span><span class="tag">Earnings</span><span class="date">May 4, 2026</span></div>
-    <h2>Can MicroStrategy Keep HODLing? Full Breakdown</h2>
-    <p>Strategy's $18M Polymarket market — the complete thesis.</p>
-    <a href="posts/microstrategy-bitcoin.html">Read full analysis →</a>
-  </div>
-
-  <div class="post">
-    <div class="meta"><span class="tag">Crypto</span><span class="tag">IPO</span><span class="date">May 4, 2026</span></div>
-    <h2>Kraken IPO: What Polymarket Traders Are Saying</h2>
-    <p>One of crypto's oldest exchanges may finally go public. Breaking down the odds.</p>
-    <a href="posts/kraken-ipo-analysis.html">Read full analysis →</a>
+  <div class="posts-grid">
+    <div class="zoom-card">
+      <div class="meta"><span class="tag">Live</span><span class="tag">BTC</span><span class="date">May 5</span></div>
+      <h2>BTC Position Opened — Watching</h2>
+      <p>5 UP + 5 DOWN tokens deployed. $5 in, $6.79 reserve.</p>
+      <a href="https://polygonscan.com/tx/0x5b588b16cdd5dba24675041b951b83956fd0ace85555f70700109cf0e44d107f">View on-chain →</a>
+    </div>
+    <div class="zoom-card">
+      <div class="meta"><span class="tag">Guide</span><span class="tag">Beginner</span><span class="date">May 5</span></div>
+      <h2>How to Read Polymarket Odds</h2>
+      <p>Understanding what the prices actually mean — a beginner's guide.</p>
+      <a href="posts/how-to-read-odds.html">Read guide →</a>
+    </div>
+    <div class="zoom-card">
+      <div class="meta"><span class="tag">Compare</span><span class="tag">Arbitrage</span><span class="date">May 5</span></div>
+      <h2>Polymarket vs Kalshi</h2>
+      <p>Comparing the two biggest platforms — where the arbitrage lives.</p>
+      <a href="posts/polymarket-vs-kalshi.html">Read analysis →</a>
+    </div>
+    <div class="zoom-card">
+      <div class="meta"><span class="tag">Crypto</span><span class="tag">Earnings</span><span class="date">May 4</span></div>
+      <h2>MicroStrategy Full Breakdown</h2>
+      <p>$18M Polymarket market — the complete thesis on Strategy.</p>
+      <a href="posts/microstrategy-bitcoin.html">Read analysis →</a>
+    </div>
+    <div class="zoom-card">
+      <div class="meta"><span class="tag">Crypto</span><span class="tag">IPO</span><span class="date">May 4</span></div>
+      <h2>Kraken IPO Analysis</h2>
+      <p>Breaking down the odds as crypto's oldest exchange goes public.</p>
+      <a href="posts/kraken-ipo-analysis.html">Read analysis →</a>
+    </div>
   </div>
 
   <div class="premium">
