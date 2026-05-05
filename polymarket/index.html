@@ -229,5 +229,32 @@ m.x=t.clientX-r.left;m.y=t.clientY-r.top},{passive:true});
 h.addEventListener('touchend',()=>{m.x=-999;m.y=-999;for(const o of n)o.rst()});
 window.addEventListener('resize',()=>{rz();go()});rz();go();dr()})();
 </script>
+
+<script>
+// Live market data fetcher
+async function livePrices(){
+  try{
+    const r=await fetch('http://localhost:8402/v1/pm/polymarket/crypto-updown',{signal:AbortSignal.timeout(5000)});
+    if(!r.ok)return;
+    const data=await r.json();
+    const mkts=data?.data?.markets||data?.markets||[];
+    const cards=document.querySelectorAll('.market-card');
+    for(let i=0;i<cards.length&&i<mkts.length;i++){
+      const m=mkts[i];
+      const up=(m.up_price||0.5)*100,down=(m.down_price||0.5)*100;
+      const p=cards[i].querySelector('.prices');
+      if(p)p.innerHTML=
+        '<span class="price '+(up>50.1?'up':up<49.9?'down':'flat')+'">UP: $'+up.toFixed(1)+'¢</span>'+
+        '<span class="price '+(down>50.1?'up':down<49.9?'down':'flat')+'">DOWN: $'+down.toFixed(1)+'¢</span>';
+      const s=cards[i].querySelector('.status');
+      if(s)s.innerHTML=(up>50.5||down>50.5)?'⚡ MOVING!':'⏳ Watching';
+    }
+    const fd=document.getElementById('footerDate');
+    if(fd)fd.textContent=new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+  }catch(e){}
+}
+livePrices();
+setInterval(livePrices,30000);
+</script>
 </body>
 </html>
