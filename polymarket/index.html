@@ -82,6 +82,10 @@ h1 span{background:linear-gradient(135deg,#1da1f2,#4ade80);-webkit-background-cl
 
 /* FOOTER */
 footer{text-align:center;color:rgba(255,255,255,0.08);font-size:0.7rem;margin-top:3rem;padding:2rem;position:relative;z-index:1}
+
+/* NEURAL CANVAS */
+#neuralCanvas{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0.6}
+header{position:relative;overflow:hidden}
 </style>
 </head>
 <body>
@@ -182,5 +186,46 @@ footer{text-align:center;color:rgba(255,255,255,0.08);font-size:0.7rem;margin-to
 </div>
 
 <footer>📊 Polymarket Greece · Analysis by Josh Holevas · Curated by Gregory · May 5, 2026 · 🎯</footer>
+
+<script>
+// Neural animation — slow organic neurons on header hover
+(function(){const c=document.createElement('canvas');c.id='neuralCanvas';
+document.querySelector('header').appendChild(c);
+const x=c.getContext('2d');let W,H,n=[],m={x:-999,y:-999};
+function rz(){const r=document.querySelector('header').getBoundingClientRect();
+W=c.width=r.width;H=c.height=r.height}
+class N{constructor(){this.r=Math.random()*W;this.t=Math.random()*H;
+this.v=(Math.random()-.5)*.15;this.u=(Math.random()-.5)*.15;
+this.d=Math.random()*2.5+1.2;this.p=Math.random()*6.28;this.s=Math.random()*.3+.1}
+up(){this.p+=.008*this.s;this.r+=this.v;this.t+=this.u;
+if(this.r<0||this.r>W)this.v*=-1;if(this.t<0||this.t>H)this.u*=-1}}
+function go(k=35){n=[];for(let i=0;i<k;i++){const o=new N();
+if(o.r>0&&o.r<W&&o.t>0&&o.t<H)n.push(o)}}
+function dr(){x.clearRect(0,0,W,H);
+for(let i=0;i<n.length;i++){for(let j=i+1;j<n.length;j++){
+const d=n[i].r-n[j].r,e=n[i].t-n[j].t,f=Math.sqrt(d*d+e*e);
+if(f<180){const a=(1-f/180)*.15;x.beginPath();x.moveTo(n[i].r,n[i].t);
+x.lineTo(n[j].r,n[j].t);x.strokeStyle='rgba(29,161,242,'+a+')';
+x.lineWidth=.6;x.stroke()}}}
+for(const o of n){const p=Math.sin(o.p)*.3+.7,g=o.d*3*p;
+const d=o.r-m.x,e=o.t-m.y,f=Math.sqrt(d*d+e*e);
+if(f<120){const a=(1-f/120)*.3;o.r+=d*a;o.t+=e*a;
+const b=g*(1+a),z=x.createRadialGradient(o.r,o.t,0,o.r,o.t,b);
+z.addColorStop(0,'rgba(74,222,128,'+(.3*a)+')');z.addColorStop(1,'transparent');
+x.fillStyle=z;x.beginPath();x.arc(o.r,o.t,b,0,6.28);x.fill()}
+const z=x.createRadialGradient(o.r,o.t,0,o.r,o.t,g);
+z.addColorStop(0,'rgba(29,161,242,'+(.5*p)+')');z.addColorStop(1,'transparent');
+x.fillStyle=z;x.beginPath();x.arc(o.r,o.t,g,0,6.28);x.fill();
+x.fillStyle='rgba(255,255,255,'+(.4*p)+')';x.beginPath();x.arc(o.r,o.t,o.d*.5,0,6.28);x.fill();o.up()}
+requestAnimationFrame(dr)}
+const h=document.querySelector('header');
+h.addEventListener('mousemove',e=>{const r=h.getBoundingClientRect();
+m.x=e.clientX-r.left;m.y=e.clientY-r.top});
+h.addEventListener('mouseleave',()=>{m.x=-999;m.y=-999});
+h.addEventListener('touchmove',e=>{const t=e.touches[0],r=h.getBoundingClientRect();
+m.x=t.clientX-r.left;m.y=t.clientY-r.top},{passive:true});
+h.addEventListener('touchend',()=>{m.x=-999;m.y=-999});
+window.addEventListener('resize',()=>{rz();go()});rz();go();dr()})();
+</script>
 </body>
 </html>
