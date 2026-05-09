@@ -1,0 +1,123 @@
+<!DOCTYPE html><html lang="el"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Γρηγόρης Αθανασίου — Επαγγελματική Κάρτα</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#050510;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'Inter','Segoe UI',sans-serif;padding:2rem;gap:1.5rem}
+
+.card{background:linear-gradient(160deg,#0a0a1a 0%,#0f0f2a 40%,#1a1a35 100%);width:378px;height:216px;border-radius:8px;box-shadow:0 15px 40px rgba(0,0,0,0.6);position:relative;overflow:hidden}
+.card-frame{position:absolute;top:5px;left:5px;right:5px;bottom:5px;border:1px solid rgba(29,161,242,0.12);border-radius:5px;pointer-events:none}
+
+/* Neural accents */
+.neuro-line{position:absolute;width:1px;height:40px;background:linear-gradient(180deg,transparent,rgba(29,161,242,0.2),transparent)}
+.neuro-line:nth-child(2){left:15%;top:10px}
+.neuro-line:nth-child(3){left:85%;top:30px}
+.neuro-line:nth-child(4){left:50%;bottom:15px}
+
+.neuro-dot{position:absolute;width:3px;height:3px;border-radius:50%;background:#1da1f2;opacity:0.4;animation:pulse 3s infinite}
+.neuro-dot:nth-child(5){left:15%;top:48px;animation-delay:0s}
+.neuro-dot:nth-child(6){left:85%;top:68px;animation-delay:1s}
+.neuro-dot:nth-child(7){left:50%;bottom:51px;animation-delay:2s}
+
+@keyframes pulse{0%,100%{opacity:0.4;transform:scale(1)}50%{opacity:1;transform:scale(1.5)}}
+
+/* Corner glows */
+.corner{position:absolute;width:40px;height:40px;pointer-events:none}
+.corner-tl{top:6px;left:6px;border-top:1.5px solid rgba(29,161,242,0.15);border-left:1.5px solid rgba(29,161,242,0.15)}
+.corner-tr{top:6px;right:6px;border-top:1.5px solid rgba(29,161,242,0.15);border-right:1.5px solid rgba(29,161,242,0.15)}
+.corner-bl{bottom:6px;left:6px;border-bottom:1.5px solid rgba(29,161,242,0.15);border-left:1.5px solid rgba(29,161,242,0.15)}
+.corner-br{bottom:6px;right:6px;border-bottom:1.5px solid rgba(29,161,242,0.15);border-right:1.5px solid rgba(29,161,242,0.15)}
+
+/* QR Code */
+.qr-container{position:absolute;bottom:12px;right:12px;z-index:2}
+.qr-container svg{width:48px;height:48px;opacity:0.7}
+.qr-label{position:absolute;top:-10px;right:0;font-size:0.45rem;color:rgba(255,255,255,0.12);white-space:nowrap;letter-spacing:1px}
+
+/* Content */
+.content{position:absolute;top:0;left:0;right:0;bottom:0;z-index:1;display:flex;flex-direction:column;justify-content:center;padding:0 24px}
+.name{font-size:1rem;font-weight:700;color:#fff;letter-spacing:-0.5px;margin-bottom:0.15rem}
+.name span{color:#1da1f2}
+.title{font-size:0.55rem;color:rgba(255,255,255,0.2);text-transform:uppercase;letter-spacing:2px;margin-bottom:0.6rem}
+.divider{width:24px;height:1px;background:rgba(29,161,242,0.3);margin-bottom:0.6rem}
+.info{font-size:0.6rem;color:rgba(255,255,255,0.35);line-height:1.6}
+.info span{color:rgba(255,255,255,0.15)}
+.web{position:absolute;bottom:14px;left:24px;font-size:0.5rem;color:rgba(255,255,255,0.08);letter-spacing:1px}
+
+/* Controls */
+.controls{display:flex;gap:0.7rem;font-size:0.8rem}
+.controls a{padding:0.5rem 1rem;border-radius:6px;border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02);color:#e0e0ee;text-decoration:none;transition:all 0.3s;font-size:0.75rem}
+.controls a:hover{border-color:#1da1f2;background:rgba(29,161,242,0.06)}
+.print-info{font-size:0.65rem;color:rgba(255,255,255,0.12);text-align:center}
+
+@media print{body{background:#fff}.card{box-shadow:none}.print-info,.controls{display:none}}
+</style></head><body>
+
+<div class="card" id="printCard">
+  <div class="card-frame"></div>
+  <div class="neuro-line"></div><div class="neuro-line"></div><div class="neuro-line"></div>
+  <div class="neuro-dot"></div><div class="neuro-dot"></div><div class="neuro-dot"></div>
+  <div class="corner corner-tl"></div><div class="corner corner-tr"></div>
+  <div class="corner corner-bl"></div><div class="corner corner-br"></div>
+  
+  <div class="qr-container">
+    <div class="qr-label">portfolio</div>
+    <svg viewBox="0 0 100 100" fill="rgba(255,255,255,0.15)">
+      <rect width="100" height="100" fill="rgba(255,255,255,0.02)"/>
+      <path d="M10,10h20v20H10V10zm5,5v10h10V15H15zm40-5h20v20H55V10zm5,5v10h10V15H60zm-30,5h10v10H30V20zm30,0h10v10H60V20zM10,40h20v20H10V40zm5,5v10h10V45H15zm40-5h20v20H55V40zm5,5v10h10V45H60zm-30,5h10v10H30V50zm30,0h10v10H60V50zM10,70h20v20H10V70zm5,5v10h10V75H15zm30-5h20v20H45V70zm5,5v10h10V75H50zm10-40h10v10H60V35zm-10,0h5v10h-5V35zm20,0h10v10H70V35z"/>
+    </svg>
+  </div>
+
+  <div class="content">
+    <div class="name">Γρηγόρης <span>Αθανασίου</span></div>
+    <div class="title">IT Professional · Systems & Network Support</div>
+    <div class="divider"></div>
+    <div class="info">📞 <span>+30 694 317 5944</span></div>
+    <div class="info">✉️ <span>mozz0@yandex.com</span></div>
+    <div class="info">📍 <span>Ioannina, Greece</span></div>
+  </div>
+  <div class="web">gregory.io · built by Josh</div>
+</div>
+
+<div class="controls">
+  <a href="javascript:window.print()">🖨️ Print / Save PDF</a>
+  <a href="index.html">🌐 Portfolio →</a>
+</div>
+<div class="print-info">This is a digital business card. Print-ready at 378×216mm (CR80 standard).</div>
+
+<script>
+// Small neuron animation
+const c = document.createElement('canvas');
+c.width=378; c.height=216;
+c.style.position='absolute';c.style.top='0';c.style.left='0';
+c.style.pointerEvents='none';c.style.opacity='0.15';
+const card=document.getElementById('printCard');
+card.appendChild(c);
+const ctx=c.getContext('2d');
+let particles=[];
+
+for(let i=0;i<30;i++) particles.push({
+  x:Math.random()*378,y:Math.random()*216,
+  vx:(Math.random()-0.5)*0.3,vy:(Math.random()-0.5)*0.3,r:1+Math.random()
+});
+
+function anim(){
+  ctx.clearRect(0,0,378,216);
+  particles.forEach(p=>{
+    p.x+=p.vx;p.y+=p.vy;
+    if(p.x<0||p.x>378)p.vx*=-1;if(p.y<0||p.y>216)p.vy*=-1;
+    ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fillStyle='rgba(29,161,242,0.5)';ctx.fill();
+  });
+  for(let i=0;i<particles.length;i++){
+    for(let j=i+1;j<particles.length;j++){
+      const dx=particles[i].x-particles[j].x,dy=particles[i].y-particles[j].y;
+      const d=Math.sqrt(dx*dx+dy*dy);
+      if(d<60){ctx.strokeStyle=`rgba(29,161,242,${0.1*(1-d/60)})`;ctx.lineWidth=0.3;
+      ctx.beginPath();ctx.moveTo(particles[i].x,particles[i].y);ctx.lineTo(particles[j].x,particles[j].y);ctx.stroke();}
+    }
+  }
+  requestAnimationFrame(anim);
+}
+anim();
+</script>
+</body></html>
