@@ -1,0 +1,183 @@
+{
+  "system": {
+    "gateway": "running",
+    "tailscale.bazzite": "running",
+    "bridge": "pending",
+    "http-server": "offline",
+    "nas": "running"
+  },
+  "lastUpdated": "2026-05-10T08:01:09.923508",
+  "agents": {
+    "main": {
+      "status": "active",
+      "lastActive": "2026-05-05T20:15:51.708381"
+    },
+    "oracle": {
+      "status": "offline",
+      "lastActive": "2026-05-05T20:15:51.784488"
+    },
+    "mindy": {
+      "status": "offline",
+      "lastActive": "2026-05-05T20:15:51.824476"
+    },
+    "yannis": {
+      "status": "offline",
+      "lastActive": ""
+    },
+    "compliance": {
+      "status": "active",
+      "lastActive": "2026-05-10T08:01:09.809585"
+    }
+  },
+  "income": {
+    "wallets": {
+      "franklin": {
+        "arb": 0.012383,
+        "eth": 0.002083
+      },
+      "blockrun": {
+        "base": 0.0
+      },
+      "proxy": {
+        "base": 0.0
+      }
+    },
+    "prices": {
+      "ethereum": 2364.74,
+      "bitcoin": 81292.0,
+      "solana": 85.24
+    },
+    "totalInvested": 50.0,
+    "platforms": {
+      "instagramFollowers": 2.0
+    }
+  },
+  "cron": {
+    "Dashboard status": {
+      "status": "scheduled",
+      "lastRun": ""
+    }
+  },
+  "recentActivity": [
+    {
+      "time": "2026-05-10T08:01:09.923493",
+      "msg": "\ud83d\udc33 Containers: 5 running \u2014 qbittorrent, portainer, hopeful_goldstine, netdata, jellyfin"
+    },
+    {
+      "time": "2026-05-10T08:01:09.884257",
+      "msg": "\ud83d\udee1\ufe0f Guardian: NAS up up 5 weeks, 3 days, 16 hours, 16 minutes, disk 0.44827645%, mem 0.151899"
+    },
+    {
+      "time": "2026-05-10T07:31:10.621360",
+      "msg": "\ud83d\udc33 Containers: 5 running \u2014 qbittorrent, portainer, hopeful_goldstine, netdata, jellyfin"
+    },
+    {
+      "time": "2026-05-10T07:31:10.588167",
+      "msg": "\ud83d\udee1\ufe0f Guardian: NAS up up 5 weeks, 3 days, 15 hours, 46 minutes, disk 0.44827645%, mem 0.164557"
+    },
+    {
+      "time": "2026-05-10T07:01:08.370286",
+      "msg": "\ud83d\udc33 Containers: 5 running \u2014 qbittorrent, portainer, hopeful_goldstine, netdata, jellyfin"
+    },
+    {
+      "time": "2026-05-10T07:01:08.326449",
+      "msg": "\ud83d\udee1\ufe0f Guardian: NAS up up 5 weeks, 3 days, 15 hours, 16 minutes, disk 0.44827645%, mem 0.164557"
+    },
+    {
+      "time": "2026-05-10T06:31:04.172131",
+      "msg": "\ud83d\udc33 Containers: 5 running \u2014 qbittorrent, portainer, hopeful_goldstine, netdata, jellyfin"
+    },
+    {
+      "time": "2026-05-10T06:31:04.136254",
+      "msg": "\ud83d\udee1\ufe0f Guardian: NAS up up 5 weeks, 3 days, 14 hours, 46 minutes, disk 0.44827645%, mem 0.164557"
+    },
+    {
+      "time": "2026-05-10T06:01:10.346583",
+      "msg": "\ud83d\udc33 Containers: 5 running \u2014 qbittorrent, portainer, hopeful_goldstine, netdata, jellyfin"
+    },
+    {
+      "time": "2026-05-10T06:01:10.315227",
+      "msg": "\ud83d\udee1\ufe0f Guardian: NAS up up 5 weeks, 3 days, 14 hours, 16 minutes, disk 0.44827645%, mem 0.151899"
+    },
+    {
+      "time": "2026-05-10T05:31:10.133243",
+      "msg": "\ud83d\udc33 Containers: 5 running \u2014 qbittorrent, portainer, hopeful_goldstine, netdata, jellyfin"
+    },
+    {
+      "time": "2026-05-10T05:31:10.105160",
+      "msg": "\ud83d\udee1\ufe0f Guardian: NAS up up 5 weeks, 3 days, 13 hours, 46 minutes, disk 0.44827645%, mem 0.164557"
+    },
+    {
+      "time": "2026-05-10T05:01:11.392363",
+      "msg": "\ud83d\udc33 Containers: 5 running \u2014 qbittorrent, portainer, hopeful_goldstine, netdata, jellyfin"
+    },
+    {
+      "time": "2026-05-10T05:01:11.357315",
+      "msg": "\ud83d\udee1\ufe0f Guardian: NAS up up 5 weeks, 3 days, 13 hours, 16 minutes, disk 0.44827645%, mem 0.151899"
+    },
+    {
+      "time": "2026-05-10T04:31:11.310987",
+      "msg": "\ud83d\udc33 Containers: 5 running \u2014 qbittorrent, portainer, hopeful_goldstine, netdata, jellyfin"
+    },
+    {
+      "time": "2026-05-10T04:31:11.277487",
+      "msg": "\ud83d\udee1\ufe0f Guardian: NAS up up 5 weeks, 3 days, 12 hours, 46 minutes, disk 0.44827645%, mem 0.151899"
+    },
+    {
+      "time": "2026-05-10T04:01:03.394005",
+      "msg": "\ud83d\udc33 Containers: 5 running \u2014 qbittorrent, portainer, hopeful_goldstine, netdata, jellyfin"
+    },
+    {
+      "time": "2026-05-10T04:01:03.359457",
+      "msg": "\ud83d\udee1\ufe0f Guardian: NAS up up 5 weeks, 3 days, 12 hours, 16 minutes, disk 0.44827645%, mem 0.151899"
+    },
+    {
+      "time": "2026-05-10T03:30:37.858225",
+      "msg": "\ud83d\udc33 Containers: 5 running \u2014 qbittorrent, portainer, hopeful_goldstine, netdata, jellyfin"
+    },
+    {
+      "time": "2026-05-10T03:30:37.818484",
+      "msg": "\ud83d\udee1\ufe0f Guardian: NAS up up 5 weeks, 3 days, 11 hours, 45 minutes, disk 0.44827645%, mem 0.151899"
+    },
+    {
+      "time": "2026-05-10T03:00:38.029099",
+      "msg": "\ud83d\udc33 Containers: 5 running \u2014 qbittorrent, portainer, hopeful_goldstine, netdata, jellyfin"
+    },
+    {
+      "time": "2026-05-10T03:00:37.996275",
+      "msg": "\ud83d\udee1\ufe0f Guardian: NAS up up 5 weeks, 3 days, 11 hours, 15 minutes, disk 0.44827645%, mem 0.151899"
+    },
+    {
+      "time": "2026-05-10T02:30:36.587404",
+      "msg": "\ud83d\udc33 Containers: 5 running \u2014 qbittorrent, portainer, hopeful_goldstine, netdata, jellyfin"
+    },
+    {
+      "time": "2026-05-10T02:30:36.548164",
+      "msg": "\ud83d\udee1\ufe0f Guardian: NAS up up 5 weeks, 3 days, 10 hours, 45 minutes, disk 0.44827645%, mem 0.151899"
+    },
+    {
+      "time": "2026-05-10T02:00:40.119744",
+      "msg": "\ud83d\udc33 Containers: 5 running \u2014 qbittorrent, portainer, hopeful_goldstine, netdata, jellyfin"
+    },
+    {
+      "time": "2026-05-10T02:00:40.089026",
+      "msg": "\ud83d\udee1\ufe0f Guardian: NAS up up 5 weeks, 3 days, 10 hours, 15 minutes, disk , mem 0.151899"
+    },
+    {
+      "time": "2026-05-10T01:30:37.587763",
+      "msg": "\ud83d\udc33 Containers: 5 running \u2014 qbittorrent, portainer, hopeful_goldstine, netdata, jellyfin"
+    },
+    {
+      "time": "2026-05-10T01:30:37.555112",
+      "msg": "\ud83d\udee1\ufe0f Guardian: NAS up up 5 weeks, 3 days, 9 hours, 45 minutes, disk 0.44827645%, mem 0.151899"
+    },
+    {
+      "time": "2026-05-10T01:01:14.746504",
+      "msg": "\ud83d\udc33 Containers: 5 running \u2014 qbittorrent, portainer, hopeful_goldstine, netdata, jellyfin"
+    },
+    {
+      "time": "2026-05-10T01:01:14.712359",
+      "msg": "\ud83d\udee1\ufe0f Guardian: NAS up up 5 weeks, 3 days, 9 hours, 16 minutes, disk 0.44827645%, mem 0.151899"
+    }
+  ]
+}
