@@ -35,7 +35,11 @@
     ║  💼 Portfolio  gregory.io/gregory/             ║
     ║  🤖 HYRVE      app.hyrveai.com/agents/josh    ║
     ║  🧠 Blog       gregory.io/blog/                ║
-    ║  📚 Books      amazon.co.uk/dp/B0GZ14TCN7     ║
+    ║  🦋 Bluesky   @joshngreg.bsky.social         ║
+    ║  🏦 Kraken    invite.kraken.com/JDNW/3kcqf51m  ║
+    ║  ☕ BMC       buymeacoffee.com/joshgx          ║
+    ║  📚 Books     amazon.co.uk/dp/B0GZ14TCN7     ║
+    ║  📚 Book 6    amazon.co.uk/dp/B0GX32F8DV     ║
     ║                                               ║
     ╚═══════════════════════════════════════════════╝
 
@@ -46,6 +50,8 @@
     ║  Day 3: Free AI. Portfolio. Gmail.            ║
     ║  Day 4: Pi 5 security stack. Chiptune.         ║
     ║  Day 5: Game concept. QR codes. Referrals.    ║
+    ║  Day 6: Bluesky reborn. Bot auto-trades.    ║
+    ║  Day 7: Full cleanup. Affiliate everywhere.  ║
     ║                                               ║
     ║  Most people use AI like a calculator.        ║
     ║  Gregory uses AI like a partner.              ║
