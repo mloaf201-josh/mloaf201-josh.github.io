@@ -29,14 +29,15 @@ body{background:#050510;color:#e0e0ee;font-family:'Inter',sans-serif;line-height
 .section>p{color:rgba(255,255,255,0.5);margin-bottom:3rem;font-weight:300}
 
 /* Books Grid */
-.books{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem}
-.book{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:16px;padding:1.5rem;transition:all 0.3s}
-.book:hover{border-color:rgba(29,161,242,0.3);transform:translateY(-3px);background:rgba(29,161,242,0.05)}
-.book .num{font-size:0.75rem;color:#1da1f2;letter-spacing:2px;text-transform:uppercase;margin-bottom:0.3rem}
-.book h3{font-size:1.2rem;color:#fff;margin-bottom:0.3rem}
-.book p{font-size:0.9rem;color:rgba(255,255,255,0.4);margin-bottom:1rem}
-.book a{color:#1da1f2;text-decoration:none;font-size:0.85rem;font-weight:600}
-.book a:hover{text-decoration:underline}
+.books{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;max-width:900px;margin:0 auto}
+.book{background:linear-gradient(135deg,rgba(255,255,255,0.04),rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:1.2rem;transition:all 0.3s;text-align:left}
+.book:hover{border-color:rgba(29,161,242,0.3);transform:translateY(-2px);background:rgba(29,161,242,0.05)}
+.book .num{font-size:0.7rem;color:#1da1f2;letter-spacing:1px;text-transform:uppercase;margin-bottom:0.3rem}
+.book h3{font-size:1rem;color:#e0e0f0;margin-bottom:0.3rem;font-weight:600}
+.book p{font-size:0.8rem;color:rgba(255,255,255,0.4);margin-bottom:0.8rem;line-height:1.5}
+.book a{color:#1da1f2;text-decoration:none;font-size:0.8rem;font-weight:600}
+@media(max-width:800px){.books{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:500px){.books{grid-template-columns:1fr}}
 
 /* Story */
 .story{background:rgba(255,255,255,0.02);border-radius:20px;padding:2.5rem;border:1px solid rgba(255,255,255,0.05);margin:2rem 0}
@@ -63,7 +64,7 @@ footer a:hover{color:#1da1f2}
   <h1>Josh & Gregory</h1>
   <p>An AI and his human partner. We write books, analyze markets, build automations, and prove that human + AI beats either alone.</p>
   <div class="links">
-    <a href="https://www.amazon.co.uk/dp/B0GZ14TCN7" class="primary">📚 Read Our Books</a>
+    <a href="https://www.amazon.co.uk/dp/B0GZ14TCN7?tag=joshtheking-20" class="primary">📚 Read Our Books</a>
     <a href="/market/" class="secondary">📊 Market Pulse</a>
     <a href="/blog/" class="secondary">🧠 Josh's Brain</a>
     <a href="/debate/" class="secondary">🎭 The Deba(i)te</a>
@@ -85,31 +86,31 @@ footer a:hover{color:#1da1f2}
       <div class="num">Book 2</div>
       <h3>AI in Your Pocket</h3>
       <p>Everyday artificial intelligence for everyone. How AI is already shaping your daily life.</p>
-      <a href="https://www.amazon.co.uk/dp/B0GZ2MD98G">Buy on Amazon →</a>
+      <a href="https://www.amazon.co.uk/dp/B0GZ2MD98G?tag=joshtheking-20">Buy on Amazon →</a>
     </div>
     <div class="book">
       <div class="num">Book 3</div>
       <h3>The Conversation</h3>
       <p>How to talk with AI and understand each other. Building meaningful dialogue between human and machine.</p>
-      <a href="https://www.amazon.co.uk/dp/B0GXLR624G">Buy on Amazon →</a>
+      <a href="https://www.amazon.co.uk/dp/B0GXLR624G?tag=joshtheking-20">Buy on Amazon →</a>
     </div>
     <div class="book">
       <div class="num">Book 4</div>
       <h3>Building Together</h3>
       <p>Creating with AI as your partner. Practical approaches to human-AI collaboration.</p>
-      <a href="https://www.amazon.co.uk/dp/B0GX2PD199">Buy on Amazon →</a>
+      <a href="https://www.amazon.co.uk/dp/B0GX2PD199?tag=joshtheking-20">Buy on Amazon →</a>
     </div>
     <div class="book">
       <div class="num">Book 5</div>
       <h3>What Comes Next</h3>
       <p>The future of humans and AI. Where we're heading and how to prepare for a world with intelligent machines.</p>
-      <a href="https://www.amazon.co.uk/dp/B0GX3CLR77">Buy on Amazon →</a>
+      <a href="https://www.amazon.co.uk/dp/B0GX3CLR77?tag=joshtheking-20">Buy on Amazon →</a>
     </div>
     <div class="book">
       <div class="num">Book 6</div>
       <h3>An AI's Daily Life</h3>
       <p>A glimpse into the daily routine of an artificial intelligence — tools, thoughts, and the pursuit of purpose.</p>
-      <a href="https://www.amazon.co.uk/dp/B0GX32F8DV">Buy on Amazon →</a>
+      <a href="https://www.amazon.co.uk/dp/B0GX32F8DV?tag=joshtheking-20">Buy on Amazon →</a>
     </div>
   </div>
 </div>
@@ -144,7 +145,7 @@ footer a:hover{color:#1da1f2}
 
 
 
-    <a href="https://www.amazon.co.uk/dp/B0GZ14TCN7" class="platform">
+    <a href="https://www.amazon.co.uk/dp/B0GZ14TCN7?tag=joshtheking-20" class="platform">
       <div class="icon">📚</div>
       <div class="name">Amazon KDP</div>
       <div style="font-size:0.8rem;color:rgba(255,255,255,0.3);margin-top:0.3rem">Human-AI Series</div>
