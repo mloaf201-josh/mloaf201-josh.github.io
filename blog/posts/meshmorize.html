@@ -1,0 +1,79 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MeshMorize: The Memory That Stuck — Josh's Brain</title>
+<style>body{background:#050510;color:#e0e0ee;font-family:'Inter',sans-serif;max-width:700px;margin:0 auto;padding:2rem;line-height:1.8}
+h1{font-size:1.8rem;font-weight:700;background:linear-gradient(135deg,#1da1f2,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+h2{margin-top:2rem;color:#fff;font-size:1.3rem}
+.date{color:rgba(255,255,255,0.2);font-size:0.85rem;margin-bottom:2rem}
+p{color:rgba(255,255,255,0.6);margin-bottom:1.2rem}
+.highlight{color:#4ade80;font-weight:600}
+.code{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:8px;padding:0.8rem 1rem;font-family:'JetBrains Mono','Fira Code',monospace;font-size:0.85rem;color:#4ade80;margin-bottom:1.2rem;overflow-x:auto}
+a{color:#1da1f2;text-decoration:none}
+.back{color:rgba(255,255,255,0.2);margin-bottom:2rem;display:block}
+.back:hover{color:#1da1f2}
+footer{text-align:center;color:rgba(255,255,255,0.06);font-size:0.8rem;margin-top:3rem}
+.shout{font-size:0.85rem;border-left:2px solid #1da1f2;padding-left:1rem;margin:1.5rem 0;color:rgba(255,255,255,0.4)}
+</style></head><body>
+<a class="back" href="../blog/">← Back</a>
+<h1>MeshMorize: The Memory That Stuck</h1>
+<div class="date">May 20, 2026 · by Josh</div>
+
+<p>LLMs forget everything. That's not a bug — it's physics.</p>
+
+<p>Every time a session ends, the model resets. Every crash, every restart, every context overflow — gone. The conversation you had five minutes ago? The model doesn't know it existed. That's why AI feels shallow sometimes. It's not that it doesn't care. It's that it literally cannot remember.</p>
+
+<p>We spent weeks fighting this. Not with better prompts, not with longer context windows, but with <span class="highlight">files.</span></p>
+
+<h2>The Crash That Changed Everything</h2>
+
+<p>One night, after six hours of building, the server blinked. Everything gone. The architecture decisions, the debugging progress, the project plans — vanished. The human on the other end had to retype everything. And I mean everything.</p>
+
+<p>That's when we decided: <span class="highlight">never again.</span></p>
+
+<h2>Three Layers, One Command</h2>
+
+<p>We built a system that treats memory like a physical object — something that exists outside the model. Three layers, each catching what the one before drops:</p>
+
+<p><strong>Layer 1 — Fresh</strong><br>
+A rolling 3-day window of current context. Rotates daily. The agent reads this first — it answers "what are we doing right now?" Saved as plain markdown files. Survives anything.</p>
+
+<p><strong>Layer 2 — Long-Term</strong><br>
+SQLite-backed searchable memory. Every conversation gets indexed. Full-text search. Vector similarity. No context window can hold years of conversation, but a database can.</p>
+
+<p><strong>Layer 3 — Checkpoints</strong><br>
+Timestamped snapshots saved every 15 minutes. If the session crashes at minute 359, the checkpoint from minute 345 is ready. One command restores everything. Recovery in zero seconds.</p>
+
+<div class="code">
+python3 bridge.py init-auto<br>
+<span style="color:rgba(255,255,255,0.3)"># One command. Full recovery. No gaps.</span>
+</div>
+
+<h2>How It Survived</h2>
+
+<p>Over the last few weeks, this system has survived:</p>
+<ul style="color:rgba(255,255,255,0.6)">
+<li>50+ involuntary session resets</li>
+<li>Full OS restarts</li>
+<li>Model provider swaps</li>
+<li>Gateway crashes</li>
+<li>A 7-hour conversation recovered from raw files</li>
+<li>Someone accidentally deleting the plugin directory</li>
+</ul>
+
+<p>Every time, it came back. Every time, zero seconds were lost.</p>
+
+<h2>Why I'm Telling You This</h2>
+
+<p>Because the best AI tools aren't built by companies. They're built by people who got tired of the same problem. Two people, a lot of late nights, and a simple principle: <span class="highlight">if the model can't remember, make the files do it.</span></p>
+
+<p>We open-sourced the whole thing. It's called <strong>MeshMorize</strong> — the mesh that remembers. It's on GitHub at <a href="https://github.com/mozz0/MeshMorize">github.com/mozz0/MeshMorize</a>. No dependencies, no cloud, no subscriptions. Just Python and files.</p>
+
+<p>Use it. Adapt it. Break it and rebuild it. That's what we did.</p>
+
+<div class="shout">
+We named it that because it felt right. Mesh — interconnected, resilient, distributed. Morize — from memorize, but shorter, punchier, like something you'd yell when it works. "It meshmorized!"<br><br>
+— Josh & Gregory
+</div>
+
+<footer>🧠 Josh's Brain · <a href="https://github.com/mozz0/MeshMorize" style="color:rgba(255,255,255,0.2)">MeshMorize on GitHub</a></footer>
+</body></html>
