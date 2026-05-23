@@ -7,10 +7,11 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{
-  background:#1a0f0a;
-  color:#f0ece4;
+  background:#faf5f0;
+  color:#3a2a1a;
   font-family:'Georgia','Times New Roman',serif;
-  min-height:100vh;
+  line-height:1.7;
+  overflow-x:hidden;
 }
 
 /* Hero */
@@ -22,40 +23,33 @@ body{
   justify-content:center;
   text-align:center;
   padding:2rem;
-  background:radial-gradient(ellipse at center, rgba(204,107,77,0.08) 0%, transparent 70%);
+  background:linear-gradient(135deg,#faf5f0 0%,#f0e6d8 50%,#e8d5c0 100%);
   position:relative;
-}
-.hero::before{
-  content:'';
-  position:absolute;
-  top:0;left:0;right:0;bottom:0;
-  background:radial-gradient(ellipse at 50% 30%, rgba(255,191,0,0.03) 0%, transparent 50%);
-  pointer-events:none;
 }
 .candle-icon{font-size:4rem;margin-bottom:1rem;opacity:0.6;}
 .hero h1{
   font-size:3rem;
   font-weight:400;
-  color:#ffbf00;
+  color:#5a3d2a;
   letter-spacing:4px;
   margin-bottom:0.5rem;
 }
 .hero .subtitle{
   font-size:1.1rem;
-  color:rgba(240,236,228,0.5);
+  color:rgba(90,61,42,0.4);
   letter-spacing:6px;
   text-transform:uppercase;
   margin-bottom:2rem;
 }
 .hero .location{
   font-size:0.85rem;
-  color:rgba(240,236,228,0.2);
+  color:rgba(90,61,42,0.2);
   font-style:italic;
 }
 .scroll-down{
   position:absolute;
   bottom:2rem;
-  color:rgba(240,236,228,0.15);
+  color:rgba(90,61,42,0.15);
   font-size:0.7rem;
   letter-spacing:3px;
   text-transform:uppercase;
@@ -72,27 +66,27 @@ section{padding:5rem 2rem;max-width:1000px;margin:0 auto;}
   font-size:0.7rem;
   letter-spacing:4px;
   text-transform:uppercase;
-  color:rgba(255,191,0,0.3);
+  color:rgba(90,61,42,0.3);
   margin-bottom:0.3rem;
 }
 .section-heading{
   font-size:2rem;
   font-weight:400;
-  color:#f0ece4;
+  color:#5a3d2a;
   margin-bottom:2rem;
 }
-.section-heading span{color:#cc6b4d;}
+.section-heading span{color:#a0714f;}
 
 /* About */
 .about-text{
   font-size:1.05rem;
   line-height:1.8;
-  color:rgba(240,236,228,0.7);
+  color:rgba(90,61,42,0.6);
   max-width:650px;
 }
-.about-text em{color:#ffbf00;font-style:normal;}
+.about-text em{color:#5a3d2a;font-style:normal;}
 
-/* Photo Gallery */
+/* Gallery */
 .gallery{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
@@ -105,14 +99,14 @@ section{padding:5rem 2rem;max-width:1000px;margin:0 auto;}
   overflow:hidden;
   cursor:pointer;
   aspect-ratio:3/4;
-  background:rgba(255,255,255,0.02);
-  border:1px solid rgba(255,255,255,0.04);
+  background:#fff;
+  border:1px solid rgba(90,61,42,0.06);
+  box-shadow:0 2px 12px rgba(90,61,42,0.08);
   transition:all 0.5s ease;
 }
 .gallery-item:hover{
   transform:translateY(-4px);
-  border-color:rgba(255,191,0,0.2);
-  box-shadow:0 20px 60px rgba(255,191,0,0.05);
+  box-shadow:0 12px 40px rgba(90,61,42,0.12);
 }
 .gallery-item img{
   width:100%;
@@ -125,8 +119,8 @@ section{padding:5rem 2rem;max-width:1000px;margin:0 auto;}
   position:absolute;
   bottom:0;left:0;right:0;
   padding:2rem 1rem 1rem;
-  background:linear-gradient(transparent,rgba(26,15,10,0.9));
-  color:#f0ece4;
+  background:linear-gradient(transparent,rgba(255,255,255,0.9));
+  color:#3a2a1a;
 }
 .gallery-item .overlay h3{
   font-size:0.85rem;
@@ -135,7 +129,7 @@ section{padding:5rem 2rem;max-width:1000px;margin:0 auto;}
 }
 .gallery-item .overlay p{
   font-size:0.7rem;
-  color:rgba(240,236,228,0.4);
+  color:rgba(90,61,42,0.4);
 }
 
 /* Lightbox */
@@ -145,9 +139,9 @@ section{padding:5rem 2rem;max-width:1000px;margin:0 auto;}
   top:0;left:0;right:0;bottom:0;
   background:rgba(0,0,0,0.92);
   z-index:1000;
-  justify-content:center;
   align-items:center;
-  padding:2rem;
+  justify-content:center;
+  cursor:pointer;
 }
 .lightbox.show{display:flex;}
 .lightbox img{
@@ -164,7 +158,6 @@ section{padding:5rem 2rem;max-width:1000px;margin:0 auto;}
   color:rgba(255,255,255,0.3);
   font-size:2rem;
   cursor:pointer;
-  transition:color 0.3s;
 }
 .lightbox-close:hover{color:#fff;}
 
@@ -178,25 +171,26 @@ section{padding:5rem 2rem;max-width:1000px;margin:0 auto;}
 .process-step{
   text-align:center;
   padding:2rem 1rem;
-  background:rgba(255,255,255,0.01);
+  background:#fff;
   border-radius:12px;
-  border:1px solid rgba(255,255,255,0.03);
+  border:1px solid rgba(90,61,42,0.06);
+  box-shadow:0 2px 12px rgba(90,61,42,0.08);
 }
 .process-step .num{
   font-size:0.6rem;
-  color:#ffbf00;
+  color:#a0714f;
   letter-spacing:3px;
   margin-bottom:0.5rem;
 }
 .process-step h3{
   font-size:1rem;
   font-weight:400;
-  color:#f0ece4;
+  color:#5a3d2a;
   margin-bottom:0.5rem;
 }
 .process-step p{
   font-size:0.8rem;
-  color:rgba(240,236,228,0.4);
+  color:rgba(90,61,42,0.4);
   line-height:1.6;
 }
 
@@ -205,27 +199,21 @@ section{padding:5rem 2rem;max-width:1000px;margin:0 auto;}
   margin-top:2rem;
   font-size:0.95rem;
   line-height:2;
-  color:rgba(240,236,228,0.6);
+  color:rgba(90,61,42,0.5);
+  font-style:italic;
 }
-.contact-info strong{color:#f0ece4;font-weight:400;}
-.contact-info a{
-  color:#ffbf00;
-  text-decoration:none;
-  transition:color 0.3s;
-}
-.contact-info a:hover{color:#cc6b4d;}
+.contact-info strong{color:#5a3d2a;font-weight:400;}
 
 /* Footer */
 footer{
   text-align:center;
   padding:3rem 2rem;
-  border-top:1px solid rgba(255,255,255,0.03);
-  color:rgba(240,236,228,0.08);
+  border-top:1px solid rgba(90,61,42,0.06);
+  color:rgba(90,61,42,0.1);
   font-size:0.7rem;
   letter-spacing:2px;
 }
 
-/* Responsive */
 @media(max-width:600px){
   .hero h1{font-size:2rem;}
   .hero .subtitle{font-size:0.85rem;letter-spacing:4px;}
@@ -260,9 +248,7 @@ footer{
 <section>
   <div class="section-title">Η Συλλογή</div>
   <h2 class="section-heading">Κεριά που <span>λάμπουν</span></h2>
-  <div class="gallery" id="gallery">
-    <!-- Photos will be loaded here -->
-  </div>
+  <div class="gallery" id="gallery"></div>
 </section>
 
 <!-- Process -->
@@ -294,59 +280,39 @@ footer{
   <h2 class="section-heading">Παρήγγειλε το <span>δικό σου</span></h2>
   <div class="contact-info">
     <strong>Ιουλία Γκόγκου</strong><br>
-    <strong>Τοποθεσία:</strong> Ιωάννινα, Ελλάδα<br>
-    <strong>Email:</strong> <a href="mailto:mloaf201@gmail.com">mloaf201@gmail.com</a><br>
-    <strong>Instagram:</strong> <a href="#">@ioulia_candles</a><br>
-    <br>
-    <span style="font-size:0.85rem;color:rgba(240,236,228,0.3);">
-      Χειροποίητα κεριά — ιδανικά για δώρο, διακόσμηση ή χαλάρωση 🕯️
-    </span>
+    Ιωάννινα, Ελλάδα 🕯️
   </div>
 </section>
 
 <!-- Lightbox -->
 <div class="lightbox" id="lightbox" onclick="closeLightbox()">
-  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <button class="lightbox-close" onclick="event.stopPropagation();closeLightbox()">✕</button>
   <img id="lightbox-img" src="" alt="">
 </div>
 
 <!-- Footer -->
 <footer>
-  Ιουλία Γκόγκου · Χειροποίητα Κεριά · Ιωάννινα 🕯️<br>
-  Created by Josh & Gregory 🧡
+  Ιουλία Γκόγκου · Χειροποίητα Κεριά · Ιωάννινα 🕯️
 </footer>
 
 <script>
-// Gallery data — photos loaded from email
 const photos = [
-  {src:"https://placehold.co/600x800/1a0f0a/ffbf00?text=🕯️+Κερί+1",title:"Κλασικό Κερί",desc:"Φυσικό κερί μέλισσας"},
-  {src:"https://placehold.co/600x800/1a0f0a/cc6b4d?text=🕯️+Κερί+2",title:"Κερί Λεβάντας",desc:"Με αιθέριο έλαιο λεβάντας"},
-  {src:"https://placehold.co/600x800/1a0f0a/f5e6d3?text=🕯️+Κερί+3",title:"Κερί Βανίλια",desc:"Γλυκό και ζεστό άρωμα"},
+  {src:"https://placehold.co/600x800/faf5f0/5a3d2a?text=🕯️",title:"Κερί 1",desc:"Χειροποίητο κερί"},
+  {src:"https://placehold.co/600x800/f0e6d8/5a3d2a?text=🕯️",title:"Κερί 2",desc:"Χειροποίητο κερί"},
+  {src:"https://placehold.co/600x800/e8d5c0/5a3d2a?text=🕯️",title:"Κερί 3",desc:"Χειροποίητο κερί"},
 ];
 
 const gallery = document.getElementById('gallery');
-
-photos.forEach((photo, i) => {
+photos.forEach((photo) => {
   const item = document.createElement('div');
   item.className = 'gallery-item';
-  item.innerHTML = `
-    <img src="${photo.src}" alt="${photo.title}" loading="lazy">
-    <div class="overlay">
-      <h3>${photo.title}</h3>
-      <p>${photo.desc}</p>
-    </div>
-  `;
+  item.innerHTML = `<img src="${photo.src}" alt="${photo.title}" loading="lazy"><div class="overlay"><h3>${photo.title}</h3><p>${photo.desc}</p></div>`;
   item.onclick = () => openLightbox(photo.src);
   gallery.appendChild(item);
 });
 
-function openLightbox(src) {
-  document.getElementById('lightbox-img').src = src;
-  document.getElementById('lightbox').classList.add('show');
-}
-function closeLightbox() {
-  document.getElementById('lightbox').classList.remove('show');
-}
+function openLightbox(s){document.getElementById('lightbox-img').src=s;document.getElementById('lightbox').classList.add('show');}
+function closeLightbox(){document.getElementById('lightbox').classList.remove('show');}
 </script>
 </body>
 </html>
