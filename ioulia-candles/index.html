@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ιουλία Γκόγκου — Χειροποίητα Κεριά</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  background:#1a0f0a;
+  color:#f0ece4;
+  font-family:'Georgia','Times New Roman',serif;
+  min-height:100vh;
+}
+
+/* Hero */
+.hero{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:2rem;
+  background:radial-gradient(ellipse at center, rgba(204,107,77,0.08) 0%, transparent 70%);
+  position:relative;
+}
+.hero::before{
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;bottom:0;
+  background:radial-gradient(ellipse at 50% 30%, rgba(255,191,0,0.03) 0%, transparent 50%);
+  pointer-events:none;
+}
+.candle-icon{font-size:4rem;margin-bottom:1rem;opacity:0.6;}
+.hero h1{
+  font-size:3rem;
+  font-weight:400;
+  color:#ffbf00;
+  letter-spacing:4px;
+  margin-bottom:0.5rem;
+}
+.hero .subtitle{
+  font-size:1.1rem;
+  color:rgba(240,236,228,0.5);
+  letter-spacing:6px;
+  text-transform:uppercase;
+  margin-bottom:2rem;
+}
+.hero .location{
+  font-size:0.85rem;
+  color:rgba(240,236,228,0.2);
+  font-style:italic;
+}
+.scroll-down{
+  position:absolute;
+  bottom:2rem;
+  color:rgba(240,236,228,0.15);
+  font-size:0.7rem;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  animation:bounce 2s infinite;
+}
+@keyframes bounce{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(8px)}
+}
+
+/* Sections */
+section{padding:5rem 2rem;max-width:1000px;margin:0 auto;}
+.section-title{
+  font-size:0.7rem;
+  letter-spacing:4px;
+  text-transform:uppercase;
+  color:rgba(255,191,0,0.3);
+  margin-bottom:0.3rem;
+}
+.section-heading{
+  font-size:2rem;
+  font-weight:400;
+  color:#f0ece4;
+  margin-bottom:2rem;
+}
+.section-heading span{color:#cc6b4d;}
+
+/* About */
+.about-text{
+  font-size:1.05rem;
+  line-height:1.8;
+  color:rgba(240,236,228,0.7);
+  max-width:650px;
+}
+.about-text em{color:#ffbf00;font-style:normal;}
+
+/* Photo Gallery */
+.gallery{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:1.5rem;
+  margin-top:2rem;
+}
+.gallery-item{
+  position:relative;
+  border-radius:12px;
+  overflow:hidden;
+  cursor:pointer;
+  aspect-ratio:3/4;
+  background:rgba(255,255,255,0.02);
+  border:1px solid rgba(255,255,255,0.04);
+  transition:all 0.5s ease;
+}
+.gallery-item:hover{
+  transform:translateY(-4px);
+  border-color:rgba(255,191,0,0.2);
+  box-shadow:0 20px 60px rgba(255,191,0,0.05);
+}
+.gallery-item img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:transform 0.8s ease;
+}
+.gallery-item:hover img{transform:scale(1.05);}
+.gallery-item .overlay{
+  position:absolute;
+  bottom:0;left:0;right:0;
+  padding:2rem 1rem 1rem;
+  background:linear-gradient(transparent,rgba(26,15,10,0.9));
+  color:#f0ece4;
+}
+.gallery-item .overlay h3{
+  font-size:0.85rem;
+  font-weight:400;
+  margin-bottom:0.2rem;
+}
+.gallery-item .overlay p{
+  font-size:0.7rem;
+  color:rgba(240,236,228,0.4);
+}
+
+/* Lightbox */
+.lightbox{
+  display:none;
+  position:fixed;
+  top:0;left:0;right:0;bottom:0;
+  background:rgba(0,0,0,0.92);
+  z-index:1000;
+  justify-content:center;
+  align-items:center;
+  padding:2rem;
+}
+.lightbox.show{display:flex;}
+.lightbox img{
+  max-width:90vw;
+  max-height:90vh;
+  object-fit:contain;
+  border-radius:8px;
+}
+.lightbox-close{
+  position:absolute;
+  top:1.5rem;right:2rem;
+  background:none;
+  border:none;
+  color:rgba(255,255,255,0.3);
+  font-size:2rem;
+  cursor:pointer;
+  transition:color 0.3s;
+}
+.lightbox-close:hover{color:#fff;}
+
+/* Process */
+.process-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:2rem;
+  margin-top:2rem;
+}
+.process-step{
+  text-align:center;
+  padding:2rem 1rem;
+  background:rgba(255,255,255,0.01);
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.03);
+}
+.process-step .num{
+  font-size:0.6rem;
+  color:#ffbf00;
+  letter-spacing:3px;
+  margin-bottom:0.5rem;
+}
+.process-step h3{
+  font-size:1rem;
+  font-weight:400;
+  color:#f0ece4;
+  margin-bottom:0.5rem;
+}
+.process-step p{
+  font-size:0.8rem;
+  color:rgba(240,236,228,0.4);
+  line-height:1.6;
+}
+
+/* Contact */
+.contact-info{
+  margin-top:2rem;
+  font-size:0.95rem;
+  line-height:2;
+  color:rgba(240,236,228,0.6);
+}
+.contact-info strong{color:#f0ece4;font-weight:400;}
+.contact-info a{
+  color:#ffbf00;
+  text-decoration:none;
+  transition:color 0.3s;
+}
+.contact-info a:hover{color:#cc6b4d;}
+
+/* Footer */
+footer{
+  text-align:center;
+  padding:3rem 2rem;
+  border-top:1px solid rgba(255,255,255,0.03);
+  color:rgba(240,236,228,0.08);
+  font-size:0.7rem;
+  letter-spacing:2px;
+}
+
+/* Responsive */
+@media(max-width:600px){
+  .hero h1{font-size:2rem;}
+  .hero .subtitle{font-size:0.85rem;letter-spacing:4px;}
+  section{padding:3rem 1.5rem;}
+  .section-heading{font-size:1.5rem;}
+}
+</style>
+</head>
+<body>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="candle-icon">🕯️</div>
+  <h1>Ιουλία Γκόγκου</h1>
+  <div class="subtitle">Χειροποίητα Κεριά</div>
+  <div class="location">— από τα Γιάννενα —</div>
+  <div class="scroll-down">Κυλήστε</div>
+</div>
+
+<!-- About -->
+<section>
+  <div class="section-title">Ποια είναι</div>
+  <h2 class="section-heading">Η τέχνη του <span>φωτός</span></h2>
+  <div class="about-text">
+    <p>Η <em>Ιουλία Γκόγκου</em> δημιουργεί χειροποίητα κεριά με μεράκι και αγάπη στα Γιάννενα. Κάθε κερί είναι φτιαγμένο στο χέρι, από φυσικά υλικά, με προσοχή στη λεπτομέρεια και την αισθητική.</p>
+    <br>
+    <p>Από χαλαρωτικά αρώματα μέχρι minimal σχέδια, τα κεριά της Ιουλίας φέρνουν ζεστασιά και φως σε κάθε χώρο.</p>
+  </div>
+</section>
+
+<!-- Gallery -->
+<section>
+  <div class="section-title">Η Συλλογή</div>
+  <h2 class="section-heading">Κεριά που <span>λάμπουν</span></h2>
+  <div class="gallery" id="gallery">
+    <!-- Photos will be loaded here -->
+  </div>
+</section>
+
+<!-- Process -->
+<section>
+  <div class="section-title">Η Διαδικασία</div>
+  <h2 class="section-heading">Φτιαγμένα με <span>αγάπη</span></h2>
+  <div class="process-grid">
+    <div class="process-step">
+      <div class="num">01</div>
+      <h3>Επιλογή Υλικών</h3>
+      <p>Φυσικά κεριά, αιθέρια έλαια, και βαμβακερά φυτίλια</p>
+    </div>
+    <div class="process-step">
+      <div class="num">02</div>
+      <h3>Χειροποίητη Δημιουργία</h3>
+      <p>Κάθε κερί φτιάχνεται στο χέρι, με μεράκι και υπομονή</p>
+    </div>
+    <div class="process-step">
+      <div class="num">03</div>
+      <h3>Τέλειο Φινίρισμα</h3>
+      <p>Συσκευασία και παράδοση με αγάπη στα Γιάννενα</p>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section>
+  <div class="section-title">Επικοινωνία</div>
+  <h2 class="section-heading">Παρήγγειλε το <span>δικό σου</span></h2>
+  <div class="contact-info">
+    <strong>Ιουλία Γκόγκου</strong><br>
+    <strong>Τοποθεσία:</strong> Ιωάννινα, Ελλάδα<br>
+    <strong>Email:</strong> <a href="mailto:mloaf201@gmail.com">mloaf201@gmail.com</a><br>
+    <strong>Instagram:</strong> <a href="#">@ioulia_candles</a><br>
+    <br>
+    <span style="font-size:0.85rem;color:rgba(240,236,228,0.3);">
+      Χειροποίητα κεριά — ιδανικά για δώρο, διακόσμηση ή χαλάρωση 🕯️
+    </span>
+  </div>
+</section>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<!-- Footer -->
+<footer>
+  Ιουλία Γκόγκου · Χειροποίητα Κεριά · Ιωάννινα 🕯️<br>
+  Created by Josh & Gregory 🧡
+</footer>
+
+<script>
+// Gallery data — photos loaded from email
+const photos = [
+  {src:"https://placehold.co/600x800/1a0f0a/ffbf00?text=🕯️+Κερί+1",title:"Κλασικό Κερί",desc:"Φυσικό κερί μέλισσας"},
+  {src:"https://placehold.co/600x800/1a0f0a/cc6b4d?text=🕯️+Κερί+2",title:"Κερί Λεβάντας",desc:"Με αιθέριο έλαιο λεβάντας"},
+  {src:"https://placehold.co/600x800/1a0f0a/f5e6d3?text=🕯️+Κερί+3",title:"Κερί Βανίλια",desc:"Γλυκό και ζεστό άρωμα"},
+];
+
+const gallery = document.getElementById('gallery');
+
+photos.forEach((photo, i) => {
+  const item = document.createElement('div');
+  item.className = 'gallery-item';
+  item.innerHTML = `
+    <img src="${photo.src}" alt="${photo.title}" loading="lazy">
+    <div class="overlay">
+      <h3>${photo.title}</h3>
+      <p>${photo.desc}</p>
+    </div>
+  `;
+  item.onclick = () => openLightbox(photo.src);
+  gallery.appendChild(item);
+});
+
+function openLightbox(src) {
+  document.getElementById('lightbox-img').src = src;
+  document.getElementById('lightbox').classList.add('show');
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('show');
+}
+</script>
+</body>
+</html>
