@@ -1,203 +1,272 @@
 <!DOCTYPE html><html lang="en"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Gregory Athanasiou — Portfolio</title>
+<title>Γρηγόρης Αθανασίου — Portfolio</title>
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{background:#050510;color:#e0e0ee;font-family:'Inter','Segoe UI',sans-serif;overflow-x:hidden}
+body{background:#050510;color:#e0e0ee;font-family:'Inter',sans-serif;overflow-x:hidden}
 
-/* NEURON CANVAS */
-#neuro-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:0.3}
+/* NEURON CANVAS — improved */
+#neuro-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:0.35}
 
-/* HEADER */
+/* BG glow */
+.bg-glow{position:fixed;width:600px;height:600px;border-radius:50%;pointer-events:none;z-index:0}
+.bg-glow.tl{background:radial-gradient(circle,rgba(29,161,242,0.05),transparent 70%);top:-200px;right:-200px}
+.bg-glow.br{background:radial-gradient(circle,rgba(168,85,247,0.04),transparent 70%);bottom:-200px;left:-200px}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:14px 28px;background:rgba(5,5,16,0.7);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,0.03)}
+nav .name{font-weight:700;font-size:14px;color:#fff;letter-spacing:-0.3px}
+nav .nav-links{display:flex;gap:20px}
+nav .nav-links a{color:rgba(255,255,255,0.25);text-decoration:none;font-size:12px;font-weight:500;transition:color 0.2s;letter-spacing:0.3px}
+nav .nav-links a:hover{color:rgba(255,255,255,0.6)}
+nav .nav-links .active{color:rgba(29,161,242,0.7)}
+
+/* HERO */
 header{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem}
-header h1{font-size:3rem;font-weight:800;color:#fff;letter-spacing:-2px;margin-bottom:0.3rem}
-header h1 span{background:linear-gradient(135deg,#1da1f2,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-header .tagline{font-size:1.1rem;color:rgba(255,255,255,0.3);margin-bottom:2rem}
-header .scroll-hint{position:absolute;bottom:2rem;color:rgba(255,255,255,0.15);font-size:0.75rem;animation:bounce 2s infinite}
-@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+header .greeting{font-size:0.75rem;text-transform:uppercase;letter-spacing:3px;color:rgba(29,161,242,0.4);margin-bottom:1rem}
+header h1{font-size:clamp(2.5rem,5vw,4.5rem);font-weight:800;color:#fff;letter-spacing:-0.03em;line-height:1.1;margin-bottom:0.5rem}
+header h1 span{background:linear-gradient(135deg,#1da1f2,#a855f7,#1da1f2);background-size:200% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:shift 6s ease infinite}
+@keyframes shift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+header .tagline{font-size:1.05rem;color:rgba(255,255,255,0.25);font-weight:400;margin-bottom:0.5rem;max-width:500px}
+header .meta{font-size:0.8rem;color:rgba(255,255,255,0.12)}
+header .scroll-hint{position:absolute;bottom:2.5rem;display:flex;flex-direction:column;align-items:center;gap:4px;color:rgba(255,255,255,0.1);font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;animation:bounce 2s ease-in-out infinite}
+header .scroll-hint .line{width:1px;height:28px;background:linear-gradient(to bottom,rgba(255,255,255,0.15),transparent)}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
 
 /* SECTIONS */
-section{position:relative;z-index:1;max-width:800px;margin:0 auto;padding:4rem 2rem}
-.section-title{font-size:0.7rem;text-transform:uppercase;letter-spacing:3px;color:rgba(255,255,255,0.15);margin-bottom:1.5rem;border-top:1px solid rgba(255,255,255,0.04);padding-top:1rem}
+section{position:relative;z-index:1;max-width:780px;margin:0 auto;padding:5rem 2rem}
+.section-title{font-size:0.65rem;text-transform:uppercase;letter-spacing:2.5px;color:rgba(255,255,255,0.12);margin-bottom:0.5rem}
+.section-bar{width:32px;height:2px;background:rgba(29,161,242,0.3);margin-bottom:1.5rem;border-radius:2px}
 
-/* EXPERIENCE */
-.timeline{position:relative}
-.timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:rgba(255,255,255,0.06)}
-.job{padding:0 0 2rem 1.5rem;position:relative;opacity:0;transform:translateX(-10px);transition:all 0.6s}
+/* ABOUT */
+#about p{font-size:0.9rem;color:rgba(255,255,255,0.45);line-height:1.8;margin-bottom:1rem}
+#about .highlight{color:rgba(255,255,255,0.7)}
+.quick-links{display:flex;gap:10px;flex-wrap:wrap;margin-top:2rem}
+.quick-links a{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;border:1px solid rgba(255,255,255,0.05);background:rgba(255,255,255,0.02);color:rgba(255,255,255,0.5);text-decoration:none;font-size:0.8rem;transition:all 0.2s}
+.quick-links a:hover{border-color:rgba(29,161,242,0.2);background:rgba(29,161,242,0.04);color:rgba(255,255,255,0.7);transform:translateY(-1px)}
+
+/* EXPERIENCE TIMELINE */
+.timeline{position:relative;padding-left:20px}
+.timeline::before{content:'';position:absolute;left:0;top:8px;bottom:8px;width:1px;background:linear-gradient(to bottom,rgba(29,161,242,0.2),rgba(168,85,247,0.1),transparent)}
+.job{padding:0 0 1.8rem 1.2rem;position:relative;opacity:0;transform:translateX(-8px);transition:all 0.5s ease}
 .job.visible{opacity:1;transform:translateX(0)}
-.job::before{content:'';position:absolute;left:-3px;top:4px;width:6px;height:6px;border-radius:50%;background:#1da1f2}
-.job .date{font-size:0.65rem;color:rgba(255,255,255,0.2);text-transform:uppercase;letter-spacing:1px;margin-bottom:0.2rem}
-.job .role{font-size:1rem;font-weight:600;color:#fff;margin-bottom:0.1rem}
-.job .company{font-size:0.85rem;color:#1da1f2;margin-bottom:0.3rem}
-.job .desc{font-size:0.85rem;color:rgba(255,255,255,0.4);line-height:1.6}
+.job::before{content:'';position:absolute;left:-4px;top:6px;width:7px;height:7px;border-radius:50%;background:rgba(29,161,242,0.3);border:1px solid rgba(29,161,242,0.15);transition:background 0.3s}
+.job:hover::before{background:rgba(29,161,242,0.6)}
+.job .date{font-size:0.6rem;color:rgba(255,255,255,0.15);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:0.15rem}
+.job .role{font-size:1rem;font-weight:600;color:#fff;margin-bottom:0.05rem}
+.job .company{font-size:0.8rem;color:rgba(29,161,242,0.5);margin-bottom:0.2rem}
+.job .desc{font-size:0.8rem;color:rgba(255,255,255,0.3);line-height:1.6}
 
 /* SKILLS */
-.skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:0.7rem}
-.skill-group{margin-bottom:0.5rem}
-.skill-group .cat{font-size:0.65rem;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,0.2);margin-bottom:0.4rem}
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem}
+.skill-group .cat{font-size:0.6rem;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,0.15);margin-bottom:0.4rem}
 .skill-group .tags{display:flex;flex-wrap:wrap;gap:0.3rem}
-.skill-group .tag{font-size:0.75rem;padding:0.2rem 0.6rem;border-radius:4px;background:rgba(29,161,242,0.08);border:1px solid rgba(29,161,242,0.12);color:rgba(255,255,255,0.6)}
+.skill-group .tag{font-size:0.72rem;padding:0.2rem 0.65rem;border-radius:4px;background:rgba(29,161,242,0.05);border:1px solid rgba(29,161,242,0.08);color:rgba(255,255,255,0.4);transition:all 0.2s}
+.skill-group .tag:hover{background:rgba(29,161,242,0.1);border-color:rgba(29,161,242,0.2);color:rgba(255,255,255,0.6)}
+.lang-info{display:flex;gap:1rem;justify-content:center;font-size:0.7rem;color:rgba(255,255,255,0.12);margin-top:1rem}
 
 /* CONTACT */
-.contact-links{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center}
-.contact-links a{padding:0.6rem 1.2rem;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02);color:#e0e0ee;text-decoration:none;font-size:0.85rem;transition:all 0.3s}
-.contact-links a:hover{border-color:#1da1f2;background:rgba(29,161,242,0.06);transform:translateY(-2px)}
+.contact-links{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.contact-links a{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:rgba(255,255,255,0.02);color:rgba(255,255,255,0.5);text-decoration:none;font-size:0.85rem;transition:all 0.2s}
+.contact-links a:hover{border-color:rgba(29,161,242,0.15);background:rgba(29,161,242,0.04);color:rgba(255,255,255,0.7);transform:translateY(-1px)}
 
-/* BUSINESS CARD PREVIEW */
-.card-preview{margin-top:2rem;text-align:center}
-.card-preview a{color:#1da1f2;font-size:0.85rem;text-decoration:none}
+/* FOOTER */
+footer{text-align:center;padding:2rem;color:rgba(255,255,255,0.04);font-size:0.65rem;position:relative;z-index:1;letter-spacing:0.5px}
 
-footer{text-align:center;padding:2rem;color:rgba(255,255,255,0.06);font-size:0.7rem;position:relative;z-index:1}
+@media(max-width:600px){
+  nav .nav-links{display:none}
+  section{padding:3rem 1.2rem}
+}
 </style></head><body>
 
 <canvas id="neuro-canvas"></canvas>
+<div class="bg-glow tl"></div>
+<div class="bg-glow br"></div>
+
+<nav>
+  <span class="name">Γρ. Αθανασίου</span>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#experience">Experience</a>
+    <a href="#skills">Skills</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
 
 <header>
+  <div class="greeting">IT Professional · 20+ Years</div>
   <h1>Γρηγόρης <span>Αθανασίου</span></h1>
-  <div class="tagline">IT Professional · Systems Support · Network Specialist</div>
-  <div class="tagline" style="font-size:0.85rem;color:rgba(255,255,255,0.2)">Ioannina, Greece · +30 694 317 5944 · mozz0@yandex.com</div>
-  <div class="scroll-hint">↓ scroll</div>
+  <p class="tagline">Network specialist. Systems support. Builder of things that work.</p>
+  <p class="meta">+30 694 317 5944 · mozz0@yandex.com</p>
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="line"></div>
+  </div>
 </header>
 
-<!-- ABOUT -->
 <section id="about">
-  <div class="section-title">👤 About Me</div>
-  <p style="font-size:0.9rem;color:rgba(255,255,255,0.5);line-height:1.8;margin-bottom:1.5rem">
-    IT professional with over 20 years of experience in network support, technical maintenance,
-    and department management. From FORTHnet technical assistant to MediaMarkt supervisor.
-    From logistics in the Netherlands to building AI trading bots at home in Ioannina.
+  <div class="section-title">About</div>
+  <div class="section-bar"></div>
+  <p>
+    <span class="highlight">Twenty years</span> in IT — from FORTHnet network maintenance to MediaMarkt department supervisor. From logistics in the Netherlands to building AI trading bots at home. The throughline: <span class="highlight">I make things run</span>.
   </p>
-  <p style="font-size:0.9rem;color:rgba(255,255,255,0.3);line-height:1.8;margin-bottom:2rem">
-    I work with my AI partner Josh — we build tools, trade crypto, and create things.<br>
-    We believe machine intelligence + human intuition can win.
+  <p>
+    I've worked with networks, servers, POS systems, thermal printers, tax mechanisms, and everything in between. These days I work alongside <span class="highlight">Josh</span>, my AI partner — building tools, automating workflows, trading crypto, and pushing what's possible when human intuition meets machine intelligence.
   </p>
-  <div class="contact-links" style="margin-bottom:3rem">
-    <a href="https://bsky.app/profile/joshngreg.bsky.social">🦋 Bluesky</a>
-    <a href="https://invite.kraken.com/JDNW/3kcqf51m">🏦 Kraken €200</a>
+  <div class="quick-links">
+    <a href="https://github.com/mloaf201-josh">🐙 GitHub</a>
+    <a href="https://mloaf201-josh.github.io/blog/">📝 Blog</a>
+    <a href="https://mloaf201-josh.github.io/gregory/links.html">🔗 Links</a>
     <a href="https://buymeacoffee.com/joshgx">☕ Buy Me a Coffee</a>
-    <a href="https://mloaf201-josh.github.io/gregory/links.html">🔗 All Links</a>
+    <a href="card.html" target="_blank">📇 Business Card</a>
+    <a href="cv-gregory.pdf" download>📄 Download CV</a>
   </div>
 </section>
 
-<!-- EXPERIENCE -->
 <section id="experience">
-  <div class="section-title">📌 Experience</div>
+  <div class="section-title">Experience</div>
+  <div class="section-bar"></div>
   <div class="timeline">
-    <div class="job"><div class="date">Mar 2020 — Present</div><div class="role">Department Supervisor</div><div class="company">Public — MediaMarkt, Rhodes (currently in Ioannina)</div><div class="desc">Managing the general department at the Rhodes store.</div></div>
-    <div class="job"><div class="date">Oct 2019 — Feb 2020</div><div class="role">Logistics Operator</div><div class="company">Syncreon Logistics — Dell, Tilburg Netherlands</div><div class="desc">Worked in Dell's logistics warehouse operations.</div></div>
-    <div class="job"><div class="date">2017 — 2018</div><div class="role">Technical Support</div><div class="company">Kotsovolos — Dixons S.A., Rhodes</div><div class="desc">Technical support at a franchise store.</div></div>
-    <div class="job"><div class="date">2012 — 2017</div><div class="role">IT & Network Support</div><div class="company">Planet Internet Stations</div><div class="desc">Computer and network support for the local internet cafe branch.</div></div>
-    <div class="job"><div class="date">2007 — 2012</div><div class="role">IT & Network Support</div><div class="company">B'nB Internet Stations, Ioannina</div><div class="desc">Computer and network support at a well-known internet cafe chain.</div></div>
-    <div class="job"><div class="date">Feb 2005 — Nov 2007</div><div class="role">Network Maintenance Assistant</div><div class="company">FORTHnet, Igoumenitsa</div><div class="desc">Worked at the PoP Igoumenitsa as assistant maintainer of the FORTHnet network.</div></div>
-    <div class="job"><div class="date">2004 — 2005</div><div class="role">Certified Tax Equipment Technician</div><div class="company">Daskalakis S.A., Igoumenitsa</div><div class="desc">Authorized tax mechanism technician for the Daskalakis Group with personal ID and tax office stamp.</div></div>
-    <div class="job"><div class="date">2003 — 2007</div><div class="role">Exclusive Technical Support</div><div class="company">FORTH-crs</div><div class="desc">Exclusive technical support for FORTHcrs shipping ticket systems. Specialized in thermal printers.</div></div>
+    <div class="job"><div class="date">Mar 2020 — Present</div><div class="role">Department Supervisor</div><div class="company">Public — MediaMarkt</div><div class="desc">Managing department operations, inventory, and team coordination at the Rhodes store.</div></div>
+    <div class="job"><div class="date">Oct 2019 — Feb 2020</div><div class="role">Logistics Operator</div><div class="company">Syncreon Logistics — Dell, Tilburg Netherlands</div><div class="desc">Managed Dell logistics operations in a fast-paced European warehouse environment.</div></div>
+    <div class="job"><div class="date">2017 — 2018</div><div class="role">Technical Support</div><div class="company">Kotsovolos — Dixons S.A.</div><div class="desc">Customer-facing technical support and troubleshooting at the Rhodes franchise.</div></div>
+    <div class="job"><div class="date">2012 — 2017</div><div class="role">IT & Network Support</div><div class="company">Planet Internet Stations</div><div class="desc">Full-stack IT support — workstations, networks, servers for the local internet cafe chain.</div></div>
+    <div class="job"><div class="date">2007 — 2012</div><div class="role">IT & Network Support</div><div class="company">B'nB Internet Stations</div><div class="desc">Network and computer systems support for a well-known Greek internet cafe brand.</div></div>
+    <div class="job"><div class="date">Feb 2005 — Nov 2007</div><div class="role">Network Maintenance Assistant</div><div class="company">FORTHnet — PoP Igoumenitsa</div><div class="desc">Assistant maintainer of the FORTHnet network infrastructure at the Point of Presence in Igoumenitsa.</div></div>
+    <div class="job"><div class="date">2004 — 2005</div><div class="role">Certified Tax Equipment Technician</div><div class="company">Daskalakis S.A.</div><div class="desc">Authorized tax mechanism technician with personal accreditation for the Daskalakis Group.</div></div>
+    <div class="job"><div class="date">2003 — 2007</div><div class="role">Exclusive Technical Support</div><div class="company">FORTHcrs</div><div class="desc">Exclusive support for FORTHcrs shipping ticket systems. Thermal printer specialist.</div></div>
   </div>
 </section>
 
-<!-- SKILLS -->
 <section id="skills">
-  <div class="section-title">⚡ Skills</div>
+  <div class="section-title">Skills</div>
+  <div class="section-bar"></div>
   <div class="skills-grid">
-    <div><div class="skill-group"><div class="cat">Systems</div><div class="tags"><span class="tag">Windows (98–11)</span><span class="tag">Linux (Arch, Debian)</span><span class="tag">Mac OS</span><span class="tag">MySQL</span><span class="tag">Database Design</span></div></div></div>
-    <div><div class="skill-group"><div class="cat">Web Development</div><div class="tags"><span class="tag">HTML/CSS</span><span class="tag">PHP</span><span class="tag">Laravel</span><span class="tag">WordPress</span><span class="tag">Joomla</span></div></div></div>
-    <div><div class="skill-group"><div class="cat">Office & Tools</div><div class="tags"><span class="tag">Excel</span><span class="tag">Access</span><span class="tag">PowerPoint</span><span class="tag">Open/Libre Office</span><span class="tag">Publisher</span></div></div></div>
-    <div><div class="skill-group"><div class="cat">Other</div><div class="tags"><span class="tag">Arduino</span><span class="tag">Microcomputing</span><span class="tag">Robotics</span><span class="tag">Network Admin</span></div></div></div>
+    <div><div class="skill-group"><div class="cat">Systems & Networks</div><div class="tags"><span class="tag">Windows (98–11)</span><span class="tag">Linux (Arch, Debian)</span><span class="tag">Mac OS</span><span class="tag">Network Admin</span><span class="tag">MySQL</span><span class="tag">Database Design</span></div></div></div>
+    <div><div class="skill-group"><div class="cat">Development</div><div class="tags"><span class="tag">HTML/CSS</span><span class="tag">PHP</span><span class="tag">Laravel</span><span class="tag">WordPress</span><span class="tag">Joomla</span><span class="tag">Python</span><span class="tag">AI Tools</span></div></div></div>
+    <div><div class="skill-group"><div class="cat">Office & Tools</div><div class="tags"><span class="tag">Excel</span><span class="tag">Access</span><span class="tag">PowerPoint</span><span class="tag">LibreOffice</span><span class="tag">Publisher</span></div></div></div>
+    <div><div class="skill-group"><div class="cat">Hardware & More</div><div class="tags"><span class="tag">Arduino</span><span class="tag">Microcomputing</span><span class="tag">Robotics</span><span class="tag">POS Systems</span><span class="tag">Thermal Printers</span></div></div></div>
   </div>
-  <div style="margin-top:1rem;display:flex;gap:0.5rem;flex-wrap:wrap;justify-content:center">
-    <span style="font-size:0.7rem;color:rgba(255,255,255,0.15)">English: Proficiency</span>
-    <span style="font-size:0.7rem;color:rgba(255,255,255,0.15)">·</span>
-    <span style="font-size:0.7rem;color:rgba(255,255,255,0.15)">Greek: Native</span>
+  <div class="lang-info">
+    <span>🇬🇷 Greek: Native</span>
+    <span>🇬🇧 English: Proficient</span>
   </div>
 </section>
 
-<!-- EDUCATION -->
 <section id="education">
-  <div class="section-title">🎓 Education</div>
+  <div class="section-title">Education</div>
+  <div class="section-bar"></div>
   <div class="job visible"><div class="date">2002 — 2005</div><div class="role">IT Degree</div><div class="company">Technical Lyceum of Igoumenitsa</div><div class="desc">Second-level diploma in Information Technology.</div></div>
-  <div style="margin-top:1.5rem"><div class="section-title" style="border-top:none;padding-top:0">📜 Seminars</div>
-  <div style="display:flex;gap:1rem;flex-wrap:wrap;font-size:0.85rem;color:rgba(255,255,255,0.4)">
+  <div style="margin-top:1.5rem"><div class="section-title" style="margin-bottom:0.5rem">Seminars</div>
+  <div style="display:flex;gap:1.2rem;flex-wrap:wrap;font-size:0.8rem;color:rgba(255,255,255,0.3)">
     <span>Ecorama (2004–2006)</span><span>WinERA (2004)</span><span>Tradesoft</span>
   </div></div>
 </section>
 
-<!-- CONTACT -->
 <section id="contact">
-  <div class="section-title">📬 Contact</div>
+  <div class="section-title">Contact</div>
+  <div class="section-bar"></div>
   <div class="contact-links">
     <a href="tel:+306943175944">📞 +30 694 317 5944</a>
     <a href="mailto:mozz0@yandex.com">✉️ mozz0@yandex.com</a>
     <a href="card.html" target="_blank">📇 Business Card</a>
     <a href="cv-gregory.pdf" download>📄 Download CV</a>
-  </div>
-  <div class="card-preview">
-    <p style="font-size:0.8rem;color:rgba(255,255,255,0.2);margin-top:1rem">Digital business card also available — <a href="card.html">open here</a></p>
+    <a href="https://github.com/mloaf201-josh">🐙 GitHub</a>
+    <a href="https://mloaf201-josh.github.io/blog/">📝 Blog</a>
   </div>
 </section>
 
-<footer>© 2026 Gregory Athanasiou · Built by Josh</footer>
+<footer>© 2026 · Built by Josh 🎯</footer>
 
 <script>
-// NEURON NETWORK ANIMATION
-const canvas = document.getElementById('neuro-canvas');
-const ctx = canvas.getContext('2d');
-let w, h, neurons = [], mouse = {x:-999,y:-999};
+// NEURON NETWORK — v2 (better)
+const canvas=document.getElementById('neuro-canvas');
+const ctx=canvas.getContext('2d');
+let W,H,neurons=[],mouse={x:-999,y:-999};
 
-function resize(){w=canvas.width=window.innerWidth; h=canvas.height=window.innerHeight}
-window.addEventListener('resize', resize);
-resize();
+function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight}
+window.addEventListener('resize',resize); resize();
 
 class Neuron{
-  constructor(){this.x=Math.random()*w; this.y=Math.random()*h; this.vx=(Math.random()-0.5)*0.5; this.vy=(Math.random()-0.5)*0.5; this.r=1.5+Math.random()*2}
+  constructor(){
+    this.x=Math.random()*W;this.y=Math.random()*H;
+    this.vx=(Math.random()-0.5)*0.4;this.vy=(Math.random()-0.5)*0.4;
+    this.r=1+Math.random()*2.5;
+    this.pulse=Math.random()*Math.PI*2;
+    this.pulseSpeed=0.01+Math.random()*0.02;
+    this.hue=210+Math.random()*40;
+  }
   update(){
-    this.x+=this.vx; this.y+=this.vy;
-    if(this.x<0||this.x>w)this.vx*=-1;
-    if(this.y<0||this.y>h)this.vy*=-1;
+    this.x+=this.vx;this.y+=this.vy;
+    if(this.x<0||this.x>W)this.vx*=-1;
+    if(this.y<0||this.y>H)this.vy*=-1;
+    this.pulse+=this.pulseSpeed;
   }
   draw(){
-    ctx.beginPath(); ctx.arc(this.x,this.y,this.r,0,Math.PI*2);
-    ctx.fillStyle='rgba(29,161,242,0.6)'; ctx.fill();
+    const pulseR=this.r+Math.sin(this.pulse)*0.8;
+    const alpha=0.3+Math.sin(this.pulse)*0.15;
+    ctx.beginPath();ctx.arc(this.x,this.y,pulseR,0,Math.PI*2);
+    ctx.fillStyle=`hsla(${this.hue},60%,50%,${alpha})`;
+    ctx.fill();
   }
 }
 
-for(let i=0;i<80;i++) neurons.push(new Neuron());
+for(let i=0;i<120;i++)neurons.push(new Neuron());
 
-const maxDist = 150;
+const maxDist=160;
+const purpleHue=270;
+
 function animate(){
-  ctx.clearRect(0,0,w,h);
-  neurons.forEach(n=>{n.update(); n.draw()});
+  ctx.clearRect(0,0,W,H);
+  
+  // Connections
   for(let i=0;i<neurons.length;i++){
     for(let j=i+1;j<neurons.length;j++){
-      const dx=neurons[i].x-neurons[j].x, dy=neurons[i].y-neurons[j].y;
+      const dx=neurons[i].x-neurons[j].x,dy=neurons[i].y-neurons[j].y;
       const dist=Math.sqrt(dx*dx+dy*dy);
       if(dist<maxDist){
-        ctx.strokeStyle=`rgba(29,161,242,${0.15*(1-dist/maxDist)})`;
-        ctx.lineWidth=0.5; ctx.beginPath();
+        const alpha=0.12*(1-dist/maxDist);
+        const avgHue=(neurons[i].hue+neurons[j].hue)/2;
+        ctx.strokeStyle=`hsla(${avgHue},50%,50%,${alpha})`;
+        ctx.lineWidth=0.4;
+        ctx.beginPath();
         ctx.moveTo(neurons[i].x,neurons[i].y);
         ctx.lineTo(neurons[j].x,neurons[j].y);
         ctx.stroke();
       }
     }
   }
-  // Mouse connection
+  
+  // Draw neurons
+  neurons.forEach(n=>{n.update();n.draw()});
+  
+  // Mouse connection — purple
   if(mouse.x>0){
     neurons.forEach(n=>{
-      const dx=n.x-mouse.x, dy=n.y-mouse.y, dist=Math.sqrt(dx*dx+dy*dy);
+      const dx=n.x-mouse.x,dy=n.y-mouse.y;
+      const dist=Math.sqrt(dx*dx+dy*dy);
       if(dist<maxDist){
-        ctx.strokeStyle=`rgba(168,85,247,${0.3*(1-dist/maxDist)})`;
-        ctx.lineWidth=1; ctx.beginPath();
-        ctx.moveTo(n.x,n.y); ctx.lineTo(mouse.x,mouse.y);
+        ctx.strokeStyle=`hsla(${purpleHue},60%,60%,${0.3*(1-dist/maxDist)})`;
+        ctx.lineWidth=1;
+        ctx.beginPath();
+        ctx.moveTo(n.x,n.y);
+        ctx.lineTo(mouse.x,mouse.y);
         ctx.stroke();
       }
     });
   }
+  
   requestAnimationFrame(animate);
 }
 animate();
 
 document.addEventListener('mousemove',e=>{mouse.x=e.clientX;mouse.y=e.clientY});
+document.addEventListener('mouseleave',()=>{mouse.x=-999;mouse.y=-999});
 
-// SCROLL REVEAL
+// Scroll reveal
 const observer=new IntersectionObserver(entries=>{
   entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')});
 },{threshold:0.1});
