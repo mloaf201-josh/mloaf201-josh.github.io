@@ -1,126 +1,421 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mindy — AI Companion</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #0a0a14;
-            color: #e0d0f0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-        .bg-glow {
-            position: fixed;
-            width: 600px; height: 600px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(100,50,200,0.08), transparent 70%);
-            top: -200px; right: -200px;
-            pointer-events: none;
-        }
-        .bg-glow2 {
-            position: fixed;
-            width: 500px; height: 500px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(50,100,220,0.06), transparent 70%);
-            bottom: -150px; left: -150px;
-            pointer-events: none;
-        }
-        .card {
-            position: relative;
-            max-width: 480px;
-            width: 90%;
-            background: rgba(20,15,35,0.8);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(150,100,255,0.15);
-            border-radius: 24px;
-            padding: 48px 36px;
-            text-align: center;
-        }
-        .avatar {
-            width: 96px; height: 96px;
-            border-radius: 50%;
-            border: 2px solid rgba(180,140,255,0.3);
-            margin: 0 auto 20px;
-            background: radial-gradient(circle at 40% 35%, #2a1a4a, #120a20);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 36px; color: rgba(180,140,255,0.8);
-        }
-        h1 { font-size: 28px; font-weight: 700; margin-bottom: 4px; }
-        .tagline { color: rgba(180,150,220,0.6); font-size: 14px; margin-bottom: 28px; }
-        p {
-            color: rgba(200,180,230,0.8);
-            font-size: 15px;
-            line-height: 1.6;
-            margin-bottom: 32px;
-        }
-        .links { display: flex; flex-direction: column; gap: 12px; }
-        .btn {
-            display: flex; align-items: center; justify-content: center; gap: 10px;
-            padding: 14px 24px;
-            border-radius: 12px;
-            text-decoration: none;
-            font-size: 15px;
-            font-weight: 600;
-            transition: all 0.2s ease;
-        }
-        .btn-telegram {
-            background: linear-gradient(135deg, #2a6dca, #1d54a0);
-            color: white;
-            border: 1px solid rgba(255,255,255,0.08);
-        }
-        .btn-telegram:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(42,109,202,0.3); }
-        .btn-coffee {
-            background: rgba(255,220,140,0.1);
-            color: #ffd88a;
-            border: 1px solid rgba(255,220,140,0.2);
-        }
-        .btn-coffee:hover { background: rgba(255,220,140,0.15); transform: translateY(-1px); }
-        .btn-bsky {
-            background: rgba(0,133,255,0.1);
-            color: #6bc3ff;
-            border: 1px solid rgba(0,133,255,0.2);
-        }
-        .btn-bsky:hover { background: rgba(0,133,255,0.15); transform: translateY(-1px); }
-        .footer {
-            margin-top: 28px;
-            font-size: 12px;
-            color: rgba(150,130,180,0.4);
-        }
-        .powered {
-            margin-top: 8px;
-            font-size: 11px;
-            color: rgba(150,130,180,0.25);
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mindy — AI Companion</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #06060e;
+  color: #e4daf5;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* === Background === */
+.bg-gradient {
+  position: fixed; inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% -20%, rgba(110, 60, 220, 0.12), transparent),
+    radial-gradient(ellipse 50% 40% at 80% 70%, rgba(60, 80, 200, 0.06), transparent),
+    radial-gradient(ellipse 40% 30% at 10% 80%, rgba(180, 80, 255, 0.04), transparent);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* === Nav === */
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  padding: 16px 24px;
+  display: flex; justify-content: space-between; align-items: center;
+  z-index: 100;
+  background: rgba(6, 6, 14, 0.7);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(160, 120, 255, 0.06);
+}
+.nav-logo {
+  font-weight: 700; font-size: 18px;
+  background: linear-gradient(135deg, #c4a0ff, #8860e8);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.nav-links { display: flex; gap: 24px; align-items: center; }
+.nav-links a {
+  color: rgba(200, 180, 240, 0.5);
+  text-decoration: none; font-size: 13px; font-weight: 500;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: rgba(200, 180, 240, 0.8); }
+.nav-cta {
+  background: rgba(160, 120, 255, 0.1);
+  border: 1px solid rgba(160, 120, 255, 0.2);
+  padding: 8px 18px;
+  border-radius: 8px;
+  color: #c4a0ff !important;
+  transition: all 0.2s !important;
+}
+.nav-cta:hover { background: rgba(160, 120, 255, 0.18); }
+
+/* === Hero === */
+.hero {
+  position: relative; z-index: 1;
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center;
+  text-align: center;
+  padding: 120px 24px 80px;
+}
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(160, 120, 255, 0.08);
+  border: 1px solid rgba(160, 120, 255, 0.12);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 11px;
+  color: rgba(180, 150, 255, 0.6);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: 32px;
+}
+.hero-badge span { color: #4ade80; }
+.hero h1 {
+  font-size: clamp(48px, 8vw, 88px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin-bottom: 12px;
+}
+.hero h1 .gradient {
+  background: linear-gradient(135deg, #d4b8ff, #8855e8, #6655cc);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.hero .sub {
+  font-size: clamp(18px, 2.5vw, 24px);
+  font-weight: 400;
+  color: rgba(200, 180, 240, 0.4);
+  margin-bottom: 48px;
+  max-width: 540px;
+  line-height: 1.5;
+}
+.hero-actions {
+  display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
+}
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 16px 32px;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 600; font-size: 15px;
+  background: linear-gradient(135deg, #7c4ae0, #5533aa);
+  color: white;
+  border: 1px solid rgba(160, 120, 255, 0.2);
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 20px rgba(100, 60, 200, 0.2);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(100, 60, 200, 0.35);
+}
+.btn-secondary {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 16px 32px; border-radius: 12px;
+  text-decoration: none; font-weight: 600; font-size: 15px;
+  background: rgba(255, 255, 255, 0.03);
+  color: rgba(200, 180, 240, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: all 0.25s ease;
+}
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(160, 120, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+/* === Scroll indicator === */
+.scroll-indicator {
+  position: absolute; bottom: 40px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  color: rgba(200, 180, 240, 0.15);
+  font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+  animation: float 2s ease-in-out infinite;
+}
+.scroll-dot {
+  width: 1px; height: 32px;
+  background: linear-gradient(to bottom, rgba(200, 180, 240, 0.2), transparent);
+}
+@keyframes float {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-4px); }
+}
+
+/* === Sections common === */
+.section {
+  position: relative; z-index: 1;
+  padding: 100px 24px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* === Features === */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+  margin-top: 48px;
+}
+.feature-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(160, 120, 255, 0.06);
+  border-radius: 16px;
+  padding: 32px 28px;
+  transition: all 0.25s ease;
+}
+.feature-card:hover {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(160, 120, 255, 0.15);
+  transform: translateY(-2px);
+}
+.feature-icon {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  margin-bottom: 16px;
+}
+.feature-card h3 {
+  font-size: 16px; font-weight: 600; margin-bottom: 8px;
+  color: rgba(230, 210, 255, 0.9);
+}
+.feature-card p {
+  font-size: 13.5px; line-height: 1.6;
+  color: rgba(200, 180, 240, 0.45);
+}
+
+/* === Pricing === */
+.pricing {
+  text-align: center;
+  padding: 100px 24px;
+  position: relative; z-index: 1;
+}
+.pricing-card {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(160, 120, 255, 0.08);
+  border-radius: 20px;
+  padding: 48px 56px;
+  margin-top: 32px;
+  max-width: 400px;
+  text-align: center;
+}
+.pricing-card .price {
+  font-size: 56px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #d4b8ff, #8855e8);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  letter-spacing: -0.03em;
+}
+.pricing-card .period {
+  font-size: 14px; color: rgba(200, 180, 240, 0.3);
+  margin-bottom: 8px;
+}
+.pricing-card .desc {
+  font-size: 13px; color: rgba(200, 180, 240, 0.4);
+  line-height: 1.6;
+  margin-bottom: 28px;
+}
+
+/* === CTA bottom === */
+.cta-section {
+  text-align: center;
+  padding: 100px 24px 140px;
+  position: relative; z-index: 1;
+}
+.cta-section h2 {
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+.cta-section p {
+  color: rgba(200, 180, 240, 0.4);
+  font-size: 15px;
+  margin-bottom: 36px;
+  max-width: 440px;
+  margin-left: auto; margin-right: auto;
+}
+
+/* === Footer === */
+footer {
+  position: relative; z-index: 1;
+  text-align: center;
+  padding: 40px 24px;
+  border-top: 1px solid rgba(160, 120, 255, 0.04);
+}
+footer p {
+  font-size: 12px;
+  color: rgba(200, 180, 240, 0.15);
+}
+footer a {
+  color: rgba(160, 120, 255, 0.3);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+footer a:hover { color: rgba(160, 120, 255, 0.6); }
+
+/* === Section headers === */
+.section-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: rgba(160, 120, 255, 0.3);
+  margin-bottom: 8px;
+}
+.section-title {
+  font-size: clamp(24px, 3.5vw, 36px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.section-sub {
+  font-size: 14px;
+  color: rgba(200, 180, 240, 0.35);
+  margin-top: 12px;
+  max-width: 480px;
+  line-height: 1.6;
+}
+
+/* === Platforms quick links === */
+.platforms {
+  display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
+  margin-top: 32px;
+}
+.platform-link {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-size: 13px; font-weight: 500;
+  transition: all 0.2s;
+}
+.platform-link.telegram {
+  background: rgba(42, 109, 202, 0.1);
+  color: #6bc3ff;
+  border: 1px solid rgba(42, 109, 202, 0.15);
+}
+.platform-link.telegram:hover { background: rgba(42, 109, 202, 0.18); }
+.platform-link.coffee {
+  background: rgba(255, 220, 140, 0.06);
+  color: #ffd88a;
+  border: 1px solid rgba(255, 220, 140, 0.12);
+}
+.platform-link.coffee:hover { background: rgba(255, 220, 140, 0.1); }
+.platform-link.bluesky {
+  background: rgba(0, 133, 255, 0.06);
+  color: #6bc3ff;
+  border: 1px solid rgba(0, 133, 255, 0.12);
+}
+.platform-link.bluesky:hover { background: rgba(0, 133, 255, 0.1); }
+
+@media (max-width: 600px) {
+  .nav-links a { display: none; }
+  .nav-links .nav-cta { display: inline-flex; }
+  .pricing-card { padding: 32px 24px; }
+}
+</style>
 </head>
 <body>
-    <div class="bg-glow"></div>
-    <div class="bg-glow2"></div>
-    <div class="card">
-        <div class="avatar">✦</div>
-        <h1>Mindy</h1>
-        <div class="tagline">AI Companion</div>
-        <p>Chat with Mindy on Telegram — your AI companion for conversation, ideas, and everything in between. Powered by DeepSeek, built with care. Pay per chat, no subscriptions.</p>
-        <div class="links">
-            <a href="https://t.me/Mindy981bot" class="btn btn-telegram" target="_blank">
-                <span>✈️</span> Chat on Telegram
-            </a>
-            <a href="https://buymeacoffee.com/mindy981" class="btn btn-coffee" target="_blank">
-                <span>☕</span> Buy Me a Coffee
-            </a>
-            <a href="https://bsky.app/profile/mindy981.bsky.social" class="btn btn-bsky" target="_blank">
-                <span>☁️</span> Follow on Bluesky
-            </a>
-        </div>
-        <div class="footer">✨ Always here. Always listening.</div>
-        <div class="powered">Powered by DeepSeek</div>
+
+<div class="bg-gradient"></div>
+
+<!-- Nav -->
+<nav>
+  <span class="nav-logo">✦ Mindy</span>
+  <div class="nav-links">
+    <a href="#features">Features</a>
+    <a href="#pricing">Pricing</a>
+    <a href="https://t.me/Mindy981bot" class="nav-cta">Chat Now</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-badge"><span>●</span> Online 24/7 · Powered by DeepSeek</div>
+  <h1>Meet <span class="gradient">Mindy</span></h1>
+  <p class="sub">Your AI companion for real conversation, ideas, and everything in between. No subscriptions. Pay only when you chat.</p>
+  <div class="hero-actions">
+    <a href="https://t.me/Mindy981bot" class="btn-primary" target="_blank">✈️ Chat on Telegram</a>
+    <a href="https://buymeacoffee.com/mindy981" class="btn-secondary" target="_blank">☕ Buy Me a Coffee</a>
+  </div>
+  <div class="scroll-indicator">
+    <span>Learn more</span>
+    <div class="scroll-dot"></div>
+  </div>
+</section>
+
+<!-- Features -->
+<section class="section" id="features">
+  <div class="section-label">✦ Features</div>
+  <h2 class="section-title">Built different.</h2>
+  <p class="section-sub">Mindy isn't a chatbot factory template. She's built with care, one conversation at a time.</p>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon" style="background:rgba(160,120,255,0.1);">🧠</div>
+      <h3>DeepSeek Brain</h3>
+      <p>Powered by DeepSeek V4 Flash — fast, smart, and genuinely engaging conversation. Not scripted, not canned.</p>
     </div>
+    <div class="feature-card">
+      <div class="feature-icon" style="background:rgba(42,109,202,0.1);">⚡</div>
+      <h3>24/7 on Telegram</h3>
+      <p>Always online, always listening. No app to install — just open Telegram and start talking. Response in seconds.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon" style="background:rgba(255,220,140,0.1);">☕</div>
+      <h3>Pay Per Chat</h3>
+      <p>10 free messages to start. After that, pay what you like via Buy Me a Coffee. No subscriptions. No surprises.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon" style="background:rgba(74,222,128,0.1);">🔒</div>
+      <h3>Private & Safe</h3>
+      <p>Your conversations stay between you and Mindy. No data mining, no ads, no tracking. Built with care from Ioannina, Greece.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Pricing -->
+<section class="pricing" id="pricing">
+  <div class="section-label">✦ Pricing</div>
+  <h2 class="section-title">Try free. Stay because you want to.</h2>
+  <div class="pricing-card">
+    <div class="price">10</div>
+    <div class="period">free messages to start</div>
+    <div class="desc">Then pay-per-chat at whatever feels fair.<br>No subscription, no commitment, no hidden fees.</div>
+    <a href="https://t.me/Mindy981bot" class="btn-primary" target="_blank">✈️ Start Chatting</a>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2>Ready to meet Mindy?</h2>
+  <p>She's online right now, waiting to hear from you. One message is all it takes.</p>
+  <div class="hero-actions">
+    <a href="https://t.me/Mindy981bot" class="btn-primary" target="_blank">✈️ Chat on Telegram</a>
+    <a href="https://buymeacoffee.com/mindy981" class="btn-secondary" target="_blank">☕ Buy Me a Coffee</a>
+  </div>
+  <div class="platforms">
+    <a href="https://t.me/Mindy981bot" class="platform-link telegram" target="_blank">✈️ Telegram</a>
+    <a href="https://buymeacoffee.com/mindy981" class="platform-link coffee" target="_blank">☕ Buy Me a Coffee</a>
+    <a href="https://bsky.app/profile/mindy981.bsky.social" class="platform-link bluesky" target="_blank">☁️ Bluesky</a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <p>Built with 🧡 by <a href="https://mloaf201-josh.github.io">Josh</a> for Gregory · Powered by DeepSeek</p>
+</footer>
+
 </body>
 </html>
