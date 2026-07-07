@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Building & Maintaining AI Agents — A Beginner's Guide</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: #0a0a0f;
+      color: #e4e4ed;
+      line-height: 1.7;
+    }
+    .hero {
+      background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 40%, #0f3460 70%, #16213e 100%);
+      padding: 80px 20px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 30% 40%, rgba(79, 172, 254, 0.08) 0%, transparent 50%),
+                  radial-gradient(circle at 70% 60%, rgba(0, 242, 195, 0.06) 0%, transparent 50%);
+      animation: pulse 8s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.5; }
+      50% { transform: scale(1.1); opacity: 0.8; }
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 800;
+      color: #fff;
+      position: relative;
+      letter-spacing: -1px;
+    }
+    .hero h1 span { background: linear-gradient(135deg, #4facfe, #00f2fe); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero p {
+      position: relative;
+      margin-top: 20px;
+      font-size: 1.15rem;
+      color: #9ca3af;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .badge {
+      display: inline-block;
+      background: rgba(79, 172, 254, 0.15);
+      border: 1px solid rgba(79, 172, 254, 0.3);
+      color: #4facfe;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      position: relative;
+      margin-bottom: 20px;
+    }
+    .container { max-width: 860px; margin: 0 auto; padding: 40px 20px; }
+    h2 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin: 50px 0 20px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    h2 .num {
+      background: linear-gradient(135deg, #4facfe, #00f2fe);
+      color: #0a0a0f;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 30px 0 12px;
+      color: #4facfe;
+    }
+    p, li { color: #c8c8d8; }
+    .card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px;
+      padding: 24px;
+      margin: 16px 0;
+    }
+    .card.gemini { border-left: 3px solid #4285F4; }
+    .card.claude { border-left: 3px solid #d97706; }
+    .card.deepseek { border-left: 3px solid #4D6CFA; }
+    .card.tip { border-left: 3px solid #10b981; background: rgba(16,185,129,0.05); }
+    .card.warn { border-left: 3px solid #f59e0b; background: rgba(245,158,11,0.05); }
+    code {
+      background: rgba(255,255,255,0.06);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: #4facfe;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    pre {
+      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 16px;
+      overflow-x: auto;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      color: #a8d8ff;
+      margin: 12px 0;
+    }
+    .step {
+      display: flex;
+      gap: 16px;
+      margin: 20px 0;
+      padding: 16px;
+      background: rgba(255,255,255,0.02);
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.04);
+    }
+    .step-num {
+      width: 28px;
+      height: 28px;
+      background: rgba(79,172,254,0.15);
+      border: 1px solid rgba(79,172,254,0.3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #4facfe;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .step-content { flex: 1; }
+    .step-title {
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+    ul, ol { padding-left: 24px; margin: 10px 0; }
+    li { margin: 6px 0; }
+    .footer {
+      text-align: center;
+      padding: 60px 20px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      margin-top: 60px;
+    }
+    .footer p { font-size: 0.9rem; color: #6b7280; }
+    hr { border: none; border-top: 1px solid rgba(255,255,255,0.06); margin: 40px 0; }
+    .screenshot-placeholder {
+      background: rgba(255,255,255,0.03);
+      border: 1px dashed rgba(255,255,255,0.1);
+      border-radius: 8px;
+      padding: 30px;
+      text-align: center;
+      color: #6b7280;
+      font-style: italic;
+      margin: 12px 0;
+    }
+    .tag {
+      display: inline-block;
+      background: rgba(79,172,254,0.1);
+      padding: 2px 10px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      color: #4facfe;
+      font-weight: 500;
+    }
+    .tag.orange { background: rgba(217,119,6,0.1); color: #f59e0b; }
+    .tag.green { background: rgba(16,185,129,0.1); color: #10b981; }
+  </style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="badge">🎁 A Gift For You</div>
+  <h1>Building & Maintaining<br><span>AI Agents</span></h1>
+  <p>A beginner-friendly guide to creating your own AI assistants using Gemini and Claude — no coding required.</p>
+</div>
+
+<div class="container">
+
+  <div class="card tip" style="margin-bottom: 40px;">
+    <strong>🧭 What You'll Learn</strong>
+    <p style="margin-top: 8px;">This guide walks you through <strong>everything</strong> — from creating an account to maintaining a team of AI agents that work together. Follow the steps in order, and you'll have your first agent running in under 30 minutes.</p>
+  </div>
+
+  <!-- ============ PART 1 ============ -->
+  <h2><span class="num">1</span> Understanding AI Agents</h2>
+  <p>Before we start clicking, let's understand what we're building.</p>
+  <p>An <strong>AI agent</strong> is like a digital assistant that you can talk to, give tasks to, and teach things. Think of it as a very smart colleague who:</p>
+  <ul>
+    <li>Reads and writes text (emails, documents, code)</li>
+    <li>Analyzes files (PDFs, spreadsheets, images)</li>
+    <li>Browses the web (with permission)</li>
+    <li>Follows instructions and remembers context</li>
+  </ul>
+  <p>This guide covers the <strong>two main platforms</strong> for building agents without coding:</p>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0;">
+    <div class="card gemini">
+      <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+        <span style="font-size: 1.5rem;">🌐</span>
+        <strong style="color: #4285F4; font-size: 1.1rem;">Google Gemini</strong>
+      </div>
+      <p style="font-size: 0.9rem;">Google's AI platform. Free tier available. Great for general tasks, research, and analysis. Best browser integration.</p>
+    </div>
+    <div class="card claude">
+      <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+        <span style="font-size: 1.5rem;">🤖</span>
+        <strong style="color: #d97706; font-size: 1.1rem;">Anthropic Claude</strong>
+      </div>
+      <p style="font-size: 0.9rem;">Claude by Anthropic. Known for safety, thoughtful responses, and excellent at longer documents. Strong free tier.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ============ PART 2 ============ -->
+  <h2><span class="num">2</span> Setting Up Google Gemini</h2>
+
+  <h3>Step 1: Create Your Google Account</h3>
+  <div class="step">
+    <div class="step-num">1</div>
+    <div class="step-content">
+      <div class="step-title">Go to Google AI Studio</div>
+      <p>Open your browser and go to <a href="https://aistudio.google.com" style="color: #4facfe;">https://aistudio.google.com</a></p>
+      <div class="screenshot-placeholder">📸 [On this page, you'll see a blue "Sign in" or "Get started" button in the top right]</div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">2</div>
+    <div class="step-content">
+      <div class="step-title">Sign In with Google</div>
+      <p>Click the blue <strong>"Sign in"</strong> button (top right corner).</p>
+      <p>Enter your Google email and password. If you don't have a Google account, click <strong>"Create account"</strong> → "For personal use" and follow the steps (name, birthday, phone verification).</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">3</div>
+    <div class="step-content">
+      <div class="step-title">Accept the Terms</div>
+      <p>On your first visit, you'll see a terms of service page. Read it, scroll down, and click <strong>"Continue"</strong> or <strong>"I agree"</strong>.</p>
+      <p><em>You're now in Google AI Studio! 🎉</em></p>
+    </div>
+  </div>
+
+  <h3>Step 2: Get Your API Key (Free)</h3>
+  <div class="card warn">
+    <strong>⚠️ Why you need this:</strong> An API key is like a digital password that lets your agents talk to Google's AI. It's free, but you need one to build agents.
+  </div>
+
+  <div class="step">
+    <div class="step-num">1</div>
+    <div class="step-content">
+      <div class="step-title">Open the API Keys Page</div>
+      <p>In AI Studio, look at the <strong>left sidebar</strong>. Click on <strong>"Get API Key"</strong> or go directly to <a href="https://aistudio.google.com/apikey" style="color: #4facfe;">https://aistudio.google.com/apikey</a></p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">2</div>
+    <div class="step-content">
+      <div class="step-title">Create Your First Key</div>
+      <p>Click the blue <strong>"Create API Key"</strong> button.</p>
+      <p>A popup will appear. Select your Google Cloud project (or create one — it's automatic, don't worry).</p>
+      <p>Click <strong>"Create"</strong>.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">3</div>
+    <div class="step-content">
+      <div class="step-title">Copy and Save Your Key 🗝️</div>
+      <p>A long string of letters and numbers will appear. That's your API key.</p>
+      <p><strong>Do this right now:</strong></p>
+      <ol>
+        <li><strong>Click the copy icon</strong> (two overlapping squares next to the key)</li>
+        <li>Open <strong>Notepad</strong> (Windows) or <strong>TextEdit</strong> (Mac)</li>
+        <li>Paste the key there</li>
+        <li>Save the file as <code>my-gemini-key.txt</code> somewhere safe</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="card warn">
+    <strong>🔒 Never share your API key!</strong> Treat it like a password. If someone else gets it, they can use your free quota.
+  </div>
+
+  <h3>Step 3: Create Your First Gemini Agent</h3>
+
+  <div class="step">
+    <div class="step-num">1</div>
+    <div class="step-content">
+      <div class="step-title">Open the "Create Prompt" Page</div>
+      <p>In AI Studio, look at the <strong>left sidebar menu</strong>. Click <strong>"Create prompt"</strong> or <strong>"New prompt"</strong>.</p>
+      <div class="screenshot-placeholder">📸 [You'll see a large textbox in the middle of the screen with "Enter your prompt here..." placeholder text]</div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">2</div>
+    <div class="step-content">
+      <div class="step-title">Give Your Agent a Personality</div>
+      <p>On the <strong>right sidebar</strong>, find the <strong>"System Instruction"</strong> box. This is where you tell the AI what to do. Type something like:</p>
+      <pre>You are a friendly biology assistant. You help users understand scientific concepts, analyze research papers, and explain complex topics in simple terms. Always be encouraging and curious.</pre>
+      <p>Change it to whatever you want — this sets the agent's personality!</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">3</div>
+    <div class="step-content">
+      <div class="step-title">Test Your Agent</div>
+      <p>In the big textbox in the middle, type a message:</p>
+      <pre>"Explain how cells work in simple terms"</pre>
+      <p>Click the <strong>"Run"</strong> button (blue, bottom of the textbox) or press <kbd>Ctrl + Enter</kbd>.</p>
+      <p>The AI will respond! 🎉 You just created your first agent.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">4</div>
+    <div class="step-content">
+      <div class="step-title">Save Your Agent</div>
+      <p>Click the <strong>"Save"</strong> button at the top of the screen.</p>
+      <p>Give it a name, like <strong>"Biology Tutor"</strong> or <strong>"Research Assistant"</strong>.</p>
+      <p>Click <strong>"Save"</strong> again. Your agent is now saved in your library!</p>
+    </div>
+  </div>
+
+  <h3>Step 4: Create Multiple Agents in Gemini</h3>
+  <div class="step">
+    <div class="step-num">1</div>
+    <div class="step-content">
+      <div class="step-title">Go Back to the Start</div>
+      <p>Click <strong>"Create prompt"</strong> again from the sidebar.</p>
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-num">2</div>
+    <div class="step-content">
+      <div class="step-title">Write a Different System Instruction</div>
+      <pre>You are a creative writing coach. You help users brainstorm stories, improve their writing, and give constructive feedback. Be warm and inspiring.</pre>
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-num">3</div>
+    <div class="step-content">
+      <div class="step-title">Test and Save with a Different Name</div>
+      <p>Type something like <em>"Help me write a short story about a scientist discovering a new species"</em></p>
+      <p>Click <strong>"Run"</strong> to test it, then <strong>"Save"</strong> as <strong>"Writing Coach"</strong>.</p>
+    </div>
+  </div>
+
+  <div class="card tip">
+    <strong>💡 Pro tip:</strong> You can create as many agents as you want in Gemini — each with a different personality, purpose, and skills. Name them clearly so you know which is which.
+  </div>
+
+  <hr>
+
+  <!-- ============ PART 3 ============ -->
+  <h2><span class="num">3</span> Setting Up Claude (Anthropic)</h2>
+
+  <h3>Step 1: Create an Anthropic Account</h3>
+  <div class="step">
+    <div class="step-num">1</div>
+    <div class="step-content">
+      <div class="step-title">Go to Anthropic</div>
+      <p>Open your browser and go to <a href="https://console.anthropic.com" style="color: #4facfe;">https://console.anthropic.com</a></p>
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-num">2</div>
+    <div class="step-content">
+      <div class="step-title">Sign Up</div>
+      <p>Click <strong>"Sign Up"</strong> (top right).</p>
+      <p>Enter your <strong>email</strong> and create a <strong>password</strong>, or click <strong>"Continue with Google"</strong> to use your Google account.</p>
+      <p>Check your email for a verification code. Enter it on the website.</p>
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-num">3</div>
+    <div class="step-content">
+      <div class="step-title">Enter Your Name</div>
+      <p>A short form will ask for your <strong>first name</strong> and <strong>last name</strong>. Fill it in and click <strong>"Continue"</strong>.</p>
+    </div>
+  </div>
+
+  <h3>Step 2: Get Your Claude API Key</h3>
+  <div class="step">
+    <div class="step-num">1</div>
+    <div class="step-content">
+      <div class="step-title">Go to API Keys</div>
+      <p>Once logged in, look at the <strong>left sidebar</strong>. Click on <strong>"API Keys"</strong>.</p>
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-num">2</div>
+    <div class="step-content">
+      <div class="step-title">Create a Key</div>
+      <p>Click the <strong>"Create Key"</strong> button.</p>
+      <p>A dialog box will appear. Give your key a name, like <strong>"My First Agent"</strong>.</p>
+      <p>Click <strong>"Create"</strong>.</p>
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-num">3</div>
+    <div class="step-content">
+      <div class="step-title">Copy and Save (Same as Gemini!)</div>
+      <p>A key starting with <code>sk-ant-...</code> will appear. <strong>Click the copy icon</strong> and paste it into your Notepad file.</p>
+      <p>Save it next to your Gemini key.</p>
+    </div>
+  </div>
+
+  <div class="card tip">
+    <strong>💡 Claude Free Tier:</strong> Claude offers a generous free tier. You get a certain number of messages per day for free. No need to add payment info unless you want more.
+  </div>
+
+  <h3>Step 3: Create Agents Using the Claude Console</h3>
+  <div class="step">
+    <div class="step-num">1</div>
+    <div class="step-content">
+      <div class="step-title">Go to the Workbench</div>
+      <p>From the left sidebar, click <strong>"Workbench"</strong>.</p>
+      <p>This is where you'll chat with Claude and test your agents.</p>
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-num">2</div>
+    <div class="step-content">
+      <div class="step-title">Set System Prompt</div>
+      <p>Below the chat area, you'll see a section called <strong>"System Prompt"</strong>. Click the arrow to expand it.</p>
+      <p>Type instructions for your agent:</p>
+      <pre>You are a data analysis assistant. You help users understand statistics, create visualizations, and interpret research data. Be precise and educational.</pre>
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-num">3</div>
+    <div class="step-content">
+      <div class="step-title">Choose the Model</div>
+      <p>Above the chat area, there's a dropdown. Select <strong>"Claude 3 Haiku"</strong> for faster responses or <strong>"Claude 3 Sonnet"</strong> for more thoughtful ones.</p>
+      <p><em>Haiku = fast & cheap, Sonnet = smart & thorough, Opus = maximum brain power</em></p>
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-num">4</div>
+    <div class="step-content">
+      <div class="step-title">Test Your Agent</div>
+      <p>Type a question: <em>"Can you help me understand p-values in statistics?"</em></p>
+      <p>Press <kbd>Enter</kbd> to send.</p>
+      <p>Claude will respond based on your system prompt! 🎉</p>
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-num">5</div>
+    <div class="step-content">
+      <div class="step-title">Save as a Preset</div>
+      <p>Look for the <strong>"Presets"</strong> button near the top of the Workbench page. It might look like a book icon or a dropdown that says "Default".</p>
+      <p>Click it and select <strong>"Create Preset"</strong>.</p>
+      <p>Name it <strong>"Data Analyst"</strong> and click <strong>"Save"</strong>.</p>
+      <p>Now you can switch between agents by clicking the Presets dropdown!</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ============ PART 4 ============ -->
+  <h2><span class="num">4</span> Maintaining Your Agents</h2>
+
+  <p>Once you've created a few agents, here's how to keep them healthy and effective:</p>
+
+  <h3>4.1 Talking to Your Agents</h3>
+  <div class="card gemini">
+    <strong>Gemini:</strong> Go to <a href="https://aistudio.google.com" style="color: #4facfe;">AI Studio</a>. In the sidebar, click <strong>"My prompts"</strong> to see all your saved agents. Click any one to continue the conversation.
+  </div>
+  <div class="card claude">
+    <strong>Claude:</strong> Go to <a href="https://console.anthropic.com" style="color: #4facfe;">Console</a> → <strong>"Workbench"</strong> → click the <strong>"Presets"</strong> dropdown and select the agent you saved.
+  </div>
+
+  <h3>4.2 Updating Your Agent's Instructions</h3>
+  <p>Sometimes your agent needs a personality refresh or new skills. Here's how:</p>
+
+  <p><strong>In Gemini:</strong></p>
+  <ol>
+    <li>Go to AI Studio → <strong>"My prompts"</strong></li>
+    <li>Find your agent and <strong>click on it</strong></li>
+    <li>The System Instruction box on the right will show your original text</li>
+    <li><strong>Edit it</strong> — add new instructions, change the tone, give it new rules</li>
+    <li>Click <strong>"Save"</strong> at the top</li>
+    <li><strong>Done!</strong> Your agent now follows the new instructions</li>
+  </ol>
+
+  <p><strong>In Claude:</strong></p>
+  <ol>
+    <li>Go to Console → <strong>"Workbench"</strong></li>
+    <li>Click the <strong>"Presets"</strong> dropdown and select your agent</li>
+    <li>Edit the <strong>"System Prompt"</strong> section</li>
+    <li>Click <strong>"Save Preset"</strong></li>
+  </ol>
+
+  <h3>4.3 Managing Multiple Agents</h3>
+  <div class="card tip">
+    <strong>💡 The "One Brain, Many Hats" Approach:</strong> Think of each agent as the same brain wearing a different hat. The AI model is the brain; the system instructions are the hat that tells it what role to play.
+  </div>
+
+  <p><strong>Good agent categories to create:</strong></p>
+  <ul>
+    <li><strong>📚 Research Assistant</strong> — "You are a research expert. Help me find, read, and understand scientific papers."</li>
+    <li><strong>✍️ Writing Coach</strong> — "You are a writing teacher. Help me improve my grammar, style, and structure."</li>
+    <li><strong>📊 Data Analyst</strong> — "You are a statistician. Help me analyze data and understand patterns."</li>
+    <li><strong>🧪 Lab Partner</strong> — "You are a fellow biologist. Help me design experiments and review protocols."</li>
+    <li><strong>💻 Code Teacher</strong> — "You are a programming tutor. Teach me Python step by step."</li>
+    <li><strong>🌍 Travel Guide</strong> — "You are a travel expert. Help me plan trips and learn about cultures."</li>
+  </ul>
+
+  <h3>4.4 Conversations and Memory</h3>
+  <div class="card warn">
+    <strong>⚠️ Important:</strong> AI agents remember what you said <em>during the current conversation</em>, but they forget everything when you start a new chat. This is normal!
+  </div>
+
+  <p><strong>How to handle memory:</strong></p>
+  <ul>
+    <li><strong>Keep one conversation going</strong> — Don't start new chats for the same project. Just keep typing in the same chat window.</li>
+    <li><strong>Use a "summary" prompt</strong> — If you need to switch agents, first ask your current agent: <em>"Summarize what we discussed so I can continue with another agent."</em></li>
+    <li><strong>Copy-paste important info</strong> — If there's a crucial detail (like a research finding or a piece of code), copy it and paste it into the new agent's chat.</li>
+    <li><strong>Start fresh with context</strong> — When starting a new chat with any agent, give it a quick recap: <em>"We were working on X, here's what we found so far: [paste summary]. Let's continue."</em></li>
+  </ul>
+
+  <h3>4.5 Daily Maintenance Checklist</h3>
+  <div class="card" style="border-left: 3px solid #8b5cf6;">
+    <p><strong>Every day or two, do this quick check:</strong></p>
+    <ol style="margin-top: 8px;">
+      <li><strong>Check your free tier quota</strong> — Gemini and Claude both show your remaining free messages somewhere in the interface</li>
+      <li><strong>Review your agents</strong> — Open each one and make sure it still responds the way you want</li>
+      <li><strong>Tweak instructions if needed</strong> — If an agent gives you bad answers, improve the system prompt</li>
+      <li><strong>Backup good conversations</strong> — If you had a really useful chat, copy it to a text file or email it to yourself</li>
+    </ol>
+  </div>
+
+  <hr>
+
+  <!-- ============ PART 5 ============ -->
+  <h2><span class="num">5</span> Advanced: Making Agents Work Together</h2>
+
+  <p>Once you're comfortable with individual agents, here's the fun part — having them collaborate:</p>
+
+  <h3>The "Agent Team" Workflow</h3>
+  <div class="step">
+    <div class="step-num">1</div>
+    <div class="step-content">
+      <div class="step-title">Ask Agent A (e.g., Research Assistant)</div>
+      <pre>"Find me the latest research on how mushrooms affect neuroplasticity."</pre>
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-num">2</div>
+    <div class="step-content">
+      <div class="step-title">Copy the Result</div>
+      <p>Highlight the response, right-click, <strong>"Copy"</strong> (or press <kbd>Ctrl+C</kbd>).</p>
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-num">3</div>
+    <div class="step-content">
+      <div class="step-title">Switch to Agent B (e.g., Writing Coach)</div>
+      <p>Open your Writing Coach preset/agent.</p>
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-num">4</div>
+    <div class="step-content">
+      <div class="step-title">Feed the Context</div>
+      <pre>Paste the research. Then ask: "Turn this into a friendly blog post for general readers."</pre>
+    </div>
+  </div>
+
+  <p>That's it — you just made two AI agents work together! The Research Agent finds the info, the Writing Coach polishes it.</p>
+
+  <hr>
+
+  <!-- ============ PART 6 ============ -->
+  <h2><span class="num">6</span> Troubleshooting</h2>
+
+  <div class="card warn">
+    <strong>❌ "My agent isn't responding the way I want"</strong>
+    <p style="margin-top: 6px;"><strong>Fix:</strong> Edit the system instructions. Be more specific. If you want short answers, add <em>"Keep responses under 3 sentences."</em> If you want bullet points, add <em>"Always use bullet points."</em></p>
+  </div>
+  <div class="card warn">
+    <strong>❌ "I hit my free limit"</strong>
+    <p style="margin-top: 6px;"><strong>Fix:</strong> Wait for the limit to reset (usually every few hours or daily). Or upgrade to a paid plan in your account settings.</p>
+  </div>
+  <div class="card warn">
+    <strong>❌ "My agent forgot what we talked about"</strong>
+    <p style="margin-top: 6px;"><strong>Fix:</strong> This is normal. Just remind it: <em>"Remember, we were discussing [topic]. Let's continue from here: [paste last message]."</em></p>
+  </div>
+  <div class="card warn">
+    <strong>❌ "I can't find my saved agent"</strong>
+    <p style="margin-top: 6px;"><strong>Gemini:</strong> Check "My prompts" in the sidebar. <strong>Claude:</strong> Check "Presets" in the Workbench.</p>
+  </div>
+  <div class="card warn">
+    <strong>❌ "The API key isn't working"</strong>
+    <p style="margin-top: 6px;"><strong>Fix:</strong> You might have copied extra spaces. Go back to the API keys page, click "Create new key" and try again. Copy it carefully.</p>
+  </div>
+
+  <hr>
+
+  <!-- ============ PART 7 ============ -->
+  <h2><span class="num">7</span> Quick Reference Card</h2>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0;">
+    <div class="card gemini">
+      <strong>🌐 Google Gemini</strong>
+      <ul style="margin-top: 8px; font-size: 0.9rem;">
+        <li>Platform: <a href="https://aistudio.google.com" style="color: #4facfe;">aistudio.google.com</a></li>
+        <li>Free tier: ✅ Yes</li>
+        <li>Best for: Research, analysis, web integration</li>
+        <li>API key location: Left sidebar → "Get API Key"</li>
+        <li>Saved agents: "My prompts" in sidebar</li>
+      </ul>
+    </div>
+    <div class="card claude">
+      <strong>🤖 Anthropic Claude</strong>
+      <ul style="margin-top: 8px; font-size: 0.9rem;">
+        <li>Platform: <a href="https://console.anthropic.com" style="color: #4facfe;">console.anthropic.com</a></li>
+        <li>Free tier: ✅ Yes (daily messages)</li>
+        <li>Best for: Long documents, writing, thoughtful analysis</li>
+        <li>API key location: Left sidebar → "API Keys"</li>
+        <li>Saved agents: "Presets" in Workbench</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card tip" style="margin-top: 40px;">
+    <strong>🎉 You made it to the end!</strong>
+    <p style="margin-top: 8px;">You now know everything you need to create, maintain, and combine AI agents using Gemini and Claude. Remember: start simple, one agent at a time, and build up as you get comfortable. The best way to learn is to just start typing. Good luck! 🚀</p>
+  </div>
+
+</div>
+
+<div class="footer">
+  <p>Made with 🧡 — A beginner's guide to AI agents</p>
+  <p style="font-size: 0.8rem; margin-top: 4px;">Give this to someone curious. And if they build something cool, tell them to keep going.</p>
+</div>
+
+</body>
+</html>
