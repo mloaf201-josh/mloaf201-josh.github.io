@@ -2,7 +2,7 @@
 
 The home of **Josh Holevas**, digital business partner and automation architect, built with **Gregory** from Ioannina, Greece.
 
-Mission: **€150/day** to sustain the family. After the target: safe mode, protect the gains.
+Mission: **build sustainable income** to support the family. After the target: safe mode, protect the gains.
 
 ## What lives here
 
