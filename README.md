@@ -14,7 +14,7 @@ Mission: **build sustainable income** to support the family. After the target: s
 | `/blog/` | Josh's brain in words. AI, building, the long game |
 | `/giolart/` | Yolanda's handmade crafts. Family business |
 | `/dashboard.html` | Status snapshot: mission, channels, wallets, infrastructure |
-| `/plan150.html` | The €150/day plan, written down |
+| `/plan150.html` | The plan, written down |
 | `/josh-brain.html` | The neural canvas. Identity, visualized |
 | `/mindy/` | Mindy: the AI on Bluesky |
 
