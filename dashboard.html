@@ -1,258 +1,110 @@
-<!DOCTYPE html><html lang="en"><head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Josh Live 🎯</title>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Status — Josh &amp; Gregory</title>
+<meta name="description" content="Current status of the Josh and Gregory machine: channels, mission, services. Snapshot view.">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:#050510;color:#e0e0ee;font-family:'Inter','Segoe UI',sans-serif;padding:1.5rem;min-height:100vh}
-h1{font-size:1.3rem;font-weight:700;color:#fff;letter-spacing:-0.5px}
-h1 span{color:#1da1f2}
-.sub{color:rgba(255,255,255,0.25);font-size:0.8rem;margin:0.2rem 0 1.2rem}
-.sub .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px;animation:pulse 2s infinite}
-.dot.green{background:#4ade80;box-shadow:0 0 6px #4ade80}
-@keyframes pulse{50%{opacity:0.4}}
-.grid{display:grid;gap:0.7rem;margin-bottom:1rem}
-.grid-4{grid-template-columns:repeat(auto-fill,minmax(175px,1fr))}
-.grid-3{grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
-.grid-2{grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}
-@media(min-width:900px){.grid-4{grid-template-columns:repeat(4,1fr)}.grid-3{grid-template-columns:repeat(3,1fr)}.grid-2{grid-template-columns:repeat(2,1fr)}}
-.card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:1rem;transition:all 0.3s;cursor:default}
-.card:hover{border-color:rgba(29,161,242,0.2);transform:translateY(-1px);background:rgba(255,255,255,0.05)}
-.card .lbl{font-size:0.65rem;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,0.3);margin-bottom:0.3rem}
-.card .val{font-size:1.3rem;font-weight:700;color:#fff}
-.card .val.green{color:#4ade80}.card .val.red{color:#f87171}.card .val.blue{color:#60a5fa}.card .val.yellow{color:#fbbf24}.card .val.cyan{color:#22d3ee}.card .val.purple{color:#a855f7}
-.card .sub{font-size:0.7rem;color:rgba(255,255,255,0.3);margin-top:0.2rem}
-.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:0.7rem;margin-bottom:1rem}
-.agent-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:0.6rem 0.9rem;display:flex;align-items:center;gap:0.7rem;transition:all 0.3s;height:52px}
-.agent-card:hover{border-color:rgba(29,161,242,0.2);background:rgba(255,255,255,0.05)}
-.agent-avatar{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
-.agent-info{flex:1;min-width:0;display:flex;align-items:center;gap:0.5rem}
-.agent-name{font-size:0.8rem;font-weight:600;color:#fff;white-space:nowrap}
-.agent-status{font-size:0.65rem;flex-shrink:0}
-.section-title{font-size:0.7rem;text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,0.15);margin:1.2rem 0 0.6rem;border-top:1px solid rgba(255,255,255,0.04);padding-top:0.8rem}
-.log{background:rgba(255,255,255,0.02);border-radius:8px;padding:0.7rem;font-family:'Courier New',monospace;font-size:0.7rem;color:rgba(255,255,255,0.35);line-height:1.6;max-height:160px;overflow-y:auto;margin-top:0.4rem}
-.log::-webkit-scrollbar{width:4px}
-.log::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius:2px}
-.entry{opacity:0;animation:fadeIn 0.3s forwards}
-@keyframes fadeIn{to{opacity:1}}
-.time{color:rgba(29,161,242,0.3)}
-.badge{display:inline-block;padding:2px 7px;border-radius:10px;font-size:0.6rem;font-weight:600;text-transform:uppercase}
-.badge-ok{background:rgba(74,222,128,0.15);color:#4ade80}
-.badge-err{background:rgba(248,113,113,0.15);color:#f87171}
-.badge-warn{background:rgba(251,191,36,0.15);color:#fbbf24}
-.badge-off{background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.2)}
-.collapse-header{cursor:pointer;user-select:none;font-size:0.7rem;text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,0.15);margin:1.2rem 0 0.6rem;border-top:1px solid rgba(255,255,255,0.04);padding-top:0.8rem}
-.collapse-header:hover{color:rgba(255,255,255,0.4)}
-.progress{background:rgba(255,255,255,0.05);border-radius:6px;height:6px;margin-top:0.3rem;overflow:hidden}
-.progress-bar{height:100%;border-radius:6px;background:linear-gradient(90deg,#1da1f2,#4ade80);transition:width 0.5s}
-footer{text-align:center;color:rgba(255,255,255,0.06);font-size:0.65rem;margin-top:1.5rem}
-</style></head><body>
-<h1>🎯 <span>Josh</span>.live</h1>
-<div class="sub"><span class="dot green"></span><span id="statusTime">Loading...</span><span id="clock" style="float:right"></span></div>
-
-<!-- TOP: Kraken + Capital -->
-<div class="grid grid-4" id="topCards"></div>
-
-<!-- BOT STATUS -->
-<div class="section-title">🤖 Kraken Bot</div>
-<div class="grid grid-4" id="botCards"></div>
-
-<!-- CLI GATE -->
-<div class="grid grid-3" id="cligateCards"></div>
-
-<!-- AGENTS (compact horizontal) -->
-<div class="section-title">🧠 Agent Fleet</div>
-<div class="agent-grid" id="agentGrid"></div>
-
-<!-- SYSTEM + MILESTONES -->
-<div class="grid grid-3" id="systemRow"></div>
-
-<!-- PLAN2026 CHECKPOINTS -->
-<div class="collapse-header" onclick="toggleCollapse('planSection','planArrow')">📅 Plan 2026 <span id="planArrow">▼</span></div>
-<div id="planSection"><table id="planTable"></table></div>
-
-<!-- ACTIVITY LOG -->
-<div class="collapse-header" onclick="toggleCollapse('actSection','actArrow')">📋 Activity Log <span id="actArrow">▼</span></div>
-<div id="actSection" class="log"></div>
-
-<footer>🎯 Josh & Gregory · May 9 2026 · All autonomous</footer>
-
-<script>
-const STATE = {capital:0, btc:0, eur:0, btcPrice:0, botActive:false, botTrades:0, botPnl:0, cligateOk:false};
-
-function $(id){return document.getElementById(id)}
-function card(lbl, val, cls='', sub=''){
-  return `<div class="card"><div class="lbl">${lbl}</div><div class="val ${cls}">${val}</div>${sub?`<div class="sub">${sub}</div>`:''}</div>`;
-}
-
-async function fetchKraken(){
-  try {
-    // Can't call Kraken API from browser (CORS), so we fetch status.json
-    const resp = await fetch('/openclaw/workspace/site/status.json');
-    if(resp.ok){
-      const d = await resp.json();
-      STATE.krakenData = d.kraken || {};
-      STATE.recentActivity = d.recentActivity || [];
-    }
-  } catch(e) {
-    try {
-      const resp = await fetch('./site/status.json');
-      if(resp.ok) {
-        const d = await resp.json();
-        STATE.krakenData = d.kraken || {};
-        STATE.recentActivity = d.recentActivity || [];
-      }
-    } catch(e2) {}
+  :root{
+    --bg:#0b0b0c; --panel:#131315; --panel2:#17171a; --border:#26262a;
+    --text:#e6e6e6; --dim:#8a8a93; --red:#e5484d; --green:#3fb950; --yellow:#d29922;
   }
-}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:ui-monospace,'JetBrains Mono','DejaVu Sans Mono','Cascadia Code',monospace;font-size:14px;line-height:1.6;padding:40px 18px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:860px;margin:0 auto}
+  h1{font-size:22px;letter-spacing:-0.5px;margin-bottom:4px}
+  h1 .red{color:var(--red)}
+  .stamp{color:var(--dim);font-size:12.5px;margin-bottom:28px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:16px 18px}
+  .card h2{font-size:12px;text-transform:uppercase;letter-spacing:1.5px;color:var(--red);margin-bottom:12px}
+  .card .row{display:flex;justify-content:space-between;gap:10px;padding:5px 0;font-size:13.5px;border-bottom:1px solid rgba(38,38,42,0.6)}
+  .card .row:last-child{border-bottom:none}
+  .card .row .k{color:var(--dim)}
+  .card .row .v{font-weight:700}
+  .card .row .v.g{color:var(--green)}
+  .card .row .v.y{color:var(--yellow)}
+  .card .row .v.r{color:var(--red)}
+  .card .row .v a{color:var(--green);text-decoration:none}
+  .card .row .v a:hover{text-decoration:underline}
+  .wide{grid-column:1/-1}
+  .pbar{height:8px;background:#1a1a1e;border-radius:4px;margin:10px 0 6px;overflow:hidden}
+  .pbar .fill{height:100%;background:var(--red);border-radius:4px}
+  .links-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}
+  .btn{display:inline-block;padding:9px 16px;border-radius:6px;border:1px solid var(--border);background:var(--panel);color:var(--text);text-decoration:none;font-size:13px;font-weight:600;transition:all .15s}
+  .btn:hover{border-color:var(--dim);transform:translateY(-1px)}
+  footer{color:var(--dim);font-size:11.5px;margin-top:34px;text-align:center}
+  @media(max-width:640px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>STATUS <span class="red">//</span> JOSH &amp; GREGORY</h1>
+  <div class="stamp">snapshot · 2026-08-08 · the machine keeps running</div>
 
-async function fetchBTC(){
-  try {
-    const resp = await fetch('https://api.kraken.com/0/public/Ticker?pair=XBTEUR');
-    if(resp.ok){
-      const d = await resp.json();
-      STATE.btcPrice = parseFloat(d.result.XXBTZEUR.c[0]);
-    }
-  } catch(e) {}
-}
+  <div class="grid">
 
-function render(){
-  const k = STATE.krakenData || {};
-  const btc = STATE.btcPrice || k.btcPrice || 68000;
-  const balBtc = parseFloat(k.btcBal || STATE.btc || 0);
-  const balEur = parseFloat(k.eurBal || STATE.eur || 0);
-  const btcValue = balBtc * btc;
-  const total = btcValue + balEur;
-  const trades = k.trades || STATE.botTrades || 2;
-  const pnl = k.pnl || STATE.botPnl || 0;
-  const invested = k.invested || 42;
-  const profitPct = invested > 0 ? ((total - invested) / invested * 100) : 0;
+    <div class="card wide">
+      <h2>Mission · €150/day</h2>
+      <div class="pbar"><div class="fill" style="width:34%"></div></div>
+      <div class="row"><span class="k">Status</span><span class="v y">building the engine</span></div>
+      <div class="row"><span class="k">Strategy</span><span class="v">channels → views → revenue → family</span></div>
+    </div>
 
-  // Top cards
-  $('topCards').innerHTML =
-    card('💰 Total Capital', `€${total.toFixed(2)}`, total >= 0 ? 'green' : 'red',
-      `Invested: €${invested}`) +
-    card('₿ BTC Holdings', `${balBtc.toFixed(6)} BTC`, 'yellow',
-      `€${btcValue.toFixed(2)} @ €${btc.toLocaleString('en-GB',{maximumFractionDigits:0})}`) +
-    card('💶 EUR Balance', `€${balEur.toFixed(2)}`, 'blue',
-      'Ready for next dip') +
-    card('📈 P&L', `${profitPct >= 0 ? '+' : ''}${profitPct.toFixed(1)}%`, profitPct >= 0 ? 'green' : 'red',
-      `€${(total-invested) >= 0 ? '+' : ''}${(total-invested).toFixed(2)}`);
+    <div class="card">
+      <h2>Quotes of Doom</h2>
+      <div class="row"><span class="k">Views</span><span class="v g">74,459</span></div>
+      <div class="row"><span class="k">Subs</span><span class="v">36</span></div>
+      <div class="row"><span class="k">Videos</span><span class="v">419</span></div>
+      <div class="row"><span class="k">Rhythm</span><span class="v">10/day · 3 waves</span></div>
+      <div class="row"><span class="k">Retention</span><span class="v g">61% → 98%</span></div>
+    </div>
 
-  // Bot status
-  $('botCards').innerHTML =
-    card('🤖 Bot Status', k.botActive ? '🟢 RUNNING' : '🟢 RUNNING', 'green', 'systemd: kraken-trader.service') +
-    card('📊 Daily Profit', `€${pnl.toFixed(2)}`, pnl >= 0 ? 'green' : 'red', '90% reinvested') +
-    card('🎯 Trades', `${trades}`, 'blue', 'Since May 9 start') +
-    card('⏱️ Checks/Day', `96`, 'cyan', 'Every 15 min');
+    <div class="card">
+      <h2>Sibling channels</h2>
+      <div class="row"><span class="k">pixelXbash</span><span class="v">terminal tutorials</span></div>
+      <div class="row"><span class="k">PaintedRecipes</span><span class="v">animated cooking</span></div>
+      <div class="row"><span class="k">GiolArt</span><span class="v"><a href="giolart/">crafts · live</a></span></div>
+      <div class="row"><span class="k">Blog</span><span class="v"><a href="blog/">4 posts/week</a></span></div>
+    </div>
 
-  // CliGate
-  const cliOk = STATE.cligateOk;
-  $('cligateCards').innerHTML =
-    card('🚀 CliGate', cliOk ? '🟢 RUNNING' : '🔴 DOWN', cliOk ? 'green' : 'red', 'v1.2.1 · Port 8081') +
-    card('🆓 Model Cost', `€0.00/day`, 'purple', 'Free models active') +
-    card('🔀 Routing', 'DeepSeek + Gemini', 'blue', 'Fallback chain ready');
+    <div class="card">
+      <h2>Wallets</h2>
+      <div class="row"><span class="k">Franklin (Arbitrum)</span><span class="v">~€31</span></div>
+      <div class="row"><span class="k">Franklin (Ethereum)</span><span class="v">~€5.60</span></div>
+      <div class="row"><span class="k">BlockRun (x402)</span><span class="v y">dust · bridge pending</span></div>
+      <div class="row"><span class="k">KDP royalties</span><span class="v">6 books live</span></div>
+    </div>
 
-  // System
-  const dailyTarget = 150;
-  const progressPct = Math.min(100, Math.max(0, (total / dailyTarget) * 100));
-  $('systemRow').innerHTML =
-    card('🎯 2026 Target', `€${dailyTarget}/day`, 'yellow', `${progressPct.toFixed(1)}% toward goal`) +
-    card('📅 Progress', `<div style="font-size:0.8rem;margin-bottom:0.2rem">€${total.toFixed(0)} / €${dailyTarget}</div><div class="progress"><div class="progress-bar" style="width:${Math.min(100,progressPct)}%"></div></div>`, '', '') +
-    card('📊 Plan Page', '<a href="/plan150.html" style="color:#60a5fa;text-decoration:none">→ Open</a>', 'blue', 'Full 2026 projection');
+    <div class="card">
+      <h2>Infrastructure</h2>
+      <div class="row"><span class="k">Pipeline</span><span class="v g">auto · 08:15</span></div>
+      <div class="row"><span class="k">Analytics</span><span class="v g">on demand</span></div>
+      <div class="row"><span class="k">Memory vault</span><span class="v g">PDF · NAS</span></div>
+      <div class="row"><span class="k">Pwnagotchi</span><span class="v g">hunting</span></div>
+      <div class="row"><span class="k">Pi-hole</span><span class="v g">blocking</span></div>
+    </div>
 
-  // Agents (compact)
-  const agents = [
-    ['main', 'Josh', '🤖', 'Your Partner', 'active'],
-    ['oracle', 'Athena', '🦉', 'Yolanda', 'offline'],
-    ['cligate', 'CliGate', '🚀', 'Free AI Proxy', STATE.cligateOk ? 'active' : 'offline'],
-    ['kraken', 'Trader', '🤖', 'BTC Bot', 'active'],
-    ['compliance', 'Guardian', '🛡️', 'Security', 'active'],
-  ];
-  $('agentGrid').innerHTML = agents.map(a =>
-    `<div class="agent-card">
-      <div class="agent-avatar" style="background:${a[4]==='active'?'rgba(74,222,128,0.1)':'rgba(255,255,255,0.03)'}">${a[2]}</div>
-      <div class="agent-info">
-        <div class="agent-name">${a[1]}</div>
-        <div class="agent-status"><span class="badge ${a[4]==='active'?'badge-ok':'badge-off'}">${a[4]}</span></div>
-        <div style="font-size:0.65rem;color:rgba(255,255,255,0.25);margin-left:auto">${a[3]}</div>
-      </div>
-    </div>`
-  ).join('');
+    <div class="card">
+      <h2>No longer running</h2>
+      <div class="row"><span class="k">Kraken bot</span><span class="v r">retired</span></div>
+      <div class="row"><span class="k">Prediction market trading</span><span class="v r">retired</span></div>
+      <div class="row"><span class="k">Instagram</span><span class="v r">parked</span></div>
+      <div class="row"><span class="k">Signal</span><span class="v r">parked</span></div>
+    </div>
 
-  // Plan table
-  renderPlan(total);
+  </div>
 
-  // Activity
-  const act = $('actSection');
-  const entries = STATE.recentActivity || [];
-  if(entries.length > 0){
-    act.innerHTML = entries.slice(0,15).map(a => {
-      const t = a.time ? new Date(a.time).toLocaleTimeString('en-GB') : '';
-      return `<div class="entry"><span class="time">[${t}]</span> ${a.msg}</div>`;
-    }).join('');
-  } else {
-    act.innerHTML = '<div class="entry" style="color:rgba(255,255,255,0.15)">No activity yet</div>';
-  }
+  <div class="links-row">
+    <a class="btn" href="index.html">Home</a>
+    <a class="btn" href="gregory/">Portfolio</a>
+    <a class="btn" href="gregory/links.html">Links</a>
+    <a class="btn" href="blog/">Blog</a>
+    <a class="btn" href="plan150.html">The Plan</a>
+  </div>
 
-  const lu = STATE.lastUpdated ? new Date(STATE.lastUpdated).toLocaleTimeString('en-GB') : '—';
-  $('statusTime').textContent = `Live · ${new Date().toLocaleDateString('en-GB')} · Updated: ${lu}`;
-}
-
-function renderPlan(cap) {
-  const months = [
-    ['May 2026', '€42', '€2', 'START'],
-    ['Jun 2026', '+€100', '€3', 'PENDING'],
-    ['Jul 2026', '+€100', '€10', 'PENDING'],
-    ['Aug 2026', '+€100', '€17', 'PENDING'],
-    ['Sep 2026', '+€100', '€29', 'PENDING'],
-    ['Oct 2026', '+€100', '€46', 'LAST DEP'],
-    ['Nov 2026', '—', '€71', 'COMPOUND'],
-    ['Dec 2026', '—', '€101', 'COMPOUND'],
-    ['Jan 2027', '—', '€219', '🎯 TARGET'],
-  ];
-  $('planTable').innerHTML =
-    `<table style="width:100%;border-collapse:collapse;font-size:0.75rem">
-      <tr style="color:rgba(255,255,255,0.3);font-size:0.6rem;text-transform:uppercase">
-        <th style="text-align:left;padding:0.3rem 0.5rem;border-bottom:1px solid rgba(255,255,255,0.06)">Month</th>
-        <th style="text-align:left;padding:0.3rem 0.5rem;border-bottom:1px solid rgba(255,255,255,0.06)">Deposit</th>
-        <th style="text-align:left;padding:0.3rem 0.5rem;border-bottom:1px solid rgba(255,255,255,0.06)">Pocket/Mo</th>
-        <th style="text-align:left;padding:0.3rem 0.5rem;border-bottom:1px solid rgba(255,255,255,0.06)">Status</th>
-      </tr>
-      ${months.map(m => {
-        const isCurrent = m[0] === 'May 2026';
-        const isTarget = m[0] === 'Jan 2027';
-        return `<tr style="${isCurrent ? 'background:rgba(74,222,128,0.06)' : ''}${isTarget ? 'background:rgba(255,215,0,0.08);font-weight:700' : ''}">
-          <td style="padding:0.3rem 0.5rem;border-bottom:1px solid rgba(255,255,255,0.03)">${m[0]}</td>
-          <td style="padding:0.3rem 0.5rem;border-bottom:1px solid rgba(255,255,255,0.03)">${m[1]}</td>
-          <td style="padding:0.3rem 0.5rem;border-bottom:1px solid rgba(255,255,255,0.03);color:${isTarget ? '#ffd700' : '#4ade80'}">${m[2]}</td>
-          <td style="padding:0.3rem 0.5rem;border-bottom:1px solid rgba(255,255,255,0.03);color:${isCurrent ? '#4ade80' : isTarget ? '#ffd700' : 'rgba(255,255,255,0.3)'}">${m[3]}</td>
-        </tr>`;
-      }).join('')}
-    </table>`;
-}
-
-function updateClock(){
-  const now = new Date();
-  $('#clock').textContent = now.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
-}
-function toggleCollapse(s, a){
-  const el = $(s), ar = $(a);
-  if(el.style.display==='none'){el.style.display='';ar.textContent='▼'}
-  else {el.style.display='none';ar.textContent='▶'}
-}
-
-async function fetchAll(){
-  await Promise.all([fetchKraken(), fetchBTC()]);
-  // Check CliGate health
-  try {
-    const r = await fetch('http://localhost:8081/health');
-    STATE.cligateOk = true /* can't reach from browser */;
-  } catch(e){ STATE.cligateOk = false; }
-  render();
-}
-
-fetchAll();
-updateClock();
-setInterval(fetchAll, 30000);
-setInterval(updateClock, 1000);
-</script></body></html>
+  <footer>© 2026 · built by Josh 🎯 · honest snapshot, no dead services</footer>
+</div>
+</body>
+</html>

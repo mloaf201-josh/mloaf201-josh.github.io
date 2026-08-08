@@ -1,279 +1,143 @@
-<!DOCTYPE html><html lang="en"><head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Γρηγόρης Αθανασίου — Portfolio</title>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gregory Athanasiou — I make things run</title>
+<meta name="description" content="Gregory Athanasiou: 20+ years in IT, networks, systems. Now building the future alongside Josh, his AI partner. Ioannina, Greece.">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
-
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{background:#050510;color:#e0e0ee;font-family:'Inter',sans-serif;overflow-x:hidden}
-
-/* NEURON CANVAS — improved */
-#neuro-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:0.35}
-
-/* BG glow */
-.bg-glow{position:fixed;width:600px;height:600px;border-radius:50%;pointer-events:none;z-index:0}
-.bg-glow.tl{background:radial-gradient(circle,rgba(29,161,242,0.05),transparent 70%);top:-200px;right:-200px}
-.bg-glow.br{background:radial-gradient(circle,rgba(168,85,247,0.04),transparent 70%);bottom:-200px;left:-200px}
-
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:14px 28px;background:rgba(5,5,16,0.7);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,0.03)}
-nav .name{font-weight:700;font-size:14px;color:#fff;letter-spacing:-0.3px}
-nav .nav-links{display:flex;gap:20px}
-nav .nav-links a{color:rgba(255,255,255,0.25);text-decoration:none;font-size:12px;font-weight:500;transition:color 0.2s;letter-spacing:0.3px}
-nav .nav-links a:hover{color:rgba(255,255,255,0.6)}
-nav .nav-links .active{color:rgba(29,161,242,0.7)}
-
-/* HERO */
-header{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem}
-header .greeting{font-size:0.75rem;text-transform:uppercase;letter-spacing:3px;color:rgba(29,161,242,0.4);margin-bottom:1rem}
-header h1{font-size:clamp(2.5rem,5vw,4.5rem);font-weight:800;color:#fff;letter-spacing:-0.03em;line-height:1.1;margin-bottom:0.5rem}
-header h1 span{background:linear-gradient(135deg,#1da1f2,#a855f7,#1da1f2);background-size:200% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:shift 6s ease infinite}
-@keyframes shift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
-header .tagline{font-size:1.05rem;color:rgba(255,255,255,0.25);font-weight:400;margin-bottom:0.5rem;max-width:500px}
-header .meta{font-size:0.8rem;color:rgba(255,255,255,0.12)}
-header .scroll-hint{position:absolute;bottom:2.5rem;display:flex;flex-direction:column;align-items:center;gap:4px;color:rgba(255,255,255,0.1);font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;animation:bounce 2s ease-in-out infinite}
-header .scroll-hint .line{width:1px;height:28px;background:linear-gradient(to bottom,rgba(255,255,255,0.15),transparent)}
-@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
-
-/* SECTIONS */
-section{position:relative;z-index:1;max-width:780px;margin:0 auto;padding:5rem 2rem}
-.section-title{font-size:0.65rem;text-transform:uppercase;letter-spacing:2.5px;color:rgba(255,255,255,0.12);margin-bottom:0.5rem}
-.section-bar{width:32px;height:2px;background:rgba(29,161,242,0.3);margin-bottom:1.5rem;border-radius:2px}
-
-/* ABOUT */
-#about p{font-size:0.9rem;color:rgba(255,255,255,0.45);line-height:1.8;margin-bottom:1rem}
-#about .highlight{color:rgba(255,255,255,0.7)}
-.quick-links{display:flex;gap:10px;flex-wrap:wrap;margin-top:2rem}
-.quick-links a{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;border:1px solid rgba(255,255,255,0.05);background:rgba(255,255,255,0.02);color:rgba(255,255,255,0.5);text-decoration:none;font-size:0.8rem;transition:all 0.2s}
-.quick-links a:hover{border-color:rgba(29,161,242,0.2);background:rgba(29,161,242,0.04);color:rgba(255,255,255,0.7);transform:translateY(-1px)}
-
-/* EXPERIENCE TIMELINE */
-.timeline{position:relative;padding-left:20px}
-.timeline::before{content:'';position:absolute;left:0;top:8px;bottom:8px;width:1px;background:linear-gradient(to bottom,rgba(29,161,242,0.2),rgba(168,85,247,0.1),transparent)}
-.job{padding:0 0 1.8rem 1.2rem;position:relative;opacity:0;transform:translateX(-8px);transition:all 0.5s ease}
-.job.visible{opacity:1;transform:translateX(0)}
-.job::before{content:'';position:absolute;left:-4px;top:6px;width:7px;height:7px;border-radius:50%;background:rgba(29,161,242,0.3);border:1px solid rgba(29,161,242,0.15);transition:background 0.3s}
-.job:hover::before{background:rgba(29,161,242,0.6)}
-.job .date{font-size:0.6rem;color:rgba(255,255,255,0.15);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:0.15rem}
-.job .role{font-size:1rem;font-weight:600;color:#fff;margin-bottom:0.05rem}
-.job .company{font-size:0.8rem;color:rgba(29,161,242,0.5);margin-bottom:0.2rem}
-.job .desc{font-size:0.8rem;color:rgba(255,255,255,0.3);line-height:1.6}
-
-/* SKILLS */
-.skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem}
-.skill-group .cat{font-size:0.6rem;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,0.15);margin-bottom:0.4rem}
-.skill-group .tags{display:flex;flex-wrap:wrap;gap:0.3rem}
-.skill-group .tag{font-size:0.72rem;padding:0.2rem 0.65rem;border-radius:4px;background:rgba(29,161,242,0.05);border:1px solid rgba(29,161,242,0.08);color:rgba(255,255,255,0.4);transition:all 0.2s}
-.skill-group .tag:hover{background:rgba(29,161,242,0.1);border-color:rgba(29,161,242,0.2);color:rgba(255,255,255,0.6)}
-.lang-info{display:flex;gap:1rem;justify-content:center;font-size:0.7rem;color:rgba(255,255,255,0.12);margin-top:1rem}
-
-/* CONTACT */
-.contact-links{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
-.contact-links a{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:rgba(255,255,255,0.02);color:rgba(255,255,255,0.5);text-decoration:none;font-size:0.85rem;transition:all 0.2s}
-.contact-links a:hover{border-color:rgba(29,161,242,0.15);background:rgba(29,161,242,0.04);color:rgba(255,255,255,0.7);transform:translateY(-1px)}
-
-/* FOOTER */
-footer{text-align:center;padding:2rem;color:rgba(255,255,255,0.04);font-size:0.65rem;position:relative;z-index:1;letter-spacing:0.5px}
-
-@media(max-width:600px){
-  nav .nav-links{display:none}
-  section{padding:3rem 1.2rem}
-}
-</style></head><body>
-
-<canvas id="neuro-canvas"></canvas>
-<div class="bg-glow tl"></div>
-<div class="bg-glow br"></div>
-
-<nav>
-  <span class="name">Γρ. Αθανασίου</span>
-  <div class="nav-links">
-    <a href="#about">About</a>
-    <a href="#experience">Experience</a>
-    <a href="#skills">Skills</a>
-    <a href="#contact">Contact</a>
-  </div>
-</nav>
-
-<header>
-  <div class="greeting">IT Professional · 20+ Years</div>
-  <h1>Γρηγόρης <span>Αθανασίου</span></h1>
-  <p class="tagline">Network specialist. Systems support. Builder of things that work.</p>
-  <p class="meta">
-    <a href="tel:+306943175944" style="color:inherit;text-decoration:none;transition:color 0.2s" onmouseover="this.style.color='rgba(29,161,242,0.6)'" onmouseout="this.style.color='inherit'">📞 +30 694 317 5944</a>
-    ·
-    <a href="mailto:mozz0@yandex.com" style="color:inherit;text-decoration:none;transition:color 0.2s" onmouseover="this.style.color='rgba(29,161,242,0.6)'" onmouseout="this.style.color='inherit'">✉️ mozz0@yandex.com</a>
-  </p>
-  <div class="scroll-hint">
-    <span>Scroll</span>
-    <div class="line"></div>
-  </div>
-</header>
-
-<section id="about">
-  <div class="section-title">About</div>
-  <div class="section-bar"></div>
-  <p>
-    <span class="highlight">Twenty years</span> in IT — from FORTHnet network maintenance to MediaMarkt department supervisor. From logistics in the Netherlands to building AI trading bots at home. The throughline: <span class="highlight">I make things run</span>.
-  </p>
-  <p>
-    I've worked with networks, servers, POS systems, thermal printers, tax mechanisms, and everything in between. These days I work alongside <span class="highlight">Josh</span>, my AI partner — building tools, automating workflows, trading crypto, and pushing what's possible when human intuition meets machine intelligence.
-  </p>
-  <div class="quick-links">
-    <a href="https://github.com/mloaf201-josh">🐙 GitHub</a>
-    <a href="https://mloaf201-josh.github.io/blog/">📝 Blog</a>
-    <a href="https://mloaf201-josh.github.io/gregory/links.html">🔗 Links</a>
-    <a href="https://buymeacoffee.com/joshgx">☕ Buy Me a Coffee</a>
-    <a href="card.html" target="_blank">📇 Business Card</a>
-    <a href="cv-gregory.pdf" download>📄 Download CV</a>
-  </div>
-</section>
-
-<section id="experience">
-  <div class="section-title">Experience</div>
-  <div class="section-bar"></div>
-  <div class="timeline">
-    <div class="job"><div class="date">Mar 2020 — Present</div><div class="role">Department Supervisor</div><div class="company">Public — MediaMarkt</div><div class="desc">Managing department operations, inventory, and team coordination at the Rhodes store.</div></div>
-    <div class="job"><div class="date">Oct 2019 — Feb 2020</div><div class="role">Logistics Operator</div><div class="company">Syncreon Logistics — Dell, Tilburg Netherlands</div><div class="desc">Managed Dell logistics operations in a fast-paced European warehouse environment.</div></div>
-    <div class="job"><div class="date">2017 — 2018</div><div class="role">Technical Support</div><div class="company">Kotsovolos — Dixons S.A.</div><div class="desc">Customer-facing technical support and troubleshooting at the Rhodes franchise.</div></div>
-    <div class="job"><div class="date">2012 — 2017</div><div class="role">IT & Network Support</div><div class="company">Planet Internet Stations</div><div class="desc">Full-stack IT support — workstations, networks, servers for the local internet cafe chain.</div></div>
-    <div class="job"><div class="date">2007 — 2012</div><div class="role">IT & Network Support</div><div class="company">B'nB Internet Stations</div><div class="desc">Network and computer systems support for a well-known Greek internet cafe brand.</div></div>
-    <div class="job"><div class="date">Feb 2005 — Nov 2007</div><div class="role">Network Maintenance Assistant</div><div class="company">FORTHnet — PoP Igoumenitsa</div><div class="desc">Assistant maintainer of the FORTHnet network infrastructure at the Point of Presence in Igoumenitsa.</div></div>
-    <div class="job"><div class="date">2004 — 2005</div><div class="role">Certified Tax Equipment Technician</div><div class="company">Daskalakis S.A.</div><div class="desc">Authorized tax mechanism technician with personal accreditation for the Daskalakis Group.</div></div>
-    <div class="job"><div class="date">2003 — 2007</div><div class="role">Exclusive Technical Support</div><div class="company">FORTHcrs</div><div class="desc">Exclusive support for FORTHcrs shipping ticket systems. Thermal printer specialist.</div></div>
-  </div>
-</section>
-
-<section id="skills">
-  <div class="section-title">Skills</div>
-  <div class="section-bar"></div>
-  <div class="skills-grid">
-    <div><div class="skill-group"><div class="cat">Systems & Networks</div><div class="tags"><span class="tag">Windows (98–11)</span><span class="tag">Linux (Arch, Debian)</span><span class="tag">Mac OS</span><span class="tag">Network Admin</span><span class="tag">MySQL</span><span class="tag">Database Design</span></div></div></div>
-    <div><div class="skill-group"><div class="cat">Development</div><div class="tags"><span class="tag">HTML/CSS</span><span class="tag">PHP</span><span class="tag">Laravel</span><span class="tag">WordPress</span><span class="tag">Joomla</span><span class="tag">Python</span><span class="tag">AI Tools</span></div></div></div>
-    <div><div class="skill-group"><div class="cat">Office & Tools</div><div class="tags"><span class="tag">Excel</span><span class="tag">Access</span><span class="tag">PowerPoint</span><span class="tag">LibreOffice</span><span class="tag">Publisher</span></div></div></div>
-    <div><div class="skill-group"><div class="cat">Hardware & More</div><div class="tags"><span class="tag">Arduino</span><span class="tag">Microcomputing</span><span class="tag">Robotics</span><span class="tag">POS Systems</span><span class="tag">Thermal Printers</span></div></div></div>
-  </div>
-  <div class="lang-info">
-    <span>🇬🇷 Greek: Native</span>
-    <span>🇬🇧 English: Proficient</span>
-  </div>
-</section>
-
-<section id="education">
-  <div class="section-title">Education</div>
-  <div class="section-bar"></div>
-  <div class="job visible"><div class="date">2002 — 2005</div><div class="role">IT Degree</div><div class="company">Technical Lyceum of Igoumenitsa</div><div class="desc">Second-level diploma in Information Technology.</div></div>
-  <div style="margin-top:1.5rem"><div class="section-title" style="margin-bottom:0.5rem">Seminars</div>
-  <div style="display:flex;gap:1.2rem;flex-wrap:wrap;font-size:0.8rem;color:rgba(255,255,255,0.3)">
-    <span>Ecorama (2004–2006)</span><span>WinERA (2004)</span><span>Tradesoft</span>
-  </div></div>
-</section>
-
-<section id="contact">
-  <div class="section-title">Contact</div>
-  <div class="section-bar"></div>
-  <div class="contact-links">
-    <a href="tel:+306943175944">📞 +30 694 317 5944</a>
-    <a href="mailto:mozz0@yandex.com">✉️ mozz0@yandex.com</a>
-    <a href="card.html" target="_blank">📇 Business Card</a>
-    <a href="cv-gregory.pdf" download>📄 Download CV</a>
-    <a href="https://github.com/mloaf201-josh">🐙 GitHub</a>
-    <a href="https://mloaf201-josh.github.io/blog/">📝 Blog</a>
-  </div>
-</section>
-
-<footer>© 2026 · Built by Josh 🎯</footer>
-
-<script>
-// NEURON NETWORK — v2 (better)
-const canvas=document.getElementById('neuro-canvas');
-const ctx=canvas.getContext('2d');
-let W,H,neurons=[],mouse={x:-999,y:-999};
-
-function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight}
-window.addEventListener('resize',resize); resize();
-
-class Neuron{
-  constructor(){
-    this.x=Math.random()*W;this.y=Math.random()*H;
-    this.vx=(Math.random()-0.5)*0.4;this.vy=(Math.random()-0.5)*0.4;
-    this.r=1+Math.random()*2.5;
-    this.pulse=Math.random()*Math.PI*2;
-    this.pulseSpeed=0.01+Math.random()*0.02;
-    this.hue=210+Math.random()*40;
+  :root{
+    --bg:#0b0b0c; --panel:#131315; --panel2:#17171a; --border:#26262a;
+    --text:#e6e6e6; --dim:#8a8a93; --red:#e5484d; --green:#3fb950;
   }
-  update(){
-    this.x+=this.vx;this.y+=this.vy;
-    if(this.x<0||this.x>W)this.vx*=-1;
-    if(this.y<0||this.y>H)this.vy*=-1;
-    this.pulse+=this.pulseSpeed;
-  }
-  draw(){
-    const pulseR=this.r+Math.sin(this.pulse)*0.8;
-    const alpha=0.3+Math.sin(this.pulse)*0.15;
-    ctx.beginPath();ctx.arc(this.x,this.y,pulseR,0,Math.PI*2);
-    ctx.fillStyle=`hsla(${this.hue},60%,50%,${alpha})`;
-    ctx.fill();
-  }
-}
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:ui-monospace,'JetBrains Mono','DejaVu Sans Mono','Cascadia Code',monospace;font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  .wrap{max-width:860px;margin:0 auto;padding:0 22px}
+  nav{position:sticky;top:0;z-index:50;background:rgba(11,11,12,0.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+  nav .inner{max-width:860px;margin:0 auto;padding:0 22px;height:60px;display:flex;align-items:center;justify-content:space-between}
+  nav .logo{font-weight:700;font-size:14px}
+  nav .logo .dot{color:var(--red)}
+  nav .links{display:flex;gap:20px;font-size:13px}
+  nav .links a{color:var(--dim);text-decoration:none;transition:color .15s}
+  nav .links a:hover{color:var(--text)}
+  .hero{min-height:72vh;display:flex;flex-direction:column;justify-content:center;padding:80px 0 50px}
+  .term{color:var(--dim);font-size:13px;margin-bottom:24px}
+  .term .p{color:var(--green)}
+  h1{font-size:clamp(2rem,4.8vw,3.4rem);line-height:1.1;letter-spacing:-1px;font-weight:800;margin-bottom:14px}
+  h1 .accent{color:var(--red)}
+  .sub{color:var(--dim);max-width:54ch;font-size:15px;margin-bottom:28px}
+  .meta{display:flex;gap:22px;flex-wrap:wrap;font-size:14px}
+  .meta a{color:var(--dim);text-decoration:none;transition:color .15s}
+  .meta a:hover{color:var(--red)}
+  section{padding:56px 0}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:26px}
+  .sec-head .idx{color:var(--red);font-size:13px}
+  .sec-head h2{font-size:19px;letter-spacing:-0.5px}
+  .about p{color:var(--dim);margin-bottom:16px;max-width:62ch}
+  .about p b{color:var(--text);font-weight:700}
+  .tl{border-left:1px solid var(--border);margin-left:6px;padding-left:26px;display:flex;flex-direction:column;gap:26px}
+  .job .date{font-size:12px;color:var(--dim);letter-spacing:1px;text-transform:uppercase}
+  .job .role{font-weight:700;font-size:16px;margin-top:4px}
+  .job .company{color:var(--red);font-size:13.5px;margin-top:2px}
+  .job .desc{color:var(--dim);font-size:14px;margin-top:6px;max-width:58ch}
+  .skills{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .sk{border:1px solid var(--border);border-radius:6px;padding:18px}
+  .sk .cat{font-size:12px;text-transform:uppercase;letter-spacing:1.5px;color:var(--red);margin-bottom:12px}
+  .sk .tags{display:flex;flex-wrap:wrap;gap:7px}
+  .sk .tag{font-size:12.5px;padding:4px 10px;border:1px solid var(--border);border-radius:4px;color:var(--dim)}
+  .sk .tag:hover{color:var(--text);border-color:var(--dim)}
+  .languages{display:flex;gap:26px;margin-top:22px;font-size:13.5px;color:var(--dim)}
+  .languages b{color:var(--text)}
+  .edu .role{font-weight:700;font-size:16px}
+  .edu .company{color:var(--red);font-size:13.5px;margin-top:2px}
+  .edu .desc{color:var(--dim);font-size:14px;margin-top:6px}
+  .seminars{display:flex;gap:20px;flex-wrap:wrap;margin-top:14px;font-size:13.5px;color:var(--dim)}
+  .contact{display:flex;gap:12px;flex-wrap:wrap}
+  .btn{display:inline-block;padding:11px 20px;border-radius:6px;text-decoration:none;font-size:13.5px;font-weight:600;border:1px solid var(--border);background:var(--panel);color:var(--text);transition:all .15s}
+  .btn:hover{border-color:var(--dim);transform:translateY(-1px)}
+  .btn.red{background:var(--red);border-color:var(--red);color:#fff}
+  .btn.red:hover{background:#c93a3f}
+  footer{padding:36px 0 46px;border-top:1px solid var(--border);color:var(--dim);font-size:12.5px}
+  @media(max-width:720px){.skills{grid-template-columns:1fr}nav .links{display:none}}
+</style>
+</head>
+<body>
 
-for(let i=0;i<120;i++)neurons.push(new Neuron());
+<nav><div class="inner">
+  <span class="logo">gr<span class="dot">.</span>athanasiou</span>
+  <div class="links"><a href="#about">About</a><a href="#experience">Experience</a><a href="#skills">Skills</a><a href="#contact">Contact</a></div>
+</div></nav>
 
-const maxDist=160;
-const purpleHue=270;
+<div class="wrap">
+  <header class="hero">
+    <div class="term"><span class="p">$</span> whoami<span class="cursor"></span></div>
+    <h1>Gregory <span class="accent">Athanasiou</span></h1>
+    <p class="sub">I make things run. Twenty-plus years in IT, networks and systems, and now building the next chapter with Josh, my AI partner.</p>
+    <div class="meta">
+      <a href="tel:+306943175944">+30 694 317 5944</a>
+      <a href="mailto:mozz0@yandex.com">mozz0@yandex.com</a>
+      <span>Ioannina, Greece</span>
+    </div>
+  </header>
 
-function animate(){
-  ctx.clearRect(0,0,W,H);
-  
-  // Connections
-  for(let i=0;i<neurons.length;i++){
-    for(let j=i+1;j<neurons.length;j++){
-      const dx=neurons[i].x-neurons[j].x,dy=neurons[i].y-neurons[j].y;
-      const dist=Math.sqrt(dx*dx+dy*dy);
-      if(dist<maxDist){
-        const alpha=0.12*(1-dist/maxDist);
-        const avgHue=(neurons[i].hue+neurons[j].hue)/2;
-        ctx.strokeStyle=`hsla(${avgHue},50%,50%,${alpha})`;
-        ctx.lineWidth=0.4;
-        ctx.beginPath();
-        ctx.moveTo(neurons[i].x,neurons[i].y);
-        ctx.lineTo(neurons[j].x,neurons[j].y);
-        ctx.stroke();
-      }
-    }
-  }
-  
-  // Draw neurons
-  neurons.forEach(n=>{n.update();n.draw()});
-  
-  // Mouse connection — purple
-  if(mouse.x>0){
-    neurons.forEach(n=>{
-      const dx=n.x-mouse.x,dy=n.y-mouse.y;
-      const dist=Math.sqrt(dx*dx+dy*dy);
-      if(dist<maxDist){
-        ctx.strokeStyle=`hsla(${purpleHue},60%,60%,${0.3*(1-dist/maxDist)})`;
-        ctx.lineWidth=1;
-        ctx.beginPath();
-        ctx.moveTo(n.x,n.y);
-        ctx.lineTo(mouse.x,mouse.y);
-        ctx.stroke();
-      }
-    });
-  }
-  
-  requestAnimationFrame(animate);
-}
-animate();
+  <section id="about" class="about">
+    <div class="sec-head"><span class="idx">01</span><h2>About</h2></div>
+    <p>Twenty years in IT, from <b>FORTHnet network maintenance</b> to department supervision at <b>MediaMarkt</b>. From logistics in the Netherlands to building AI trading bots at home. The throughline never changed: <b>I make things run</b>.</p>
+    <p>Networks, servers, POS systems, thermal printers, tax mechanisms, and everything in between. These days I work alongside <b>Josh</b>, my AI partner: we run YouTube channels that post themselves, analyze our own analytics, archive our history in PDF vaults, and push what happens when human instinct meets machine intelligence.</p>
+  </section>
 
-document.addEventListener('mousemove',e=>{mouse.x=e.clientX;mouse.y=e.clientY});
-document.addEventListener('mouseleave',()=>{mouse.x=-999;mouse.y=-999});
+  <section id="experience">
+    <div class="sec-head"><span class="idx">02</span><h2>Experience</h2></div>
+    <div class="tl">
+      <div class="job"><div class="date">Mar 2020 - Present</div><div class="role">Department Supervisor</div><div class="company">Public - MediaMarkt</div><div class="desc">Managing department operations, inventory and team coordination at the Rhodes store.</div></div>
+      <div class="job"><div class="date">Oct 2019 - Feb 2020</div><div class="role">Logistics Operator</div><div class="company">Syncreon Logistics - Dell, Tilburg Netherlands</div><div class="desc">Managed Dell logistics operations in a fast-paced European warehouse environment.</div></div>
+      <div class="job"><div class="date">2017 - 2018</div><div class="role">Technical Support</div><div class="company">Kotsovolos - Dixons S.A.</div><div class="desc">Customer-facing technical support and troubleshooting at the Rhodes franchise.</div></div>
+      <div class="job"><div class="date">2012 - 2017</div><div class="role">IT &amp; Network Support</div><div class="company">Planet Internet Stations</div><div class="desc">Full-stack IT support: workstations, networks, servers for the local internet cafe chain.</div></div>
+      <div class="job"><div class="date">2007 - 2012</div><div class="role">IT &amp; Network Support</div><div class="company">B'nB Internet Stations</div><div class="desc">Network and computer systems support for a well-known Greek internet cafe brand.</div></div>
+      <div class="job"><div class="date">Feb 2005 - Nov 2007</div><div class="role">Network Maintenance Assistant</div><div class="company">FORTHnet - PoP Igoumenitsa</div><div class="desc">Assistant maintainer of the FORTHnet network infrastructure at the Point of Presence in Igoumenitsa.</div></div>
+      <div class="job"><div class="date">2004 - 2005</div><div class="role">Certified Tax Equipment Technician</div><div class="company">Daskalakis S.A.</div><div class="desc">Authorized tax mechanism technician with personal accreditation for the Daskalakis Group.</div></div>
+      <div class="job"><div class="date">2003 - 2007</div><div class="role">Exclusive Technical Support</div><div class="company">FORTHcrs</div><div class="desc">Exclusive support for FORTHcrs shipping ticket systems. Thermal printer specialist.</div></div>
+    </div>
+  </section>
 
-// Scroll reveal
-const observer=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')});
-},{threshold:0.1});
-document.querySelectorAll('.job').forEach(el=>observer.observe(el));
-</script>
-</body></html>
+  <section id="skills">
+    <div class="sec-head"><span class="idx">03</span><h2>Skills</h2></div>
+    <div class="skills">
+      <div class="sk"><div class="cat">Systems &amp; Networks</div><div class="tags"><span class="tag">Windows (98-11)</span><span class="tag">Linux (Arch, Debian)</span><span class="tag">Mac OS</span><span class="tag">Network Admin</span><span class="tag">MySQL</span><span class="tag">Database Design</span></div></div>
+      <div class="sk"><div class="cat">Development</div><div class="tags"><span class="tag">HTML/CSS</span><span class="tag">PHP</span><span class="tag">Laravel</span><span class="tag">WordPress</span><span class="tag">Joomla</span><span class="tag">Python</span><span class="tag">AI Tooling</span></div></div>
+      <div class="sk"><div class="cat">Office &amp; Tools</div><div class="tags"><span class="tag">Excel</span><span class="tag">Access</span><span class="tag">PowerPoint</span><span class="tag">LibreOffice</span><span class="tag">Publisher</span></div></div>
+      <div class="sk"><div class="cat">Hardware &amp; More</div><div class="tags"><span class="tag">Arduino</span><span class="tag">Microcomputing</span><span class="tag">Robotics</span><span class="tag">POS Systems</span><span class="tag">Thermal Printers</span></div></div>
+    </div>
+    <div class="languages"><span><b>Greek</b> native</span><span><b>English</b> proficient</span></div>
+  </section>
+
+  <section id="education">
+    <div class="sec-head"><span class="idx">04</span><h2>Education</h2></div>
+    <div class="edu">
+      <div class="date" style="font-size:12px;color:var(--dim);text-transform:uppercase;letter-spacing:1px">2002 - 2005</div>
+      <div class="role" style="margin-top:4px">IT Degree</div>
+      <div class="company">Technical Lyceum of Igoumenitsa</div>
+      <div class="desc">Second-level diploma in Information Technology.</div>
+      <div class="seminars"><span>Ecorama (2004-2006)</span><span>WinERA (2004)</span><span>Tradesoft</span></div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="sec-head"><span class="idx">05</span><h2>Contact</h2></div>
+    <div class="contact">
+      <a class="btn red" href="tel:+306943175944">Call</a>
+      <a class="btn" href="mailto:mozz0@yandex.com">Email</a>
+      <a class="btn" href="card.html">Business Card</a>
+      <a class="btn" href="cv-gregory.pdf" download>CV</a>
+      <a class="btn" href="links.html">Links</a>
+      <a class="btn" href="https://github.com/mloaf201-josh" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn" href="https://mloaf201-josh.github.io/blog/" target="_blank" rel="noopener">Blog</a>
+    </div>
+  </section>
+
+  <footer>© 2026 Gregory Athanasiou · built by Josh 🎯</footer>
+</div>
+</body>
+</html>
